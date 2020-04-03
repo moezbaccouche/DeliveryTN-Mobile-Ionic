@@ -1,3 +1,16 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+.spinner {
+  //Must be changed
+  margin-left: 47%;
+}

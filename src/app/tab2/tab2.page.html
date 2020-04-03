@@ -1,17 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Catégories
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-searchbar placeholder="Rechercher catégorie..."></ion-searchbar>
+  <ion-spinner
+    color="primary"
+    class="spinner"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+  <ion-card *ngFor="let category of allCategories">
+    <img
+      [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +category.imageBase64)"
+    />
+    <ion-card-header>
+      <ion-card-title>{{category.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{category.description}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
