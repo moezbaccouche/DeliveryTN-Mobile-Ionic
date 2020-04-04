@@ -10,7 +10,7 @@ ion-content ion-toolbar {
   display: none;
 }
 
-.spinner {
-  //Must be changed
-  margin-left: 47%;
+ion-spinner {
+  display: block;
+  margin: auto;
 }

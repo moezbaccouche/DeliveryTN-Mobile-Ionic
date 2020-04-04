@@ -1,6 +1,8 @@
 {
   "name": "DeliveryTN",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "749765eb"
 }

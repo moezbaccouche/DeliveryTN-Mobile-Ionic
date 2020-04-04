@@ -20,9 +20,15 @@ export class Tab2Page {
   }
 
   _loadAllCategories() {
-    this.categoriesService.getAllCategories().then((data) => {
-      this.isLoading = false;
-      this.allCategories = data;
-    });
+    this.categoriesService
+      .getAllCategories()
+      .then((data) => {
+        this.allCategories = data;
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.isLoading = true;
+      });
   }
 }

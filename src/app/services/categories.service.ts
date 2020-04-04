@@ -10,9 +10,6 @@ export class CategoriesService {
   baseUrl = "http://192.168.1.3:51044/delivery-app/";
   constructor(private http: HttpClient) {}
 
-  // getAllCategories() {
-  //   return this.http.get(`${this.baseUrl}categories`);
-  // }
   getAllCategories() {
     return fetch(`${this.baseUrl}categories`)
       .then((response) => response.json())

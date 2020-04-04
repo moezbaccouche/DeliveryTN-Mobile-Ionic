@@ -7,11 +7,36 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Accueil</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-searchbar placeholder="Rechercher produit"></ion-searchbar>
+  <ion-card *ngFor="let product of allProducts">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-float-left">
+          <div>
+            <img
+              height="100"
+              [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + product.imageBase64)"
+              alt="Image Produit"
+            />
+          </div>
+        </ion-col>
+        <ion-col class="ion-float-right">
+          <h6 class="ion-float-right"><strong>{{ product.name }}</strong></h6>
+          <ion-grid>
+            <ion-row class="ion-float-right">
+              <span>Prix: <strong>{{ product.price }} DT</strong></span>
+            </ion-row>
+            <ion-row class="ion-float-right">
+              <span class="textPriceUnit">{{ product.price }} DT / Pièce</span>
+            </ion-row>
+            <ion-row class="ion-float-right">
+              <ion-button fill="clear">
+                <ion-icon slot="icon-only" name="basket-outline"></ion-icon>
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>
