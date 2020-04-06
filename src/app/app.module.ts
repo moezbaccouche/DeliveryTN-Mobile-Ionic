@@ -8,10 +8,12 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { PopoverOrderbyComponent } from "./menus/popover-orderby/popover-orderby.component";
+import { Tab1Page } from "./tab1/tab1.page";
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, PopoverOrderbyComponent],
+  entryComponents: [PopoverOrderbyComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -22,6 +24,7 @@ import { AppComponent } from "./app.component";
     HttpClientModule,
     StatusBar,
     SplashScreen,
+    Tab1Page,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

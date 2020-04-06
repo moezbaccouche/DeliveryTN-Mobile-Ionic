@@ -10,6 +10,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class Tab2Page {
   private allCategories: any;
   private isLoading = true;
+  private searchTerm: string;
   constructor(
     private categoriesService: CategoriesService,
     private domSanitizer: DomSanitizer
@@ -30,5 +31,12 @@ export class Tab2Page {
         console.log(error);
         this.isLoading = true;
       });
+  }
+
+  searchCategory() {
+    this.categoriesService
+      .searchCategories(this.searchTerm)
+      .then((data) => (this.allCategories = data))
+      .catch((error) => console.error(error));
   }
 }

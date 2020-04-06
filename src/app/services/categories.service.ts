@@ -15,4 +15,10 @@ export class CategoriesService {
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
+
+  searchCategories(query) {
+    return fetch(`${this.baseUrl}categories?searchQuery=${query}`)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
 }

@@ -1,0 +1,12 @@
+<ion-list>
+  <ion-list-header>Trier par: </ion-list-header>
+  <ion-item button (click)="loadProductsByName()">Alphabet</ion-item>
+  <ion-item button (click)="loadProductsByPriceDesc()"
+    >Prix descendant
+    <ion-icon name="arrow-down-outline" slot="end"></ion-icon>
+  </ion-item>
+  <ion-item button (click)="loadProductsByPriceAsc()"
+    >Prix ascendant
+    <ion-icon name="arrow-up-outline" slot="end"></ion-icon>
+  </ion-item>
+</ion-list>

@@ -7,7 +7,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar placeholder="Rechercher catégorie..."></ion-searchbar>
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="searchCategory()"
+    placeholder="Rechercher catégorie..."
+  ></ion-searchbar>
   <ion-spinner
     color="primary"
     [class.loadingSpinner]="isLoading"
