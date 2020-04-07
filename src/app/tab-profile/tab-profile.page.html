@@ -4,4 +4,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content> 
+  <div class="header">
+    <h2>Mehdi Moujahed</h2>
+
+    <div class="space-between">
+      
+      <div class="followings">
+        <ion-badge color="primary" mode="ios">102</ion-badge>
+        <p>Courses éffectués</p>
+      </div>
+
+      <div class="followings">
+        <ion-badge color="primary" mode="ios">69</ion-badge>
+        <p>Courses à faire</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="flex">
+    <div class="border-blue">
+      <div class="border-white">
+        <div class="img-box">
+          <img src="../../assets/me.png">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <ion-item>
+    <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
+    <ion-input type="text"  value="Moujahed"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Prénom</ion-label>
+    <ion-input type="text" value="Mehdi "> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Adresse</ion-label>
+    <ion-input type="text" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input type="email"  ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Phone</ion-label>
+    <ion-input type="tel" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input type="password"  ></ion-input>
+  </ion-item>
+
+ 
+    <ion-grid>
+      <ion-row>
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+              <ion-button expand="block" class="ion-text-wrap min-max-width">Enregistrer</ion-button>
+          </ion-col>
+  
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+              <ion-button expand="block" class="ion-text-wrap min-max-width">Annuler</ion-button>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
