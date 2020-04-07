@@ -1,0 +1,30 @@
+.noPadding {
+  padding: 0px !important;
+}
+
+.textInfos {
+  font-size: 14px;
+}
+
+.btChangeLocation {
+  font-size: small !important;
+  --border-radius: 50px;
+  text-transform: none;
+  --padding-start: 0px;
+}
+
+.priceTitles {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.btOrder {
+  text-transform: none;
+  --color: white;
+  --background: rgb(117, 39, 46);
+  --border-radius: 20px !important;
+}
+
+.dividerLabels {
+  color: rgb(117, 39, 46);
+}
