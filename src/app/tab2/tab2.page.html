@@ -17,7 +17,11 @@
     [class.loadingSpinner]="isLoading"
     [class.stopLoading]="!isLoading"
   ></ion-spinner>
-  <ion-card *ngFor="let category of allCategories">
+
+  <ion-card
+    *ngFor="let category of allCategories"
+    [routerLink]="[ '/products-by-category', category.id ]"
+  >
     <img
       [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +category.imageBase64)"
     />

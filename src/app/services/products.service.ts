@@ -34,4 +34,10 @@ export class ProductsService {
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
+
+  getProductsByCategoryId(categoryId: number) {
+    return fetch(`${this.baseUrl}products/category?id=${categoryId}`)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
 }

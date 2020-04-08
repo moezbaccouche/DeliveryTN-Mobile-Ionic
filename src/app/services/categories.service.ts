@@ -21,4 +21,10 @@ export class CategoriesService {
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
+
+  getCategoryById(id: number) {
+    return fetch(`${this.baseUrl}categories/${id}`)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
 }
