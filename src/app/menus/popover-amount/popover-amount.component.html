@@ -1,0 +1,48 @@
+<ion-grid>
+  <ion-row>
+    <ion-col style="text-align: center;">
+      <ion-item-divider>
+        <ion-label style="text-align: center !important;">
+          <strong>Quantité</strong>
+        </ion-label>
+      </ion-item-divider>
+    </ion-col>
+  </ion-row>
+  <ion-row
+    style="border: 1px #a2a9b4 solid; border-radius: 20px;"
+    class="ion-justify-content-center"
+  >
+    <ion-col style="text-align: right;">
+      <ion-button
+        color="danger"
+        fill="clear"
+        (click)="decrementAmount()"
+        [disabled]="isZero"
+      >
+        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col style="text-align: center;">
+      <ion-input type="text" [(ngModel)]="productAmount"></ion-input>
+    </ion-col>
+    <ion-col style="text-align: left;">
+      <ion-button fill="clear" (click)="incrementAmount()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col style="text-align: right;">
+      <ion-button
+        [disabled]="isZero"
+        class="btConfirmAmount"
+        color="success"
+        fill="outline"
+        (click)="addToCart()"
+      >
+        Confirmer
+        <ion-icon slot="end" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

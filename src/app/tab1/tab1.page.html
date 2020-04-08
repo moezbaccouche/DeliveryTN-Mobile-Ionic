@@ -4,7 +4,11 @@
       Accueil
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" routerLink="/cart">
+      <ion-button
+        fill="clear"
+        style="--color: rgb(117, 39, 46);"
+        routerLink="/cart"
+      >
         <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -60,7 +64,11 @@
             </ion-row>
             <ion-row class="ion-justify-content-end">
               <ion-col size="6" style="text-align: end;">
-                <ion-button fill="outline" size="small">
+                <ion-button
+                  fill="outline"
+                  size="small"
+                  (click)="presentPopoverAmount(product.id)"
+                >
                   <ion-icon name="basket-outline" slot="icon-only"></ion-icon>
                 </ion-button>
               </ion-col>

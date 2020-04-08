@@ -35,7 +35,7 @@ export class ProductsByCategoryPage implements OnInit, OnDestroy {
         .catch((error) => console.error(error));
     });
 
-    //Load products with the selected category
+    //Load products having as category the selected category
     this.productsService
       .getProductsByCategoryId(this.categoryId)
       .then((data) => {

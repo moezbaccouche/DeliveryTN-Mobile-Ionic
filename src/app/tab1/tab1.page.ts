@@ -3,6 +3,8 @@ import { ProductsService } from "../services/products.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PopoverController } from "@ionic/angular";
 import { PopoverOrderbyComponent } from "../menus/popover-orderby/popover-orderby.component";
+import { PopoverAmountComponent } from "../menus/popover-amount/popover-amount.component";
+import { ToastController } from "@ionic/angular";
 
 @Component({
   selector: "app-tab1",
@@ -15,7 +17,8 @@ export class Tab1Page {
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +78,35 @@ export class Tab1Page {
     });
 
     return await popover.present();
+  }
+
+  async presentPopoverAmount(id: any) {
+    const popoverAmount = await this.popoverController.create({
+      component: PopoverAmountComponent,
+      translucent: true,
+      componentProps: {
+        onclick: (productAmount) => {
+          //Add the article to the Order table in the DB with its ID, current user ID and the amount
+          //
+          //
+          //
+
+          popoverAmount.dismiss();
+          this.presentToast("Article ajouté au panier !");
+        },
+      },
+    });
+
+    return await popoverAmount.present();
+  }
+
+  async presentToast(msg: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      cssClass: "toastCart",
+      color: "success",
+    });
+    toast.present();
   }
 }
