@@ -33,37 +33,77 @@
     </div>
   </div>
 
-  
-  <ion-item>
-    <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
-    <ion-input type="text"  value="Moujahed"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Prénom</ion-label>
-    <ion-input type="text" value="Mehdi "> </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Adresse</ion-label>
-    <ion-input type="text" ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Email</ion-label>
-    <ion-input type="email"  ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Phone</ion-label>
-    <ion-input type="tel" ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Password</ion-label>
-    <ion-input type="password"  ></ion-input>
-  </ion-item>
+  <ion-grid class="input-grid">
+    <ion-row>
+      <ion-col>
+        <div>
+          <ion-item>
+            <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
+            <ion-input type="text"  value="Moujahed"></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col> 
+        <div>
+          <ion-item>
+            <ion-label position="stacked" clear-on-edit="true">Prénom</ion-label>
+            <ion-input type="text"  value="Mehdi"></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+    
 
- 
-    <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div>
+          <ion-item>
+            <ion-label position="stacked">Télephone</ion-label>
+            <ion-input type="tel" value="55287186"></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-item>
+            <ion-label position="stacked" clear-on-edit="true">Mot de passe</ion-label>
+            <ion-input type="password"  value="Mehdi"></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <div>
+          <ion-item>
+            <ion-label position="stacked">E-mail</ion-label>
+            <ion-input type="email" value="moujahedmehdi@gmail.com" ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-item>
+            <ion-label position="stacked" clear-on-edit="true">Adresse</ion-label>
+            
+            <ion-input type="text"   value="9 Avril Bohsina Sousse"> </ion-input>
+              <ion-button  slot="end">
+                <ion-icon name="navigate-outline"></ion-icon>            
+                </ion-button> 
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+    <ion-grid class="button-grid">
       <ion-row>
           <ion-col size-sm="6" size="6" class="ion-text-center">
-              <ion-button expand="block" class="ion-text-wrap min-max-width">Enregistrer</ion-button>
+              <ion-button expand="block" class="ion-text-wrap min-max-width"> Enregistrer 
+                
+              </ion-button>
+              
           </ion-col>
   
           <ion-col size-sm="6" size="6" class="ion-text-center">
@@ -71,4 +111,5 @@
           </ion-col>
       </ion-row>
   </ion-grid>
+  
 </ion-content>
