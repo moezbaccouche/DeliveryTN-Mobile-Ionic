@@ -11,6 +11,7 @@ import { AppComponent } from "./app.component";
 import { PopoverOrderbyComponent } from "./menus/popover-orderby/popover-orderby.component";
 import { PopoverAmountComponent } from "./menus/popover-amount/popover-amount.component";
 import { Tab1Page } from "./tab1/tab1.page";
+import { ProfileImageModalPageModule } from './profile-image-modal/profile-image-modal.module';
 
 @NgModule({
   declarations: [AppComponent, PopoverOrderbyComponent, PopoverAmountComponent],
@@ -21,6 +22,7 @@ import { Tab1Page } from "./tab1/tab1.page";
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    ProfileImageModalPageModule
   ],
   providers: [
     HttpClientModule,

@@ -18,7 +18,11 @@ const routes: Routes = [
       import("./pages/products-by-category/products-by-category.module").then(
         (m) => m.ProductsByCategoryPageModule
       ),
+  },  {
+    path: 'profile-image-modal',
+    loadChildren: () => import('./profile-image-modal/profile-image-modal.module').then( m => m.ProfileImageModalPageModule)
   },
+
 ];
 @NgModule({
   imports: [

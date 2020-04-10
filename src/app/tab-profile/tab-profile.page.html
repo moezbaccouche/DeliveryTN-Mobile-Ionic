@@ -27,7 +27,7 @@
     <div class="border-blue">
       <div class="border-white">
         <div class="img-box">
-          <img src="../../assets/me.png">
+          <img src="../../assets/{{nomImage}}.png" tappable (click)="openPreview(nomImage)">
         </div>
       </div>
     </div>
@@ -67,7 +67,8 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Mot de passe</ion-label>
-            <ion-input type="password"  value="Mehdi"></ion-input>
+            <ion-input [type]="passwordType"  value="Mehdi"></ion-input>
+            <ion-icon [name]="iconType" slot="end" (click)='HidePassword()'></ion-icon>         
           </ion-item>
         </div>
       </ion-col>
@@ -86,11 +87,8 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Adresse</ion-label>
-            
             <ion-input type="text"   value="9 Avril Bohsina Sousse"> </ion-input>
-              <ion-button  slot="end">
-                <ion-icon name="navigate-outline"></ion-icon>            
-                </ion-button> 
+                <ion-icon name="navigate-outline" slot="end" ></ion-icon>            
           </ion-item>
         </div>
       </ion-col>
