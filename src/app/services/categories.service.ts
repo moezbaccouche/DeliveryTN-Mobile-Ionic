@@ -7,7 +7,7 @@ import { from } from "rxjs";
   providedIn: "root",
 })
 export class CategoriesService {
-  baseUrl = "http://192.168.1.3:51044/delivery-app/";
+  baseUrl = "http://192.168.1.4:51044/delivery-app/";
   constructor(private http: HttpClient) {}
 
   getAllCategories() {
