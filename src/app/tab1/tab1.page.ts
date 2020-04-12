@@ -91,6 +91,8 @@ export class Tab1Page {
           //
           //
 
+          this.productsService.addToCart(id, 1, productAmount.toString());
+
           popoverAmount.dismiss();
           this.presentToast("Article ajouté au panier !");
         },

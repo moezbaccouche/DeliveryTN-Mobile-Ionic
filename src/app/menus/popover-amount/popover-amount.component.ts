@@ -16,7 +16,6 @@ export class PopoverAmountComponent implements OnInit {
   ngOnInit() {}
 
   addToCart() {
-    console.log("Quantité: " + this.productAmount);
     this.onclick(this.productAmount);
   }
 

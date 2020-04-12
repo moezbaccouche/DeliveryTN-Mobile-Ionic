@@ -40,4 +40,27 @@ export class ProductsService {
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
+
+  addToCart(prodId: number, cliId: number, prodAmount: string) {
+    return fetch(`${this.baseUrl}cart/add`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: prodId,
+        clientId: cliId,
+        amount: prodAmount,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
+
+  getCartProducts(userId: number) {
+    return fetch(`${this.baseUrl}cart/products/clients/${userId}`)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
 }

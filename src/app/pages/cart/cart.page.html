@@ -13,19 +13,19 @@
 </ion-header>
 
 <ion-content>
-  <div style="margin-top: 10px;">
+  <div style="margin-top: 10px;" *ngFor="let category of cartCategories">
     <ion-item-divider>
       <ion-label class="dividerLabels">
-        <strong>Boissons</strong>
+        <strong>{{ category.name }}</strong>
       </ion-label>
     </ion-item-divider>
-    <div>
-      <ion-grid>
+    <div *ngFor="let product of cartProducts">
+      <ion-grid *ngIf="product.category == category.name">
         <ion-row class="ion-float-left">
           <ion-col size="5">
             <img
-              src="../../../assets/categories-pictures/i88542-entretien.jpeg"
-              alt=""
+              [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,'+product.imageBase64)"
+              alt="Img"
             />
           </ion-col>
           <ion-col size="6">
@@ -33,14 +33,14 @@
               <ion-row>
                 <ion-col class="noPadding"
                   ><span style="font-size: 12px;"
-                    >Bouteille Coca-Cola</span
+                    >{{product.name}}</span
                   ></ion-col
                 >
               </ion-row>
               <ion-row>
                 <ion-col class="noPadding"
                   ><span style="font-size: 12px;"
-                    ><strong>2.5</strong> DT</span
+                    ><strong>{{product.totalProductPrice}}</strong> DT</span
                   ></ion-col
                 >
               </ion-row>
@@ -56,135 +56,7 @@
                   <ion-input
                     class="noPadding"
                     style="font-size: smaller; font-weight: bold;"
-                    value="1"
-                  ></ion-input>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                    color="primary"
-                    button
-                    name="add-outline"
-                  ></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-col>
-          <ion-col size="1">
-            <ion-icon
-              color="danger"
-              button
-              name="remove-circle-outline"
-            ></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-    <div>
-      <ion-grid>
-        <ion-row class="ion-float-left">
-          <ion-col size="5">
-            <img
-              src="../../../assets/categories-pictures/i88542-entretien.jpeg"
-              alt=""
-            />
-          </ion-col>
-          <ion-col size="6">
-            <ion-grid class="noPadding">
-              <ion-row>
-                <ion-col class="noPadding"
-                  ><span style="font-size: 12px;"
-                    >Bouteille Fanta</span
-                  ></ion-col
-                >
-              </ion-row>
-              <ion-row>
-                <ion-col class="noPadding"
-                  ><span style="font-size: 12px;"
-                    ><strong>2.5</strong> DT</span
-                  ></ion-col
-                >
-              </ion-row>
-              <ion-row class="ion-align-items-center">
-                <ion-col size="2" class="noPadding">
-                  <ion-icon
-                    color="danger"
-                    button
-                    name="remove-outline"
-                  ></ion-icon>
-                </ion-col>
-                <ion-col size="3" class="noPadding">
-                  <ion-input
-                    class="noPadding"
-                    style="font-size: smaller; font-weight: bold;"
-                    value="1"
-                  ></ion-input>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                    color="primary"
-                    button
-                    name="add-outline"
-                  ></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-col>
-          <ion-col size="1">
-            <ion-icon
-              color="danger"
-              button
-              name="remove-circle-outline"
-            ></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </div>
-
-  <div style="margin-top: 10px;">
-    <ion-item-divider>
-      <ion-label class="dividerLabels">
-        <strong>Charcuteries</strong>
-      </ion-label>
-    </ion-item-divider>
-    <div>
-      <ion-grid>
-        <ion-row class="ion-float-left">
-          <ion-col size="5">
-            <img
-              src="../../../assets/categories-pictures/i88542-entretien.jpeg"
-              alt=""
-            />
-          </ion-col>
-          <ion-col size="6">
-            <ion-grid class="noPadding">
-              <ion-row>
-                <ion-col class="noPadding"
-                  ><span style="font-size: 12px;"
-                    >Bouteille Coca-Cola</span
-                  ></ion-col
-                >
-              </ion-row>
-              <ion-row>
-                <ion-col class="noPadding"
-                  ><span style="font-size: 12px;"
-                    ><strong>2.5</strong> DT</span
-                  ></ion-col
-                >
-              </ion-row>
-              <ion-row class="ion-align-items-center">
-                <ion-col size="2" class="noPadding">
-                  <ion-icon
-                    color="danger"
-                    button
-                    name="remove-outline"
-                  ></ion-icon>
-                </ion-col>
-                <ion-col size="3" class="noPadding">
-                  <ion-input
-                    class="noPadding"
-                    style="font-size: smaller; font-weight: bold;"
-                    value="1"
+                    value="{{product.amount}}"
                   ></ion-input>
                 </ion-col>
                 <ion-col size="1">
