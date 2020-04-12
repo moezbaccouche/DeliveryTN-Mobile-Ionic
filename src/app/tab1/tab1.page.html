@@ -17,23 +17,35 @@
 
 <ion-content [fullscreen]="true">
   <ion-row>
-    <ion-col size="9">
+    <ion-col size="10">
       <ion-searchbar
         [(ngModel)]="searchTerm"
-        placeholder="Rechercher produit"
+        placeholder="Recherche"
         (ionChange)="searchProduct()"
       ></ion-searchbar>
     </ion-col>
-    <ion-col size="3">
-      <ion-button fill="clear" (click)="presentPopoverOrderBy()">
-        <ion-icon name="options-outline" slot="icon-only"></ion-icon>
-      </ion-button>
+    <ion-col size="2" class="ion-align-self-center">
+      <ion-icon
+        style="font-size: 28px;"
+        color="primary"
+        button
+        name="options-outline"
+        (click)="presentPopoverOrderBy()"
+      ></ion-icon>
     </ion-col>
   </ion-row>
 
   <ion-card *ngFor="let product of allProducts">
     <ion-grid>
       <ion-row>
+        <ion-col size="1">
+          <ion-icon
+            style="font-size: 23px;"
+            button
+            color="danger"
+            name="heart-outline"
+          ></ion-icon>
+        </ion-col>
         <ion-col size="6" class="ion-float-left">
           <div>
             <img
@@ -43,10 +55,7 @@
             />
           </div>
         </ion-col>
-
-        <!-- Add another col for the heart icon -->
-
-        <ion-col size="6" class="ion-float-right">
+        <ion-col size="5" class="ion-float-right">
           <ion-grid>
             <ion-row>
               <ion-col>
@@ -66,7 +75,7 @@
               </ion-col>
             </ion-row>
             <ion-row class="ion-justify-content-end">
-              <ion-col size="6" style="text-align: end;">
+              <ion-col size="6" style="margin-right: 5px;">
                 <ion-button
                   fill="outline"
                   size="small"
