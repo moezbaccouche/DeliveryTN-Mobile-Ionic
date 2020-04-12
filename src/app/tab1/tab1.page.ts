@@ -14,6 +14,7 @@ import { ToastController } from "@ionic/angular";
 export class Tab1Page {
   allProducts: any;
   searchTerm: string;
+  userId = 1;
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
@@ -61,6 +62,13 @@ export class Tab1Page {
     this.productsService
       .getAllSearchedProducts(this.searchTerm)
       .then((data) => (this.allProducts = data))
+      .catch((error) => console.error(error));
+  }
+
+  reactToProduct(productId: any) {
+    this.productsService
+      .likeProduct(productId, this.userId)
+      .then((data) => console.log(data))
       .catch((error) => console.error(error));
   }
 

@@ -43,7 +43,8 @@
             style="font-size: 23px;"
             button
             color="danger"
-            name="heart-outline"
+            [name]="product.isFavorite ? 'heart' : 'heart-outline'"
+            (click)="reactToProduct(product.id)"
           ></ion-icon>
         </ion-col>
         <ion-col size="6" class="ion-float-left">

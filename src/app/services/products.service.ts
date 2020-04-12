@@ -12,7 +12,7 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
 
   getAllProducts() {
-    return fetch(`${this.baseUrl}products`)
+    return fetch(`${this.baseUrl}products?clientId=1`)
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
@@ -60,6 +60,44 @@ export class ProductsService {
 
   getCartProducts(userId: number) {
     return fetch(`${this.baseUrl}cart/products/clients/${userId}`)
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
+
+  likeProduct(prodId: number, cliId: number) {
+    return fetch(`${this.baseUrl}products/like-product`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: prodId,
+        clientId: cliId,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
+
+  dislikeProduct(prodId: number, cliId: number) {
+    return fetch(`${this.baseUrl}products/dislike-product`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: prodId,
+        clientId: cliId,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
+
+  getFavoriteProducts(clientId: number) {
+    return fetch(`${this.baseUrl}products/favorites/clients/${clientId}`)
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
