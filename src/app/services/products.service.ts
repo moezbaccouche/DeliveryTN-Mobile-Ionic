@@ -58,6 +58,22 @@ export class ProductsService {
       .catch((error) => console.error(error));
   }
 
+  deleteProductFromCart(prodId: number, cliId: number) {
+    return fetch(`${this.baseUrl}cart/delete`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: prodId,
+        clientId: cliId,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error));
+  }
+
   getCartProducts(userId: number) {
     return fetch(`${this.baseUrl}cart/products/clients/${userId}`)
       .then((response) => response.json())

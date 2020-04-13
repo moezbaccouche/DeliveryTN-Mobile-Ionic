@@ -11,18 +11,28 @@ import { AppComponent } from "./app.component";
 import { PopoverOrderbyComponent } from "./menus/popover-orderby/popover-orderby.component";
 import { PopoverAmountComponent } from "./menus/popover-amount/popover-amount.component";
 import { Tab1Page } from "./tab1/tab1.page";
-import { ProfileImageModalPageModule } from './profile-image-modal/profile-image-modal.module';
+import { ProfileImageModalPageModule } from "./profile-image-modal/profile-image-modal.module";
+import { PopoverConfirmDeleteComponent } from "./menus/popover-confirm-delete/popover-confirm-delete.component";
 
 @NgModule({
-  declarations: [AppComponent, PopoverOrderbyComponent, PopoverAmountComponent],
-  entryComponents: [PopoverOrderbyComponent, PopoverAmountComponent],
+  declarations: [
+    AppComponent,
+    PopoverOrderbyComponent,
+    PopoverAmountComponent,
+    PopoverConfirmDeleteComponent,
+  ],
+  entryComponents: [
+    PopoverOrderbyComponent,
+    PopoverAmountComponent,
+    PopoverConfirmDeleteComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
-    ProfileImageModalPageModule
+    ProfileImageModalPageModule,
   ],
   providers: [
     HttpClientModule,

@@ -9,7 +9,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class TabFavoritesPage implements OnInit {
   favoriteProducts = [];
-  clientId = 1;
+  nbFavoriteProducts = 0;
+  clientId = 2;
   constructor(
     private productsService: ProductsService,
     private domSanitizer: DomSanitizer
@@ -18,7 +19,13 @@ export class TabFavoritesPage implements OnInit {
   ngOnInit() {
     this.productsService
       .getFavoriteProducts(this.clientId)
-      .then((data) => (this.favoriteProducts = data))
+      .then(
+        (data) => (
+          (this.favoriteProducts = data),
+          (this.nbFavoriteProducts = this.favoriteProducts.length),
+          console.log("NOMBRE: " + this.nbFavoriteProducts)
+        )
+      )
       .catch((error) => console.error(error));
   }
 }

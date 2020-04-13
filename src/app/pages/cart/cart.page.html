@@ -74,6 +74,7 @@
               color="danger"
               button
               name="remove-circle-outline"
+              (click)="presentPopoverConfirmDelete(product.id)"
             ></ion-icon>
           </ion-col>
         </ion-row>
@@ -93,12 +94,14 @@
             <ion-grid class="noPadding">
               <ion-row>
                 <ion-col class="noPadding" size="12">
-                  <span class="textInfos">Route de sfax Borjine</span>
+                  <span class="textInfos">{{clientAddress}}</span>
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col class="noPadding" size="12">
-                  <span class="textInfos">Borjine, Sousse</span>
+                  <span class="textInfos"
+                    >{{clientCity}}, {{clientZipCode}}</span
+                  >
                 </ion-col>
               </ion-row>
               <ion-row>

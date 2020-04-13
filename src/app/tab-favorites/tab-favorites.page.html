@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="nbFavoriteProducts != 0;else emptyFavorite">
   <ion-card *ngFor="let product of favoriteProducts">
     <ion-grid>
       <ion-row>
@@ -62,3 +62,24 @@
     </ion-grid>
   </ion-card>
 </ion-content>
+
+<ng-template #emptyFavorite>
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" style="text-align: center; margin-top: 40%;">
+          <img
+            width="100"
+            height="100"
+            src="../../assets/logos/empty-transparent.png"
+            alt="EmptyList"
+          />
+          <br />
+          <span style="color: #b6b6b6; font-style: italic;"
+            >Aucun produit favoris !</span
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ng-template>
