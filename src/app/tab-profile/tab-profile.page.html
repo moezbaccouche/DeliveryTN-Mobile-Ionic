@@ -1,11 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="primary" (click)="presentPopover()">
+        <ion-icon name="ellipsis-horizontal-outline"></ion-icon>     
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content> 
   <div class="header">
+  
     <h2>Mehdi Moujahed</h2>
 
     <div class="space-between">
@@ -39,7 +45,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
-            <ion-input type="text"  value="Moujahed"></ion-input>
+            <ion-input type="text"  value="Moujahed" [readonly]="readOnly"></ion-input>
           </ion-item>
         </div>
       </ion-col>
@@ -47,7 +53,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Prénom</ion-label>
-            <ion-input type="text"  value="Mehdi"></ion-input>
+            <ion-input type="text"  value="Mehdi" [readonly]="readOnly"></ion-input>
           </ion-item>
         </div>
       </ion-col>
@@ -59,7 +65,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked">Télephone</ion-label>
-            <ion-input type="tel" value="55287186"></ion-input>
+            <ion-input type="tel" value="55287186" [readonly]="readOnly"></ion-input>
           </ion-item>
         </div>
       </ion-col>
@@ -67,7 +73,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Mot de passe</ion-label>
-            <ion-input [type]="passwordType"  value="Mehdi"></ion-input>
+            <ion-input [type]="passwordType"  value="Mehdi" [readonly]="readOnly"></ion-input>
             <ion-icon [name]="iconType" slot="end" (click)='HidePassword()'></ion-icon>         
           </ion-item>
         </div>
@@ -79,7 +85,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked">E-mail</ion-label>
-            <ion-input type="email" value="moujahedmehdi@gmail.com" ></ion-input>
+            <ion-input type="email" value="moujahedmehdi@gmail.com" [readonly]="readOnly"></ion-input>
           </ion-item>
         </div>
       </ion-col>
@@ -87,7 +93,7 @@
         <div>
           <ion-item>
             <ion-label position="stacked" clear-on-edit="true">Adresse</ion-label>
-            <ion-input type="text"   value="9 Avril Bohsina Sousse"> </ion-input>
+            <ion-input type="text"   value="9 Avril Bohsina Sousse" [readonly]="readOnly"> </ion-input>
                 <ion-icon name="navigate-outline" slot="end" ></ion-icon>            
           </ion-item>
         </div>
@@ -95,19 +101,11 @@
     </ion-row>
   </ion-grid>
 
-    <ion-grid class="button-grid">
-      <ion-row>
-          <ion-col size-sm="6" size="6" class="ion-text-center">
-              <ion-button expand="block" class="ion-text-wrap min-max-width"> Enregistrer 
-                
-              </ion-button>
-              
-          </ion-col>
   
-          <ion-col size-sm="6" size="6" class="ion-text-center">
-              <ion-button expand="block" class="ion-text-wrap min-max-width">Annuler</ion-button>
-          </ion-col>
-      </ion-row>
-  </ion-grid>
+       <ion-button expand="block" class="button" shape="round" [disabled]="ButtonDisabled" > Enregistrer 
+        <ion-icon name="save-outline" slot="end"></ion-icon>
+      </ion-button>
+              
+    
   
 </ion-content>

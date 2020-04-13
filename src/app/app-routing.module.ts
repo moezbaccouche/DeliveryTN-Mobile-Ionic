@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'profile-image-modal',
     loadChildren: () => import('./profile-image-modal/profile-image-modal.module').then( m => m.ProfileImageModalPageModule)
   },
+  {
+    path: 'popover-component',
+    loadChildren: () => import('./popover-component/popover-component.module').then( m => m.PopoverComponentPageModule)
+  },
 
 ];
 @NgModule({

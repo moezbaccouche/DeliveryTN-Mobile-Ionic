@@ -13,6 +13,7 @@ import { PopoverAmountComponent } from "./menus/popover-amount/popover-amount.co
 import { Tab1Page } from "./tab1/tab1.page";
 import { ProfileImageModalPageModule } from "./profile-image-modal/profile-image-modal.module";
 import { PopoverConfirmDeleteComponent } from "./menus/popover-confirm-delete/popover-confirm-delete.component";
+import { PopoverComponentPageModule } from './popover-component/popover-component.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PopoverConfirmDeleteComponent } from "./menus/popover-confirm-delete/po
     AppRoutingModule,
     FormsModule,
     ProfileImageModalPageModule,
+    PopoverComponentPageModule,
   ],
   providers: [
     HttpClientModule,

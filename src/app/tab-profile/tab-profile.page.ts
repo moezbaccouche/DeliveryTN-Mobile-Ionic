@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { ProfileImageModalPage } from '../profile-image-modal/profile-image-modal.page';
+import { PopoverComponentPage } from '../popover-component/popover-component.page';
 
 @Component({
   selector: 'app-tab-profile',
@@ -12,13 +13,48 @@ export class TabProfilePage implements OnInit {
   passwordType : string = 'password';
   iconType : string = 'eye-off-outline';
   passwordShown : boolean = false;
+  ButtonDisabled : boolean ;
+  readOnly : boolean ;
 
   nomImage : string = 'me';
 
-  constructor(private modalController: ModalController) { 
-
+  constructor(private modalController: ModalController, private popoverController: PopoverController) {
+    this.ButtonDisabled=true;
+    this.readOnly=true;
+   }
+  
+  ngOnInit() {
+  
   }
 
+  ionViewWillLeave() {
+    this.ButtonDisabled=true;
+    this.readOnly=true;
+  }
+  
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponentPage,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: (test) => {
+          if (test==1) {
+            this.readOnly=false;
+            this.ButtonDisabled=false;
+          } else if (test==2){
+            console.log("changer image");
+          } else {
+            console.log("déconnexion");
+          }
+          popover.dismiss();
+        },
+      },
+    });
+    return await popover.present();
+  }
+
+ 
   openPreview(img) {
     this.modalController.create({
       component: ProfileImageModalPage,
@@ -38,9 +74,9 @@ export class TabProfilePage implements OnInit {
       this.passwordType='text';
       this.iconType='eye-outline';
     }
+    
   }
 
-  ngOnInit() {
-  }
+ 
 
 }
