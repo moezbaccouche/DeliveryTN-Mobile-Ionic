@@ -27,12 +27,9 @@ export class ProductsByCategoryPage implements OnInit, OnDestroy {
       this.categoryId = +params["id"];
 
       //Load category name
-      this.categoriesService
-        .getCategoryById(this.categoryId)
-        .then((data) => {
-          this.categoryName = data.name;
-        })
-        .catch((error) => console.error(error));
+      this.categoryName = this.categoriesService.getCategoryByIdFromApi(
+        this.categoryId
+      ).name;
     });
 
     //Load products having as category the selected category

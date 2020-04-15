@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { CategoriesService } from "../services/categories.service";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Subscription } from "rxjs";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-tab2",
@@ -8,35 +10,39 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["tab2.page.scss"],
 })
 export class Tab2Page {
-  private allCategories: any;
+  CategorySubscription: Subscription;
+
+  private allCategories: any[];
   private isLoading = true;
   private searchTerm: string;
   constructor(
     private categoriesService: CategoriesService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit(): void {
-    this._loadAllCategories();
+    this._loadAllCategoriesFromApi();
+    this.CategorySubscription = this.categoriesService.categorySubject.subscribe(
+      (categories: any[]) => {
+        this.allCategories = categories;
+      }
+    );
+    this.categoriesService.emitCategorySubject();
   }
 
-  _loadAllCategories() {
-    this.categoriesService
-      .getAllCategories()
-      .then((data) => {
-        this.allCategories = data;
+  _loadAllCategoriesFromApi() {
+    this.categoriesService.getAllCategoriesFromApi().then(
+      () => {
         this.isLoading = false;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.isLoading = true;
-      });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   searchCategory() {
-    this.categoriesService
-      .searchCategories(this.searchTerm)
-      .then((data) => (this.allCategories = data))
-      .catch((error) => console.error(error));
+    this.categoriesService.searchCategoriesFromApi(this.searchTerm);
   }
 }

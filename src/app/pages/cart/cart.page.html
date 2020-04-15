@@ -5,14 +5,19 @@
     </ion-buttons>
     <ion-title>Panier</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" color="danger">
+      <ion-button
+        fill="clear"
+        color="danger"
+        *ngIf="cartProducts.length != 0;"
+        (click)="presentPopoverConfirmEmptyCart()"
+      >
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="cartProducts.length != 0; else emptyCart">
   <div style="margin-top: 10px;" *ngFor="let category of cartCategories">
     <ion-item-divider>
       <ion-label class="dividerLabels">
@@ -74,7 +79,7 @@
               color="danger"
               button
               name="remove-circle-outline"
-              (click)="presentPopoverConfirmDelete(product.id)"
+              (click)="presentPopoverConfirmDelete(product)"
             ></ion-icon>
           </ion-col>
         </ion-row>
@@ -163,3 +168,24 @@
 
   <ion-button class="btOrder" expand="block">Commander</ion-button>
 </ion-content>
+
+<ng-template #emptyCart>
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" style="text-align: center; margin-top: 40%;">
+          <img
+            width="100"
+            height="100"
+            src="../../assets/logos/empty-transparent.png"
+            alt="EmptyList"
+          />
+          <br />
+          <span style="color: #b6b6b6; font-style: italic;"
+            >Votre panier est encore vide !</span
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ng-template>

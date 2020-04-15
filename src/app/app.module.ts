@@ -14,6 +14,9 @@ import { Tab1Page } from "./tab1/tab1.page";
 import { ProfileImageModalPageModule } from "./profile-image-modal/profile-image-modal.module";
 import { PopoverConfirmDeleteComponent } from "./menus/popover-confirm-delete/popover-confirm-delete.component";
 import { PopoverComponentPageModule } from './popover-component/popover-component.module';
+import { ProductsService } from "./services/products.service";
+import { CategoriesService } from "./services/categories.service";
+import { PopoverConfirmEmptyCartComponent } from "./menus/popover-confirm-empty-cart/popover-confirm-empty-cart.component";
 
 @NgModule({
   declarations: [
@@ -21,11 +24,13 @@ import { PopoverComponentPageModule } from './popover-component/popover-componen
     PopoverOrderbyComponent,
     PopoverAmountComponent,
     PopoverConfirmDeleteComponent,
+    PopoverConfirmEmptyCartComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
     PopoverAmountComponent,
     PopoverConfirmDeleteComponent,
+    PopoverConfirmEmptyCartComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,8 @@ import { PopoverComponentPageModule } from './popover-component/popover-componen
     StatusBar,
     SplashScreen,
     Tab1Page,
+    ProductsService,
+    CategoriesService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

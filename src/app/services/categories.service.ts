@@ -1,30 +1,60 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { from } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
 export class CategoriesService {
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  categories: any[] = [];
+  categorySubject = new Subject<any[]>();
+
+  baseUrl = "http://192.168.1.5:51044/delivery-app/";
   constructor(private http: HttpClient) {}
 
-  getAllCategories() {
-    return fetch(`${this.baseUrl}categories`)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
+  emitCategorySubject() {
+    this.categorySubject.next(this.categories.slice());
   }
 
-  searchCategories(query) {
-    return fetch(`${this.baseUrl}categories?searchQuery=${query}`)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
+  getAllCategoriesFromApi() {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}categories`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.categories = data;
+          this.emitCategorySubject();
+          resolve("Catégories récupérées avec succès !");
+        }),
+        (error) => {
+          reject(error);
+        };
+    });
   }
 
-  getCategoryById(id: number) {
-    return fetch(`${this.baseUrl}categories/${id}`)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
+  searchCategoriesFromApi(query: string) {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}categories?searchQuery=${query}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.categories = data;
+          this.emitCategorySubject();
+          resolve("Catégories récupérées avec succès !");
+        }),
+        (error) => {
+          reject(error);
+        };
+    });
+  }
+
+  getCategoryByIdFromApi(id: number) {
+    const category = this.categories.find((c) => {
+      return c.id === id;
+    });
+    return category;
   }
 }

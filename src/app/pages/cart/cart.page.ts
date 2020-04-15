@@ -3,6 +3,9 @@ import { ProductsService } from "../../services/products.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PopoverConfirmDeleteComponent } from "../../menus/popover-confirm-delete/popover-confirm-delete.component";
 import { PopoverController, ToastController } from "@ionic/angular";
+import { Subscription } from "rxjs";
+import { Product } from "src/app/models/product.model";
+import { PopoverConfirmEmptyCartComponent } from "src/app/menus/popover-confirm-empty-cart/popover-confirm-empty-cart.component";
 
 @Component({
   selector: "app-cart",
@@ -10,12 +13,16 @@ import { PopoverController, ToastController } from "@ionic/angular";
   styleUrls: ["./cart.page.scss"],
 })
 export class CartPage implements OnInit {
+  cartProductsSubscription: Subscription;
+  cartProductsCategoriesSubscription: Subscription;
+
   cartProducts = [];
   cartCategories = [];
+  clientInfos: any;
   clientAddress: any;
   clientCity: any;
   clientZipCode: any;
-  userId = 1;
+  userId = 2;
   constructor(
     private productsService: ProductsService,
     private domSanitizer: DomSanitizer,
@@ -24,24 +31,42 @@ export class CartPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getCartProducts();
+    this.getCartProductsFromApi();
+    this.cartProductsSubscription = this.productsService.cartProductSubject.subscribe(
+      (products: Product[]) => {
+        this.cartProducts = products;
+      }
+    );
+    this.productsService.emitCartProductsSubject();
+    this.cartProductsCategoriesSubscription = this.productsService.cartProductsCategoriesSubject.subscribe(
+      (categories: any[]) => {
+        this.cartCategories = categories;
+      }
+    );
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.cartProducts = [];
+  getCartProductsFromApi() {
+    this.productsService.getCartProductsFromApi(this.userId).then((data) => {
+      this.clientInfos = data["client"]["location"];
+      this.cartCategories = data["categories"];
+
+      this.clientCity = this.clientInfos.city;
+      this.clientZipCode = this.clientInfos.zipCode;
+      this.clientAddress = this.clientInfos.address;
+    });
   }
 
-  async presentPopoverConfirmDelete(id: any) {
+  emptyCart() {}
+
+  async presentPopoverConfirmDelete(product: any) {
     const popover = await this.popoverController.create({
       component: PopoverConfirmDeleteComponent,
-      event: id,
+      event: product,
       translucent: true,
       componentProps: {
         onclick: (answer) => {
           if (answer) {
-            this.deleteProduct(id, this.userId);
+            this.deleteProduct(product.id, this.userId, product.categoryId);
             this.presentToast("Article supprimé du panier !");
           }
           popover.dismiss();
@@ -52,11 +77,37 @@ export class CartPage implements OnInit {
     return await popover.present();
   }
 
-  deleteProduct(productId, clientId) {
-    this.productsService
-      .deleteProductFromCart(productId, clientId)
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+  async presentPopoverConfirmEmptyCart(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverConfirmEmptyCartComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: (answer) => {
+          if (answer) {
+            this.productsService.removeAllCartProducts(this.userId).then(
+              () => {
+                this.presentToast("Articles supprimés du panier !");
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+          }
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
+  }
+
+  deleteProduct(productId, clientId, categoryId) {
+    this.productsService.deleteProductFromCartApi(
+      productId,
+      clientId,
+      categoryId
+    );
   }
 
   async presentToast(msg: string) {
@@ -69,18 +120,7 @@ export class CartPage implements OnInit {
     toast.present();
   }
 
-  getCartProducts() {
-    this.productsService
-      .getCartProducts(this.userId)
-      .then(
-        (data) => (
-          (this.cartProducts = data.products),
-          (this.cartCategories = data.categories),
-          (this.clientAddress = data.client.location.address),
-          (this.clientCity = data.client.location.city),
-          (this.clientZipCode = data.client.location.zipCode)
-        )
-      )
-      .catch((error) => console.error(error));
+  ngOnDestroy(): void {
+    this.cartProductsSubscription.unsubscribe();
   }
 }

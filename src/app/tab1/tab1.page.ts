@@ -1,20 +1,24 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ProductsService } from "../services/products.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PopoverController } from "@ionic/angular";
 import { PopoverOrderbyComponent } from "../menus/popover-orderby/popover-orderby.component";
 import { PopoverAmountComponent } from "../menus/popover-amount/popover-amount.component";
 import { ToastController } from "@ionic/angular";
+import { Subscription } from "rxjs";
+import { Product } from "../models/product.model";
 
 @Component({
   selector: "app-tab1",
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"],
 })
-export class Tab1Page {
-  allProducts: any;
+export class Tab1Page implements OnInit, OnDestroy {
+  productsSubscription: Subscription;
+
+  allProducts: any[];
   searchTerm: string;
-  userId = 1;
+  userId = 2;
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
@@ -24,24 +28,35 @@ export class Tab1Page {
 
   ngOnInit(): void {
     this._loadAllProducts();
+    this.productsSubscription = this.productsService.productSubject.subscribe(
+      (products: Product[]) => {
+        this.allProducts = products;
+      }
+    );
+    this.productsService.emitProductsSubject();
   }
 
   _loadAllProducts() {
-    this.productsService.getAllProducts().then((data) => {
-      this.allProducts = data;
-    });
+    this.productsService.getProductsFromApi();
   }
 
   _loadProductsByPriceAsc() {
-    this.productsService.getAllProductsByPriceAsc().then((data) => {
-      this.allProducts = data;
-    });
+    this.productsService.getAllProductsByPriceAscFromApi();
   }
 
   _loadProductsByPriceDesc() {
-    this.productsService.getAllProductsByPriceDesc().then((data) => {
-      this.allProducts = data;
-    });
+    this.productsService.getAllProductsByPriceDescFromApi();
+  }
+
+  searchProduct() {
+    this.productsService.getAllSearchedProductsFromApi(this.searchTerm);
+  }
+
+  reactToProduct(productId: any) {
+    this.productsService
+      .likeProduct(productId, this.userId)
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   }
 
   _loadProductsByCriteria(criteria) {
@@ -56,20 +71,6 @@ export class Tab1Page {
         this._loadAllProducts();
         break;
     }
-  }
-
-  searchProduct() {
-    this.productsService
-      .getAllSearchedProducts(this.searchTerm)
-      .then((data) => (this.allProducts = data))
-      .catch((error) => console.error(error));
-  }
-
-  reactToProduct(productId: any) {
-    this.productsService
-      .likeProduct(productId, this.userId)
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
   }
 
   async presentPopoverOrderBy(ev: any) {
@@ -99,7 +100,11 @@ export class Tab1Page {
           //
           //
 
-          this.productsService.addToCart(id, 1, productAmount.toString());
+          this.productsService.addToCart(
+            id,
+            this.userId,
+            productAmount.toString()
+          );
 
           popoverAmount.dismiss();
           this.presentToast("Article ajouté au panier !");
@@ -118,5 +123,9 @@ export class Tab1Page {
       color: "success",
     });
     toast.present();
+  }
+
+  ngOnDestroy() {
+    this.productsSubscription.unsubscribe();
   }
 }
