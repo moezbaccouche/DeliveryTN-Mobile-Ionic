@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="nbFavoriteProducts != 0;else emptyFavorite">
+<ion-content *ngIf="favoriteProducts.length != 0;else emptyFavorite">
   <ion-card *ngFor="let product of favoriteProducts">
     <ion-grid>
       <ion-row>
@@ -14,7 +14,7 @@
             button
             color="danger"
             [name]="product.isFavorite ? 'heart' : 'heart-outline'"
-            (click)="reactToProduct(product.id)"
+            (click)="dislikeProduct(product.id)"
           ></ion-icon>
         </ion-col>
         <ion-col size="6" class="ion-float-left">

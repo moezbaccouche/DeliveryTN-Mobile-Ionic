@@ -6,6 +6,7 @@ export class Product {
     public price: number,
     public imageBase64: string,
     public unit: string,
-    public category: string
+    public category: string,
+    public isFavorite: boolean
   ) {}
 }

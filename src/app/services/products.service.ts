@@ -282,6 +282,20 @@ export class ProductsService {
       .then((response) => {
         let product = this.getProductById(prodId);
         this.favoriteProducts.push(product);
+
+        //The following lines are not done correctly
+        //The logic must be changed
+        //Setting "isLiked" inside the product object is a bad idea
+
+        const favProductAllProducts = this.allProducts.findIndex((p) => {
+          return p.id === prodId;
+        });
+
+        if (favProductAllProducts !== -1) {
+          this.allProducts[favProductAllProducts].isFavorite = true;
+        }
+        this.emitProductsSubject();
+
         this.emitFavoriteProductsSubject();
       })
       .catch((error) => console.error(error));
@@ -300,9 +314,27 @@ export class ProductsService {
       }),
     })
       .then((response) => {
-        this.favoriteProducts.filter((p) => {
-          p.id === prodId;
+        const prodIndex = this.favoriteProducts.findIndex((p) => {
+          return p.id === prodId;
         });
+
+        if (prodIndex !== -1) {
+          this.favoriteProducts.splice(prodIndex, 1);
+        }
+
+        //The following lines are not done correctly
+        //The logic must be changed
+        //Setting "isLiked" inside the product object is a bad idea
+
+        const favProductAllProducts = this.allProducts.findIndex((p) => {
+          return p.id === prodId;
+        });
+
+        if (favProductAllProducts !== -1) {
+          this.allProducts[favProductAllProducts].isFavorite = false;
+        }
+        this.emitProductsSubject();
+
         this.emitFavoriteProductsSubject();
       })
       .catch((error) => console.error(error));
@@ -315,8 +347,8 @@ export class ProductsService {
           return response.json();
         })
         .then((data) => {
-          this.cartProducts = data;
-          this.emitCartProductsSubject();
+          this.favoriteProducts = data;
+          this.emitFavoriteProductsSubject();
           resolve("Produits favoris récupérés avec succès !");
         }),
         (error) => {

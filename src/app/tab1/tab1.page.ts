@@ -15,10 +15,12 @@ import { Product } from "../models/product.model";
 })
 export class Tab1Page implements OnInit, OnDestroy {
   productsSubscription: Subscription;
+  favoriteProductsSubscription: Subscription;
 
-  allProducts: any[];
+  allProducts: Product[];
+  favoriteProducts: Product[];
   searchTerm: string;
-  userId = 2;
+  clientId = 1;
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
@@ -34,6 +36,13 @@ export class Tab1Page implements OnInit, OnDestroy {
       }
     );
     this.productsService.emitProductsSubject();
+
+    this.favoriteProductsSubscription = this.productsService.favoriteProductsSubject.subscribe(
+      (favoriteProducts: Product[]) => {
+        this.favoriteProducts = favoriteProducts;
+      }
+    );
+    this.productsService.emitFavoriteProductsSubject();
   }
 
   _loadAllProducts() {
@@ -53,10 +62,33 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   reactToProduct(productId: any) {
-    this.productsService
-      .likeProduct(productId, this.userId)
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    // Check if the selected product is already liked
+    const productIndex = this.allProducts.findIndex((p) => {
+      return p.id === productId;
+    });
+
+    const isLiked = this.allProducts[productIndex].isFavorite;
+    if (isLiked) {
+      //Dislike the product
+      this.productsService.dislikeProductApi(productId, this.clientId).then(
+        () => {
+          this.presentToast("Produit retiré aux favoris !", "success");
+        },
+        (error) => {
+          this.presentToast("Une erreur s'est produite !", "danger");
+        }
+      );
+    } else {
+      //Like the product
+      this.productsService.likeProductToApi(productId, this.clientId).then(
+        () => {
+          this.presentToast("Produit ajouté des favoris !", "success");
+        },
+        (error) => {
+          this.presentToast("Une erreur s'est produite !", "danger");
+        }
+      );
+    }
   }
 
   _loadProductsByCriteria(criteria) {
@@ -102,12 +134,12 @@ export class Tab1Page implements OnInit, OnDestroy {
 
           this.productsService.addToCart(
             id,
-            this.userId,
+            this.clientId,
             productAmount.toString()
           );
 
           popoverAmount.dismiss();
-          this.presentToast("Article ajouté au panier !");
+          this.presentToast("Article ajouté au panier !", "success");
         },
       },
     });
@@ -115,12 +147,12 @@ export class Tab1Page implements OnInit, OnDestroy {
     return await popoverAmount.present();
   }
 
-  async presentToast(msg: string) {
+  async presentToast(msg: string, type: string) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
       cssClass: "toastCart",
-      color: "success",
+      color: type,
     });
     toast.present();
   }

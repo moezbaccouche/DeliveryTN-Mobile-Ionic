@@ -56,8 +56,6 @@ export class CartPage implements OnInit {
     });
   }
 
-  emptyCart() {}
-
   async presentPopoverConfirmDelete(product: any) {
     const popover = await this.popoverController.create({
       component: PopoverConfirmDeleteComponent,
