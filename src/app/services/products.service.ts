@@ -9,12 +9,13 @@ import { Product } from "../models/product.model";
   providedIn: "root",
 })
 export class ProductsService {
-  baseUrl = "http://192.168.1.5:51044/delivery-app/";
+  baseUrl = "http://192.168.1.4:51044/delivery-app/";
 
   private allProducts: Product[] = [];
   private cartProducts: Product[] = [];
   private cartProductsCategories: any[] = [];
   private favoriteProducts: Product[] = [];
+
   productSubject = new Subject<Product[]>();
   cartProductSubject = new Subject<Product[]>();
   favoriteProductsSubject = new Subject<Product[]>();
@@ -27,46 +28,6 @@ export class ProductsService {
       .then((response) => response.json())
       .catch((error) => console.error(error));
   }
-
-  likeProduct(prodId: number, cliId: number) {
-    return fetch(`${this.baseUrl}products/like-product`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: prodId,
-        clientId: cliId,
-      }),
-    })
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-  }
-
-  dislikeProduct(prodId: number, cliId: number) {
-    return fetch(`${this.baseUrl}products/dislike-product`, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: prodId,
-        clientId: cliId,
-      }),
-    })
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-  }
-
-  getFavoriteProducts(clientId: number) {
-    return fetch(`${this.baseUrl}products/favorites/clients/${clientId}`)
-      .then((response) => response.json())
-      .catch((error) => console.error(error));
-  }
-
-  /*  Service with http API */
 
   emitProductsSubject() {
     this.productSubject.next(this.allProducts.slice());
@@ -184,7 +145,7 @@ export class ProductsService {
       .catch((error) => console.error(error));
   }
 
-  deleteProductFromCartApi(prodId: number, cliId: number, categoryId: string) {
+  deleteProductFromCart(prodId: number, cliId: number, categoryId: string) {
     return fetch(`${this.baseUrl}cart/delete`, {
       method: "post",
       headers: {
@@ -267,7 +228,7 @@ export class ProductsService {
 
   /* -------------------------   Favorite Products Methods ------------------------- */
 
-  likeProductToApi(prodId: number, cliId: number) {
+  likeProduct(prodId: number, cliId: number) {
     return fetch(`${this.baseUrl}products/like-product`, {
       method: "post",
       headers: {
@@ -301,7 +262,7 @@ export class ProductsService {
       .catch((error) => console.error(error));
   }
 
-  dislikeProductApi(prodId: number, cliId: number) {
+  dislikeProduct(prodId: number, cliId: number) {
     return fetch(`${this.baseUrl}products/dislike-product`, {
       method: "post",
       headers: {

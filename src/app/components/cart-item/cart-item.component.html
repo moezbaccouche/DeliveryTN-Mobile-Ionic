@@ -1,0 +1,47 @@
+<ion-row class="ion-float-left">
+  <ion-col size="5">
+    <img
+      [src]="
+        domSanitizer.bypassSecurityTrustUrl(
+          'data:image/jpg;base64,' + productImageBase64
+        )
+      "
+      alt="Img"
+    />
+  </ion-col>
+  <ion-col size="6">
+    <ion-grid class="noPadding">
+      <ion-row>
+        <ion-col class="noPadding"
+          ><span style="font-size: 12px;">{{ productName }}</span></ion-col
+        >
+      </ion-row>
+      <ion-row>
+        <ion-col class="noPadding"
+          ><span style="font-size: 12px;"
+            ><strong>{{ productTotalPrice }}</strong> DT</span
+          ></ion-col
+        >
+      </ion-row>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="2" class="noPadding">
+          <ion-icon color="danger" button name="remove-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="3" class="noPadding">
+          <ion-input
+            class="noPadding"
+            style="font-size: smaller; font-weight: bold;"
+            [(ngModel)]="productAmount"
+            value="{{ productAmount }}"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="1">
+          <ion-icon color="primary" button name="add-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-col>
+  <ion-col size="1">
+    <ion-icon color="danger" button name="remove-circle-outline"></ion-icon>
+  </ion-col>
+</ion-row>

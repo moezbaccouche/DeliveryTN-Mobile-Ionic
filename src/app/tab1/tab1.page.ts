@@ -70,9 +70,9 @@ export class Tab1Page implements OnInit, OnDestroy {
     const isLiked = this.allProducts[productIndex].isFavorite;
     if (isLiked) {
       //Dislike the product
-      this.productsService.dislikeProductApi(productId, this.clientId).then(
+      this.productsService.dislikeProduct(productId, this.clientId).then(
         () => {
-          this.presentToast("Produit retiré aux favoris !", "success");
+          this.presentToast("Produit retiré des favoris !", "success");
         },
         (error) => {
           this.presentToast("Une erreur s'est produite !", "danger");
@@ -80,9 +80,9 @@ export class Tab1Page implements OnInit, OnDestroy {
       );
     } else {
       //Like the product
-      this.productsService.likeProductToApi(productId, this.clientId).then(
+      this.productsService.likeProduct(productId, this.clientId).then(
         () => {
-          this.presentToast("Produit ajouté des favoris !", "success");
+          this.presentToast("Produit ajouté aux favoris !", "success");
         },
         (error) => {
           this.presentToast("Une erreur s'est produite !", "danger");

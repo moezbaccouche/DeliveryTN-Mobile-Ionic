@@ -47,7 +47,7 @@ export class TabFavoritesPage implements OnInit, OnDestroy {
   }
 
   dislikeProduct(id) {
-    this.productsService.dislikeProductApi(id, this.clientId).then(
+    this.productsService.dislikeProduct(id, this.clientId).then(
       () => {
         this.presentToast("Produit retiré des favoris !", "success");
       },

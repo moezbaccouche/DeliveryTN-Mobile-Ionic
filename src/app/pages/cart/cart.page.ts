@@ -6,6 +6,8 @@ import { PopoverController, ToastController } from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { Product } from "src/app/models/product.model";
 import { PopoverConfirmEmptyCartComponent } from "src/app/menus/popover-confirm-empty-cart/popover-confirm-empty-cart.component";
+import { EditDeliveryAddressPopoverComponent } from "src/app/menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
+import { OrdersService } from "../../services/orders.service";
 
 @Component({
   selector: "app-cart",
@@ -18,16 +20,25 @@ export class CartPage implements OnInit {
 
   cartProducts = [];
   cartCategories = [];
+
   clientInfos: any;
   clientAddress: any;
   clientCity: any;
   clientZipCode: any;
-  userId = 2;
+
+  productsPrice: number = 0;
+  deliveryPrice: number = 5;
+  totalPrice: number = 0;
+
+  orderIsPending = false;
+
+  userId = 1;
   constructor(
     private productsService: ProductsService,
     private domSanitizer: DomSanitizer,
     private popoverController: PopoverController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private ordersService: OrdersService
   ) {}
 
   ngOnInit() {
@@ -45,6 +56,22 @@ export class CartPage implements OnInit {
     );
   }
 
+  ionViewDidEnter() {
+    this.ordersService.getPendingOrder(this.userId).then(
+      (response) => {
+        if (response["nbOrders"] != 0) {
+          this.orderIsPending = true;
+        } else {
+          this.orderIsPending = false;
+        }
+      },
+      (error) => {
+        this.presentToast("Une erreur s'est produite", "danger");
+        console.log(error);
+      }
+    );
+  }
+
   getCartProductsFromApi() {
     this.productsService.getCartProductsFromApi(this.userId).then((data) => {
       this.clientInfos = data["client"]["location"];
@@ -53,7 +80,30 @@ export class CartPage implements OnInit {
       this.clientCity = this.clientInfos.city;
       this.clientZipCode = this.clientInfos.zipCode;
       this.clientAddress = this.clientInfos.address;
+
+      this.getCartProductsPrice();
     });
+  }
+
+  getCartProductsPrice() {
+    this.productsPrice = 0;
+    this.cartProducts.forEach((p) => {
+      this.productsPrice += p.totalProductPrice;
+      this.totalPrice = this.productsPrice + this.deliveryPrice;
+    });
+  }
+
+  makeOrder() {
+    this.ordersService.makeNewOrder(this.userId).then(
+      () => {
+        this.presentToast("Commande effectuée !", "success");
+        this.orderIsPending = true;
+      },
+      (error) => {
+        this.presentToast("Une erreur s'est produite !", "danger");
+        console.log(error);
+      }
+    );
   }
 
   async presentPopoverConfirmDelete(product: any) {
@@ -65,7 +115,7 @@ export class CartPage implements OnInit {
         onclick: (answer) => {
           if (answer) {
             this.deleteProduct(product.id, this.userId, product.categoryId);
-            this.presentToast("Article supprimé du panier !");
+            this.presentToast("Article supprimé du panier !", "success");
           }
           popover.dismiss();
         },
@@ -85,7 +135,7 @@ export class CartPage implements OnInit {
           if (answer) {
             this.productsService.removeAllCartProducts(this.userId).then(
               () => {
-                this.presentToast("Articles supprimés du panier !");
+                this.presentToast("Articles supprimés du panier !", "success");
               },
               (error) => {
                 console.error(error);
@@ -100,20 +150,35 @@ export class CartPage implements OnInit {
     return await popover.present();
   }
 
-  deleteProduct(productId, clientId, categoryId) {
-    this.productsService.deleteProductFromCartApi(
-      productId,
-      clientId,
-      categoryId
-    );
+  async presentPopoverEditAddress(ev: any) {
+    const popover = await this.popoverController.create({
+      component: EditDeliveryAddressPopoverComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
   }
 
-  async presentToast(msg: string) {
+  deleteProduct(productId, clientId, categoryId) {
+    this.productsService
+      .deleteProductFromCart(productId, clientId, categoryId)
+      .then(() => {
+        this.getCartProductsPrice();
+      });
+  }
+
+  async presentToast(msg: string, type: string) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
       cssClass: "toastCart",
-      color: "success",
+      color: type,
     });
     toast.present();
   }

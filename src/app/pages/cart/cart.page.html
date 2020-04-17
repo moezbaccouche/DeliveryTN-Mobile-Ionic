@@ -109,12 +109,17 @@
                   >
                 </ion-col>
               </ion-row>
+
+              <!-- Let the client choose another delivery address -->
+              <!-- This task will be done later -->
+
               <ion-row>
                 <ion-col size="12" class="noPadding"
                   ><ion-button
                     class="btChangeLocation"
                     size="small"
                     fill="clear"
+                    (click)="presentPopoverEditAddress()"
                     >Changer
                     <ion-icon
                       slot="end"
@@ -141,7 +146,7 @@
             <span class="priceTitles">Prix Article(s)</span>
           </ion-col>
           <ion-col size="6" style="text-align: right;">
-            <span class="priceTitles">30 DT</span>
+            <span class="priceTitles">{{ productsPrice }} DT</span>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -149,7 +154,7 @@
             <span class="priceTitles">Prix Livraison</span>
           </ion-col>
           <ion-col size="6" style="text-align: right;">
-            <span class="priceTitles">5 DT</span>
+            <span class="priceTitles">{{ deliveryPrice }} DT</span>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -158,7 +163,7 @@
           </ion-col>
           <ion-col size="6" style="text-align: right;">
             <span class="dividerLabels" style="font-size: large;"
-              ><strong>35 DT</strong></span
+              ><strong>{{ totalPrice }} DT</strong></span
             >
           </ion-col>
         </ion-row>
@@ -166,7 +171,24 @@
     </div>
   </div>
 
-  <ion-button class="btOrder" expand="block">Commander</ion-button>
+  <div *ngIf="!orderIsPending;else divPendingOrder">
+    <ion-button
+      [class.orderIsPending]="!orderIsPending"
+      class="btOrder"
+      expand="block"
+      (click)="makeOrder()"
+      >Commander</ion-button
+    >
+  </div>
+  <ng-template #divPendingOrder>
+    <ion-row>
+      <ion-col size="12" style="text-align: center;">
+        <span style="font-style: italic;"
+          >Votre commande est en cours de traitement</span
+        >
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>
 
 <ng-template #emptyCart>
