@@ -27,7 +27,6 @@ export class ClientsService {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           this.client = new Client(
             data.id,
             data.firstName,

@@ -54,7 +54,6 @@ export class ProductsService {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           this.allProducts = data;
           this.emitProductsSubject();
           resolve("Produits récupérés avec succès !");

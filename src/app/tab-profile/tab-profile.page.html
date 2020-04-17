@@ -132,11 +132,37 @@
               >
               <ion-input
                 type="text"
-                value="9 Avril Bohsina Sousse"
+                value="{{ client.location.address }}"
                 [readonly]="readOnly"
               >
               </ion-input>
               <ion-icon name="navigate-outline" slot="end"></ion-icon>
+            </ion-item>
+          </div>
+          <div>
+            <ion-item>
+              <ion-label position="stacked" clear-on-edit="true"
+                >Ville</ion-label
+              >
+              <ion-input
+                type="text"
+                value="{{ client.location.city }}"
+                [readonly]="readOnly"
+              >
+              </ion-input>
+            </ion-item>
+          </div>
+          <div>
+            <ion-item>
+              <ion-label position="stacked" clear-on-edit="true"
+                >Code Postal</ion-label
+              >
+              <ion-input
+                type="text"
+                value="{{ client.location.zipCode }}"
+                [readonly]="readOnly"
+              >
+              </ion-input>
             </ion-item>
           </div>
         </ion-col>
