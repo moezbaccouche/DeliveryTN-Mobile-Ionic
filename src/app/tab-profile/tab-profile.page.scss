@@ -1,63 +1,76 @@
-.header{
-    background-color: cornflowerblue;
-    height: 180px;
-    padding-top: 1px;
+.header {
+  background-color: cornflowerblue;
+  height: 180px;
+  padding-top: 1px;
 }
 
 .header h2 {
-    color: white;
-    font-weight: bold;
-    text-align: center;
+  color: white;
+  font-weight: bold;
+  text-align: center;
 }
 
-.space-between{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 10px 0 10px;
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 0 10px;
 }
 
-.followings{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.followings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .followings p {
-    color: white;
-    font-size: small;
-    margin: 8px 0px 0px 0px;
+  color: white;
+  font-size: small;
+  margin: 8px 0px 0px 0px;
 }
 
 .img-box {
-    height: 130px;
-    width: 130px;
-    border-radius: 50%;
-    overflow: hidden;
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.border-white{
-    border: 4px solid white;
-    border-radius: 50%;
-    width: fit-content;
+.border-white {
+  border: 4px solid white;
+  border-radius: 50%;
+  width: fit-content;
 }
 
-.border-blue{
-    border: 6px solid royalblue;
-    border-radius: 50%;
-    width: fit-content;
+.border-blue {
+  border: 6px solid royalblue;
+  border-radius: 50%;
+  width: fit-content;
 }
 
 .flex {
-    display: flex;
-    justify-content: center;
-    margin-top: -76px;
+  display: flex;
+  justify-content: center;
+  margin-top: -76px;
 }
 
-.input-grid{
-    padding-left: 0px
+.input-grid {
+  padding-left: 0px;
 }
 
-.button{
-    text-transform: none;
-    font-size: inherit;
+.button {
+  text-transform: none;
+  font-size: inherit;
+}
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
 }

@@ -19,6 +19,7 @@ import { CategoriesService } from "./services/categories.service";
 import { PopoverConfirmEmptyCartComponent } from "./menus/popover-confirm-empty-cart/popover-confirm-empty-cart.component";
 import { EditDeliveryAddressPopoverComponent } from "./menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
 import { OrdersService } from "./services/orders.service";
+import { ClientsService } from "./services/clients.service";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { OrdersService } from "./services/orders.service";
     ProductsService,
     CategoriesService,
     OrdersService,
+    ClientsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],
