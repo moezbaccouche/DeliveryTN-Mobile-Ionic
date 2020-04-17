@@ -9,7 +9,7 @@ import { Product } from "../models/product.model";
   providedIn: "root",
 })
 export class ProductsService {
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  baseUrl = "http://192.168.1.5:51044/delivery-app/";
 
   private allProducts: Product[] = [];
   private cartProducts: Product[] = [];

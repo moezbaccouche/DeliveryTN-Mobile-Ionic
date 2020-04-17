@@ -38,14 +38,15 @@
         <div class="border-white">
           <div class="img-box">
             <img
-              src="../../assets/me.png"
+              [src]="currentImage" 
               tappable
-              (click)="openPreview(nomImage)"
+              (click)="openPreview(currentImage)"
             />
           </div>
         </div>
       </div>
     </div>
+
 
     <ion-grid class="input-grid">
       <ion-row>
@@ -178,5 +179,6 @@
       Enregistrer
       <ion-icon name="save-outline" slot="end"></ion-icon>
     </ion-button>
+
   </div>
 </ion-content>

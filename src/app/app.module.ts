@@ -20,6 +20,8 @@ import { PopoverConfirmEmptyCartComponent } from "./menus/popover-confirm-empty-
 import { EditDeliveryAddressPopoverComponent } from "./menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
 import { OrdersService } from "./services/orders.service";
 import { ClientsService } from "./services/clients.service";
+import { File } from '@ionic-native/file/ngx';
+import { Camera } from '@ionic-native/Camera/ngx';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { ClientsService } from "./services/clients.service";
     CategoriesService,
     OrdersService,
     ClientsService,
+    Camera,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],
