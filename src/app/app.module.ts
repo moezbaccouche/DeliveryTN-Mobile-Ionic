@@ -20,8 +20,9 @@ import { PopoverConfirmEmptyCartComponent } from "./menus/popover-confirm-empty-
 import { EditDeliveryAddressPopoverComponent } from "./menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
 import { OrdersService } from "./services/orders.service";
 import { ClientsService } from "./services/clients.service";
-import { File } from '@ionic-native/file/ngx';
-import { Camera } from '@ionic-native/Camera/ngx';
+import { ProductImagesSlidesComponent } from "./components/product-images-slides/product-images-slides.component";
+import { File } from "@ionic-native/file/ngx";
+import { Camera } from "@ionic-native/Camera/ngx";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
     PopoverConfirmDeleteComponent,
     PopoverConfirmEmptyCartComponent,
     EditDeliveryAddressPopoverComponent,
+    ProductImagesSlidesComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -38,6 +40,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
     PopoverConfirmDeleteComponent,
     PopoverConfirmEmptyCartComponent,
     EditDeliveryAddressPopoverComponent,
+    ProductImagesSlidesComponent,
   ],
   imports: [
     BrowserModule,

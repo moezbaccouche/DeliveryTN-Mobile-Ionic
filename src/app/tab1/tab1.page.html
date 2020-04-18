@@ -35,7 +35,10 @@
     </ion-col>
   </ion-row>
 
-  <ion-card *ngFor="let product of allProducts">
+  <ion-card
+    *ngFor="let product of allProducts"
+    [routerLink]="[ '/product-details', product.id ]"
+  >
     <ion-grid>
       <ion-row>
         <ion-col size="1">

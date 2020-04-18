@@ -1,0 +1,46 @@
+ion-slides {
+  --bullet-background: #000000;
+  --bullet-background-active: rgb(117, 39, 46);
+}
+
+.swiper-slide img {
+  height: 150px !important;
+}
+
+.divSwiper {
+  height: 150px;
+  margin-top: 10px !important;
+  margin-bottom: 10px;
+}
+
+.divDetails {
+  color: #3f3f3f;
+  background-color: #e2e2e2;
+  border-radius: 30px;
+  height: calc(100% - 150px);
+}
+
+.btAddToCart {
+  --background: rgb(117, 39, 46);
+  text-transform: none;
+  font-size: 16px;
+  height: 45px;
+}
+
+.btLike {
+  --border-color: rgb(117, 39, 46);
+  height: 45px;
+}
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}

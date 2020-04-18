@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="product != null">{{product.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" routerLink="/cart">
+        <ion-icon
+          style="color: rgb(117, 39, 46);"
+          name="cart-outline"
+          slot="icon-only"
+        >
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner
+    color="primary"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+
+  <div class="divSwiper" *ngIf="product != null">
+    <ion-slides pager="true" [options]="slideOpts" class="slides">
+      <ion-slide *ngFor="let img of product.imagesBase64">
+        <img
+          [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +img)"
+          alt=""
+        />
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="divDetails" *ngIf="product != null">
+    <br />
+    <h3 style="margin-left: 10px; font-weight: bold;">
+      {{ product.name }}
+    </h3>
+    <p style="font-size: 14px; margin: 10px;">
+      {{product.description}}
+    </p>
+    <br />
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="9">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3">
+              <ion-icon
+                style="margin-right: 15px; font-size: 25px;"
+                name="remove-circle-outline"
+                (click)="decrementAmount()"
+              ></ion-icon>
+            </ion-col>
+            <ion-col size="3">
+              <ion-input
+                type="text"
+                maxlength="2"
+                style="font-size: 18px;"
+                value="1"
+                [(ngModel)]="productAmount"
+              ></ion-input>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon
+                style="margin-left: 15px; font-size: 25px;"
+                name="add-circle-outline"
+                (click)="incrementAmount()"
+              ></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size="3" style="font-size: 22px; text-align: end;">
+          <span><strong>{{totalPrice}}</strong> DT</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-end">
+        <ion-col size="3">
+          <ion-button class="btLike" fill="outline" (click)="reactToProduct()">
+            <ion-icon
+              style="color: rgb(117, 39, 46);"
+              [name]="isFavoriteProduct ? 'heart' : 'heart-outline'"
+              slot="icon-only"
+            >
+            </ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="9">
+          <ion-button class="btAddToCart" expand="block" (click)="addToCart()">
+            <ion-icon slot="start" name="cart-outline"></ion-icon>
+            Ajouter
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

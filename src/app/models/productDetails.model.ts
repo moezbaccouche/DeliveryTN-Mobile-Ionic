@@ -1,0 +1,9 @@
+export class ProductDetails {
+  constructor(
+    public id: number,
+    public name: string,
+    public description: string,
+    public price: number,
+    public imagesBase64: string[]
+  ) {}
+}

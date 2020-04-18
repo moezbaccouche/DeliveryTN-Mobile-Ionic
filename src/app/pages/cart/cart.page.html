@@ -21,7 +21,7 @@
   <div style="margin-top: 10px;" *ngFor="let category of cartCategories">
     <ion-item-divider>
       <ion-label class="dividerLabels">
-        <strong>{{ category.name }}</strong>
+        <strong><span>{{ category.name }}</span></strong>
       </ion-label>
     </ion-item-divider>
     <div *ngFor="let product of cartProducts">
@@ -89,7 +89,7 @@
   <div style="margin-top: 10px;">
     <ion-item-divider>
       <ion-label class="dividerLabels">
-        <strong>Adresse de livraison</strong>
+        <strong><span>Adresse de livraison</span></strong>
       </ion-label>
     </ion-item-divider>
     <div>
@@ -136,7 +136,7 @@
   <div>
     <ion-item-divider>
       <ion-label class="dividerLabels">
-        <strong>Prix</strong>
+        <strong><span>Prix</span></strong>
       </ion-label>
     </ion-item-divider>
     <div>

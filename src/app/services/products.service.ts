@@ -4,12 +4,13 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { from } from "rxjs";
 import { Product } from "../models/product.model";
+import { ProductDetails } from "../models/productDetails.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProductsService {
-  baseUrl = "http://192.168.1.5:51044/delivery-app/";
+  baseUrl = "http://192.168.1.4:51044/delivery-app/";
 
   private allProducts: Product[] = [];
   private cartProducts: Product[] = [];
@@ -69,6 +70,28 @@ export class ProductsService {
       return p.id === id;
     });
     return product;
+  }
+
+  getProductDetailsFromApi(id: number) {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}products/${id}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const product = new ProductDetails(
+            id,
+            data.name,
+            data.description,
+            data.price,
+            data.productImagesBase64
+          );
+          resolve(product);
+        }),
+        (error) => {
+          reject(error);
+        };
+    });
   }
 
   getAllProductsByPriceAscFromApi() {
