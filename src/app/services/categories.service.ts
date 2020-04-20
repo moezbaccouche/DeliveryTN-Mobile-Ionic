@@ -10,7 +10,7 @@ export class CategoriesService {
   categories: any[] = [];
   categorySubject = new Subject<any[]>();
 
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  baseUrl = "http://192.168.1.5:51044/delivery-app/";
   constructor(private http: HttpClient) {}
 
   emitCategorySubject() {

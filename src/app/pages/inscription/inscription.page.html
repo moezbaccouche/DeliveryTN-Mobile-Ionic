@@ -1,52 +1,8 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Profil</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" color="primary" (click)="presentPopover($event)">
-        <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-spinner
-    color="primary"
-    [class.loadingSpinner]="isLoading"
-    [class.stopLoading]="!isLoading"
-  ></ion-spinner>
-
-  <div *ngIf="client != null">
+<ion-content class="page">
+  
     <div class="header">
-      <h2>{{ client.firstName }} {{ client.lastName }}</h2>
-
-      <div class="space-between">
-        <div class="followings">
-          <ion-badge color="primary" mode="ios">102</ion-badge>
-          <p>Courses éffectués</p>
-        </div>
-
-        <div class="followings">
-          <ion-badge color="primary" mode="ios">69</ion-badge>
-          <p>Courses à faire</p>
-        </div>
-      </div>
+      <img src="../../../assets/header_icon.png" style="height: 180px;">
     </div>
-
-    <div class="flex">
-      <div class="border-blue">
-        <div class="border-white">
-          <div class="img-box">
-            <img
-              [src]="currentImage" 
-              tappable
-              (click)="openPreview(currentImage)"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <ion-grid class="input-grid">
       <ion-row>
@@ -56,12 +12,15 @@
               <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
               <ion-input
                 type="text"
-                value="{{client.lastName}}"
-                [readonly]="readOnly"
+               
+                
               ></ion-input>
             </ion-item>
           </div>
         </ion-col>
+      </ion-row>
+      
+      <ion-row>
         <ion-col>
           <div>
             <ion-item>
@@ -70,8 +29,7 @@
               >
               <ion-input
                 type="text"
-                value="{{ client.firstName }}"
-                [readonly]="readOnly"
+               
               ></ion-input>
             </ion-item>
           </div>
@@ -85,8 +43,6 @@
               <ion-label position="stacked">Télephone</ion-label>
               <ion-input
                 type="tel"
-                value="{{client.phone}}"
-                [readonly]="readOnly"
               ></ion-input>
             </ion-item>
           </div>
@@ -99,8 +55,7 @@
               >
               <ion-input
                 [type]="passwordType"
-                value="Mehdi"
-                [readonly]="readOnly"
+               
               ></ion-input>
               <ion-icon
                 [name]="iconType"
@@ -119,8 +74,7 @@
               <ion-label position="stacked">E-mail</ion-label>
               <ion-input
                 type="email"
-                value="{{ client.email }}"
-                [readonly]="readOnly"
+               
               ></ion-input>
             </ion-item>
           </div>
@@ -133,8 +87,6 @@
               >
               <ion-input
                 type="text"
-                value="{{ client.location.address }}"
-                [readonly]="readOnly"
               >
               </ion-input>
               <ion-icon name="navigate-outline" slot="end"></ion-icon>
@@ -147,8 +99,7 @@
               >
               <ion-input
                 type="text"
-                value="{{ client.location.city }}"
-                [readonly]="readOnly"
+              
               >
               </ion-input>
             </ion-item>
@@ -160,8 +111,6 @@
               >
               <ion-input
                 type="text"
-                value="{{ client.location.zipCode }}"
-                [readonly]="readOnly"
               >
               </ion-input>
             </ion-item>
@@ -174,12 +123,10 @@
       expand="block"
       class="button"
       shape="round"
-      [disabled]="ButtonDisabled"
-      [routerLink]="['/inscription']"
     >
-      Enregistrer
+    S'inscrire
       <ion-icon name="save-outline" slot="end"></ion-icon>
     </ion-button>
 
-  </div>
+
 </ion-content>
