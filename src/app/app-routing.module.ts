@@ -41,10 +41,19 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'inscription',
-    loadChildren: () => import('./pages/inscription/inscription.module').then( m => m.InscriptionPageModule)
+    path: "inscription",
+    loadChildren: () =>
+      import("./pages/inscription/inscription.module").then(
+        (m) => m.InscriptionPageModule
+      ),
   },
-
+  {
+    path: "order-details/:id",
+    loadChildren: () =>
+      import("./pages/order-details/order-details.module").then(
+        (m) => m.OrderDetailsPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

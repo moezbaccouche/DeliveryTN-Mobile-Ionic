@@ -1,0 +1,39 @@
+.imgCircle {
+  border-radius: 50%;
+}
+
+.dividerLabels {
+  color: rgb(117, 39, 46);
+}
+
+.textInfos {
+  font-size: 14px;
+}
+
+.noPadding {
+  padding: 0px !important;
+}
+
+.priceTitles {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.btRate {
+  text-transform: none;
+  --color: rgb(117, 39, 46);
+  --border-color: rgb(117, 39, 46);
+}
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}
