@@ -1,5 +1,6 @@
 .header {
   background-color: cornflowerblue;
+  background-image: url("../../assets/pexels-photo-1250260.jpeg");
   height: 180px;
   padding-top: 1px;
 }
@@ -41,11 +42,11 @@
   width: fit-content;
 }
 
-.border-blue {
-  border: 6px solid royalblue;
-  border-radius: 50%;
-  width: fit-content;
-}
+// .border-blue {
+//   border: 6px solid royalblue;
+//   border-radius: 50%;
+//   width: fit-content;
+// }
 
 .flex {
   display: flex;

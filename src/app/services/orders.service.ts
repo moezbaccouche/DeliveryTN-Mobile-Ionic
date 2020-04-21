@@ -9,11 +9,18 @@ import { Product } from "../models/product.model";
   providedIn: "root",
 })
 export class OrdersService {
-  baseUrl = "http://192.168.1.5:51044/delivery-app/";
+  baseUrl = "http://192.168.1.4:51044/delivery-app/";
 
   private deliveredOrders: any[];
   private inDeliveryOrder: any;
   private notDeliveredOrder: any;
+
+  private treatedOrders: any[];
+  treatedOrdersSubject = new Subject<any[]>();
+
+  emitTreatedOrdersSubject() {
+    this.treatedOrdersSubject.next(this.treatedOrders.slice());
+  }
 
   deliveredOrdersSubject = new Subject<any[]>();
   inDeliveryOrderSubject = new Subject<any>();
@@ -54,6 +61,23 @@ export class OrdersService {
       fetch(`${this.baseUrl}orders/notDelivered/${cliId}`).then((response) => {
         resolve(response.json());
       }),
+        (error) => {
+          reject(error);
+        };
+    });
+  }
+
+  getTreatedOrders(clientId) {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}orders/clients/${clientId}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.treatedOrders = data;
+          this.emitTreatedOrdersSubject();
+          resolve("Commandes récupérés avec succès !");
+        }),
         (error) => {
           reject(error);
         };

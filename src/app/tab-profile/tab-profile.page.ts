@@ -1,13 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ModalController, PopoverController, ActionSheetController, ToastController } from '@ionic/angular';
-import { ProfileImageModalPage } from '../profile-image-modal/profile-image-modal.page';
-import { PopoverComponentPage } from '../popover-component/popover-component.page';
-import { Subscription } from 'rxjs';
-import { Client } from '../models/client.model';
-import { ClientsService } from '../services/clients.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-import { File } from '@ionic-native/file/ngx';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  ModalController,
+  PopoverController,
+  ActionSheetController,
+  ToastController,
+} from "@ionic/angular";
+import { ProfileImageModalPage } from "../profile-image-modal/profile-image-modal.page";
+import { PopoverComponentPage } from "../popover-component/popover-component.page";
+import { Subscription } from "rxjs";
+import { Client } from "../models/client.model";
+import { ClientsService } from "../services/clients.service";
+import { DomSanitizer } from "@angular/platform-browser";
+import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
+import { File } from "@ionic-native/file/ngx";
 
 @Component({
   selector: "app-tab-profile",
@@ -29,11 +34,11 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
   isLoading = true;
 
-  currentImage: any;
+  currentImage = "../../assets/Moez.jpg";
 
   imagePickerOptions = {
     maximumImagesCount: 1,
-    quality: 50
+    quality: 50,
   };
 
   constructor(
@@ -50,53 +55,58 @@ export class TabProfilePage implements OnInit, OnDestroy {
     this.readOnly = true;
   }
 
-
   pickImage(sourceType) {
     const options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      this.currentImage = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-      console.log("Camera issue:" + err);
-    });
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+    this.camera.getPicture(options).then(
+      (imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        this.currentImage = "data:image/jpeg;base64," + imageData;
+      },
+      (err) => {
+        // Handle error
+        console.log("Camera issue:" + err);
+      }
+    );
   }
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Photo de profil',
-      buttons: [{
-        text: 'Prendre une photo ',
-        icon: 'camera-outline',
-        handler: () => {
-          this.pickImage(this.camera.PictureSourceType.CAMERA);
-        }
-      }, {
-        text: 'Sélectionner une photo',
-        icon: 'images-outline',
-        handler: () => {
-          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      }, {
-        text: 'Annuler',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      header: "Photo de profil",
+      buttons: [
+        {
+          text: "Prendre une photo ",
+          icon: "camera-outline",
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.CAMERA);
+          },
+        },
+        {
+          text: "Sélectionner une photo",
+          icon: "images-outline",
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          },
+        },
+        {
+          text: "Annuler",
+          icon: "close",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+      ],
     });
     await actionSheet.present();
   }
 
-  
   ngOnInit() {
     this.getClient();
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
@@ -122,7 +132,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
     this.ButtonDisabled = true;
     this.readOnly = true;
   }
- 
+
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: PopoverComponentPage,
@@ -130,11 +140,11 @@ export class TabProfilePage implements OnInit, OnDestroy {
       translucent: true,
       componentProps: {
         onclick: (test) => {
-          if (test==1) {
-            this.readOnly=false;
-            this.ButtonDisabled=false;
-          } else if (test==2){
-            this.presentActionSheet(); 
+          if (test == 1) {
+            this.readOnly = false;
+            this.ButtonDisabled = false;
+          } else if (test == 2) {
+            this.presentActionSheet();
           } else {
             console.log("déconnexion");
           }
