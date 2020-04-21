@@ -11,11 +11,11 @@ import { Product } from "../models/product.model";
 export class OrdersService {
   baseUrl = "http://192.168.1.3:51044/delivery-app/";
 
-  private deliveredOrders: any[];
+  private deliveredOrders: any[] = [];
   private inDeliveryOrder: any;
   private notDeliveredOrder: any;
 
-  private treatedOrders: any[];
+  private treatedOrders: any[] = [];
   treatedOrdersSubject = new Subject<any[]>();
 
   emitTreatedOrdersSubject() {

@@ -13,6 +13,8 @@ import { ClientsService } from "../services/clients.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
 import { File } from "@ionic-native/file/ngx";
+import { ProductsService } from "../services/products.service";
+import { OrdersService } from "../services/orders.service";
 
 @Component({
   selector: "app-tab-profile",
@@ -32,6 +34,14 @@ export class TabProfilePage implements OnInit, OnDestroy {
   client: Client;
   clientId = 1;
 
+  nbFavoriteProducts = 0;
+  favoriteProducts: any;
+  favoriteProductsSubscription: Subscription;
+
+  nbDeliveredOrders = 0;
+  treatedOrders: any;
+  treatedOrdersSubscription: Subscription;
+
   isLoading = true;
 
   currentImage = "../../assets/Moez.jpg";
@@ -49,7 +59,9 @@ export class TabProfilePage implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private actionSheetController: ActionSheetController,
     private camera: Camera,
-    private file: File
+    private file: File,
+    private productsService: ProductsService,
+    private ordersService: OrdersService
   ) {
     this.ButtonDisabled = true;
     this.readOnly = true;
@@ -115,6 +127,27 @@ export class TabProfilePage implements OnInit, OnDestroy {
       }
     );
     this.clientsService.emitClientSubject();
+
+    this.getFavoriteProducts();
+
+    this.favoriteProductsSubscription = this.productsService.favoriteProductsSubject.subscribe(
+      (favoriteProducts: any[]) => {
+        this.nbFavoriteProducts = favoriteProducts.length;
+        console.log(this.nbFavoriteProducts);
+      }
+    );
+    this.productsService.emitFavoriteProductsSubject();
+
+    this.getTreatedOrders();
+
+    this.treatedOrdersSubscription = this.ordersService.treatedOrdersSubject.subscribe(
+      (treatedOrders: any[]) => {
+        this.treatedOrders = treatedOrders;
+        this.nbDeliveredOrders = this.getNbDeliveredOrders(this.treatedOrders);
+        console.log(this.nbDeliveredOrders);
+      }
+    );
+    this.ordersService.emitTreatedOrdersSubject();
   }
 
   getClient() {
@@ -126,6 +159,38 @@ export class TabProfilePage implements OnInit, OnDestroy {
         this.presentToast("Une erreur s'est produite !", "danger");
       }
     );
+  }
+
+  getTreatedOrders() {
+    this.ordersService.getTreatedOrders(this.clientId).then(
+      (response) => {
+        this.treatedOrders = response;
+      },
+      (error) => {
+        this.presentToast("Une erreur s'est produite !", "danger");
+        console.log(error);
+      }
+    );
+  }
+
+  getFavoriteProducts() {
+    this.productsService.getFavoriteProductsFromApi(this.clientId).then(
+      () => {},
+      (error) => {
+        this.presentToast("Une erreur s'est produite !", "danger");
+        console.log(error);
+      }
+    );
+  }
+
+  getNbDeliveredOrders(treatedOrders) {
+    let nb = 0;
+    for (let i = 0; i < treatedOrders.length; i++) {
+      if (treatedOrders[i].orderStatus == 2) {
+        nb++;
+      }
+    }
+    return nb;
   }
 
   ionViewWillLeave() {
@@ -190,5 +255,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.clientSubscription.unsubscribe();
+    this.favoriteProductsSubscription.unsubscribe();
+    this.treatedOrdersSubscription.unsubscribe();
   }
 }

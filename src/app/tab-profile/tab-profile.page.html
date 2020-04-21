@@ -22,13 +22,17 @@
 
       <div class="space-between">
         <div class="followings">
-          <ion-badge color="primary" mode="ios">102</ion-badge>
+          <ion-badge color="primary" mode="ios"
+            >{{ nbDeliveredOrders }}</ion-badge
+          >
           <p>Courses éffectués</p>
         </div>
 
         <div class="followings">
-          <ion-badge color="primary" mode="ios">69</ion-badge>
-          <p>Courses à faire</p>
+          <ion-badge color="primary" mode="ios"
+            >{{ nbFavoriteProducts }}</ion-badge
+          >
+          <p>Produits favoris</p>
         </div>
       </div>
     </div>
@@ -38,7 +42,7 @@
         <div class="border-white">
           <div class="img-box">
             <img
-              [src]="currentImage" 
+              [src]="currentImage"
               tappable
               (click)="openPreview(currentImage)"
             />
@@ -46,7 +50,6 @@
         </div>
       </div>
     </div>
-
 
     <ion-grid class="input-grid">
       <ion-row>
@@ -180,6 +183,5 @@
       Enregistrer
       <ion-icon name="save-outline" slot="end"></ion-icon>
     </ion-button>
-
   </div>
 </ion-content>
