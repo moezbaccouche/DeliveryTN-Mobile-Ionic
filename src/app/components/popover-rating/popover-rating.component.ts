@@ -9,6 +9,9 @@ export class PopoverRatingComponent implements OnInit {
   @Input()
   public onclick = (rating) => {};
 
+  @Input()
+  public clientRating: number;
+
   starOneSelected = false;
   starTwoSelected = false;
   starThreeSelected = false;
@@ -19,7 +22,38 @@ export class PopoverRatingComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.clientRating);
+    this.initRatingStars();
+  }
+
+  initRatingStars() {
+    if (this.clientRating != 0) {
+      switch (this.clientRating) {
+        case 1:
+          this.onStarOneClick();
+          break;
+
+        case 2:
+          this.onStarTwoClick();
+          break;
+
+        case 3:
+          this.onStarThreeClick();
+          break;
+
+        case 4:
+          this.onStarFourClick();
+          break;
+
+        case 5:
+          this.onStarFiveClick();
+          break;
+        default:
+          break;
+      }
+    }
+  }
 
   onStarOneClick() {
     this.starOneSelected = true;

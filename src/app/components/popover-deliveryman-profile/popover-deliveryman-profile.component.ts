@@ -41,7 +41,6 @@ export class PopoverDeliverymanProfileComponent implements OnInit {
   getDeliveryMan() {
     this.deliveryMenService.getDeliveryManById(this.id).then(
       (response) => {
-        console.log(response);
         this.deliveryMan = response;
         this.initRatingStars();
         this.isLoading = false;
@@ -86,12 +85,6 @@ export class PopoverDeliverymanProfileComponent implements OnInit {
       this.starFour = 1;
       this.starFive = 1;
     }
-
-    console.log(this.starOne);
-    console.log(this.starTwo);
-    console.log(this.starThree);
-    console.log(this.starFour);
-    console.log(this.starFive);
   }
 
   async presentToast(msg: string, type: string) {

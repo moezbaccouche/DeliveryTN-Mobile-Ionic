@@ -130,12 +130,22 @@
             </ion-col>
             <ion-col size="4">
               <ion-button
+                *ngIf="order.deliveryManClientRating == 0"
                 fill="outline"
                 class="btRate"
-                (click)="presentPopoverRating()"
+                (click)="presentPopoverRating(order.deliveryManClientRating)"
               >
                 <ion-icon name="star-outline" slot="start"></ion-icon>
                 Noter
+              </ion-button>
+              <ion-button
+                *ngIf="order.deliveryManClientRating != 0"
+                fill="outline"
+                class="btRate"
+                (click)="presentPopoverRating(order.deliveryManClientRating)"
+              >
+                <ion-icon name="star-outline" slot="start"></ion-icon>
+                Changer
               </ion-button>
             </ion-col>
           </ion-row>

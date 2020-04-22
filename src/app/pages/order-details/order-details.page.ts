@@ -6,6 +6,7 @@ import { ToastController, PopoverController } from "@ionic/angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PopoverRatingComponent } from "src/app/components/popover-rating/popover-rating.component";
 import { PopoverDeliverymanProfileComponent } from "src/app/components/popover-deliveryman-profile/popover-deliveryman-profile.component";
+import { DeliveryMenService } from "src/app/services/deliveryMen.service";
 
 @Component({
   selector: "app-order-details",
@@ -17,6 +18,8 @@ export class OrderDetailsPage implements OnInit {
   orderId;
   order: any;
 
+  clientId = 1;
+
   isLoading = true;
 
   constructor(
@@ -24,7 +27,8 @@ export class OrderDetailsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private domSanitizer: DomSanitizer,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private deliveryMenService: DeliveryMenService
   ) {}
 
   ngOnInit() {
@@ -60,14 +64,47 @@ export class OrderDetailsPage implements OnInit {
     toast.present();
   }
 
-  async presentPopoverRating(ev: any) {
+  async presentPopoverRating(initialRating: any) {
     const popover = await this.popoverController.create({
       component: PopoverRatingComponent,
-      event: ev,
       translucent: true,
       componentProps: {
+        clientRating: initialRating,
         onclick: (rating) => {
           console.log(rating);
+          if (initialRating == 0) {
+            //This means that it's the first time that the client is rating this delivery man
+            this.deliveryMenService
+              .rateDeliveryMan(this.clientId, this.order.deliveryManId, rating)
+              .then(
+                () => {
+                  this.presentToast("Note affectée au livreur !", "success");
+                  this.order.deliveryManClientRating = rating;
+                },
+                (error) => {
+                  this.presentToast("Une erreur est survenue !", "danger");
+                  console.log(error);
+                }
+              );
+          } else {
+            //This means that the user is changing his rating
+            this.deliveryMenService
+              .editDeliveryManRating(
+                this.clientId,
+                this.order.deliveryManId,
+                rating
+              )
+              .then(
+                () => {
+                  this.presentToast("Note affectée au livreur !", "success");
+                  this.order.deliveryManClientRating = rating;
+                },
+                (error) => {
+                  this.presentToast("Une erreur est survenue !", "danger");
+                  console.log(error);
+                }
+              );
+          }
           popover.dismiss();
         },
       },
