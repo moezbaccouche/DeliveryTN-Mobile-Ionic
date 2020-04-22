@@ -1,0 +1,94 @@
+<div class="header">
+  <div class="space-between"></div>
+</div>
+
+<div class="flex">
+  <div class="border-blue">
+    <div class="border-white">
+      <div class="img-box">
+        <img src="../../../assets/Moez.jpg" tappable />
+      </div>
+    </div>
+  </div>
+</div>
+
+<ion-grid>
+  <ion-row>
+    <ion-col style="text-align: center;"
+      ><h2>{{ deliveryMan.fullName }}</h2></ion-col
+    >
+  </ion-row>
+  <ion-row style="font-size: 14px;">
+    <ion-col>
+      <span><strong>Téléphone</strong></span>
+    </ion-col>
+    <ion-col style="text-align: end;">
+      <span>{{ deliveryMan.phone }}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row style="font-size: 14px;">
+    <ion-col>
+      <span><strong>E-Mail</strong></span>
+    </ion-col>
+    <ion-col style="text-align: end;">
+      <span>{{ deliveryMan.email }}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row style="font-size: 14px;" class="ion-align-items-center">
+    <ion-col>
+      <span><strong>Note</strong></span>
+    </ion-col>
+    <ion-col style="color: rgb(117, 39, 46); text-align: end;">
+      <!-- The ternary condition means : if the starScore == 0 then set the icon star outline -->
+      <!-- else if the star score != 0 and == 1 then set star icon -->
+      <!-- else (score == 0.5) set the icon half-star -->
+      <ion-icon
+        [name]="
+          starOne == 0
+            ? 'star-outline'
+            : starOne == 1
+            ? 'star'
+            : 'star-half-outline'
+        "
+      ></ion-icon>
+      <ion-icon
+        [name]="
+          starTwo == 0
+            ? 'star-outline'
+            : starTwo == 1
+            ? 'star'
+            : 'star-half-outline'
+        "
+      ></ion-icon>
+      <ion-icon
+        [name]="
+          starThree == 0
+            ? 'star-outline'
+            : starThree == 1
+            ? 'star'
+            : 'star-half-outline'
+        "
+      ></ion-icon>
+      <ion-icon
+        [name]="
+          starFour == 0
+            ? 'star-outline'
+            : starFour == 1
+            ? 'star'
+            : 'star-half-outline'
+        "
+      ></ion-icon>
+      <ion-icon
+        [name]="
+          starFive == 0
+            ? 'star-outline'
+            : starFive == 1
+            ? 'star'
+            : 'star-half-outline'
+        "
+      ></ion-icon>
+
+      <span> ({{ deliveryMan.nbRatings }})</span>
+    </ion-col>
+  </ion-row>
+</ion-grid>

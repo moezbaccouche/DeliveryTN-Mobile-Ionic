@@ -1,0 +1,50 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <span>Notez Moez Baccouche</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col
+      size="12"
+      style="text-align: center; font-size: 28px; color: rgb(117, 39, 46);"
+    >
+      <ion-icon
+        button
+        (click)="onStarOneClick()"
+        [name]="starOneSelected ? 'star' : 'star-outline'"
+      ></ion-icon>
+      <ion-icon
+        button
+        (click)="onStarTwoClick()"
+        [name]="starTwoSelected ? 'star' : 'star-outline'"
+      ></ion-icon>
+      <ion-icon
+        button
+        (click)="onStarThreeClick()"
+        [name]="starThreeSelected ? 'star' : 'star-outline'"
+      ></ion-icon>
+      <ion-icon
+        button
+        (click)="onStarFourClick()"
+        [name]="starFourSelected ? 'star' : 'star-outline'"
+      ></ion-icon>
+      <ion-icon
+        button
+        (click)="onStarFiveClick()"
+        [name]="starFiveSelected ? 'star' : 'star-outline'"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" style="text-align: center;">
+      <ion-button
+        [disabled]="rating == 0"
+        (click)="onConfirmRating()"
+        class="btConfirmRate"
+        fill="outline"
+        >Valider</ion-button
+      >
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,35 @@
+.header {
+  background-color: cornflowerblue;
+  background-image: url("../../../assets/pexels-photo-1250260.jpeg");
+  height: 110px;
+  padding-top: 1px;
+}
+.header h2 {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 0 10px;
+}
+
+.img-box {
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.border-white {
+  border: 4px solid white;
+  border-radius: 50%;
+  width: fit-content;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  margin-top: -76px;
+}

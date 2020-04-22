@@ -23,6 +23,9 @@ import { ClientsService } from "./services/clients.service";
 import { ProductImagesSlidesComponent } from "./components/product-images-slides/product-images-slides.component";
 import { File } from "@ionic-native/file/ngx";
 import { Camera } from "@ionic-native/Camera/ngx";
+import { PopoverRatingComponent } from "./components/popover-rating/popover-rating.component";
+import { PopoverDeliverymanProfileComponent } from "./components/popover-deliveryman-profile/popover-deliveryman-profile.component";
+import { DeliveryMenService } from "./services/deliveryMen.service";
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import { Camera } from "@ionic-native/Camera/ngx";
     PopoverConfirmEmptyCartComponent,
     EditDeliveryAddressPopoverComponent,
     ProductImagesSlidesComponent,
+    PopoverRatingComponent,
+    PopoverDeliverymanProfileComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -41,6 +46,8 @@ import { Camera } from "@ionic-native/Camera/ngx";
     PopoverConfirmEmptyCartComponent,
     EditDeliveryAddressPopoverComponent,
     ProductImagesSlidesComponent,
+    PopoverRatingComponent,
+    PopoverDeliverymanProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +67,7 @@ import { Camera } from "@ionic-native/Camera/ngx";
     CategoriesService,
     OrdersService,
     ClientsService,
+    DeliveryMenService,
     Camera,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
