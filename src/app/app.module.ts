@@ -26,6 +26,7 @@ import { Camera } from "@ionic-native/Camera/ngx";
 import { PopoverRatingComponent } from "./components/popover-rating/popover-rating.component";
 import { PopoverDeliverymanProfileComponent } from "./components/popover-deliveryman-profile/popover-deliveryman-profile.component";
 import { DeliveryMenService } from "./services/deliveryMen.service";
+import { PopoverRequestBillComponent } from "./components/popover-request-bill/popover-request-bill.component";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DeliveryMenService } from "./services/deliveryMen.service";
     ProductImagesSlidesComponent,
     PopoverRatingComponent,
     PopoverDeliverymanProfileComponent,
+    PopoverRequestBillComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -48,6 +50,7 @@ import { DeliveryMenService } from "./services/deliveryMen.service";
     ProductImagesSlidesComponent,
     PopoverRatingComponent,
     PopoverDeliverymanProfileComponent,
+    PopoverRequestBillComponent,
   ],
   imports: [
     BrowserModule,

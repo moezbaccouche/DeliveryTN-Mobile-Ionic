@@ -38,7 +38,7 @@ export class OrdersService {
     this.notDeliveredOrderSubject.next(this.notDeliveredOrder);
   }
 
-  makeNewOrder(cliId) {
+  makeNewOrder(cliId, requestBill) {
     return fetch(`${this.baseUrl}orders/add`, {
       method: "post",
       headers: {
@@ -47,6 +47,7 @@ export class OrdersService {
       },
       body: JSON.stringify({
         clientId: cliId,
+        withBill: requestBill,
       }),
     })
       .then((response) => {

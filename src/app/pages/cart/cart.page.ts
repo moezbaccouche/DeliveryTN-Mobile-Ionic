@@ -8,6 +8,7 @@ import { Product } from "src/app/models/product.model";
 import { PopoverConfirmEmptyCartComponent } from "src/app/menus/popover-confirm-empty-cart/popover-confirm-empty-cart.component";
 import { EditDeliveryAddressPopoverComponent } from "src/app/menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
 import { OrdersService } from "../../services/orders.service";
+import { PopoverRequestBillComponent } from "src/app/components/popover-request-bill/popover-request-bill.component";
 
 @Component({
   selector: "app-cart",
@@ -59,6 +60,7 @@ export class CartPage implements OnInit {
   ionViewDidEnter() {
     this.ordersService.getPendingOrder(this.userId).then(
       (response) => {
+        console.log(response);
         if (response["nbOrders"] != 0) {
           this.orderIsPending = true;
         } else {
@@ -93,8 +95,8 @@ export class CartPage implements OnInit {
     });
   }
 
-  makeOrder() {
-    this.ordersService.makeNewOrder(this.userId).then(
+  makeOrder(requestBill) {
+    this.ordersService.makeNewOrder(this.userId, requestBill).then(
       () => {
         this.presentToast("Commande effectuée !", "success");
         this.orderIsPending = true;
@@ -157,6 +159,23 @@ export class CartPage implements OnInit {
       translucent: true,
       componentProps: {
         onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
+  }
+
+  async presentPopoverRequestBill(product: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverRequestBillComponent,
+      event: product,
+      translucent: true,
+      componentProps: {
+        onclick: (answer) => {
+          this.makeOrder(answer);
+
           popover.dismiss();
         },
       },
