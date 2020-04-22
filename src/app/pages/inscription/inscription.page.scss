@@ -1,6 +1,41 @@
 .header {
     background-color: cornflowerblue;
-    height: 180px;
+    height: 150px;
     padding-top: 1px;
+    text-align: center;
+  
   }
 
+.border-white {
+  border: 4px solid whitesmoke;
+  border-radius: 50%;
+  width: fit-content;
+}
+
+ .border-blue {
+  border: 5px solid cornflowerblue;
+  border-radius: 50%;
+  width: fit-content;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.img-box {
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+  
+.input-grid{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+ion-button{
+  padding-left: 40px;
+  padding-right: 40px;
+  text-transform: none;
+}

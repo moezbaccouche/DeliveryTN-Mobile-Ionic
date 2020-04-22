@@ -1,7 +1,18 @@
-<ion-content class="page">
+<ion-content >
   
-    <div class="header">
-      <img src="../../../assets/header_icon.png" style="height: 180px;">
+
+    <div class="flex">
+      <div class="border-blue">
+        <div class="border-white">
+          <div class="img-box">
+            <img
+              src="../../../assets/avatar.jpg"
+              
+            />
+            
+          </div>
+        </div>
+      </div>
     </div>
 
     <ion-grid class="input-grid">
@@ -9,7 +20,7 @@
         <ion-col>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
+              <ion-label position="floating" required="true" style="font-size: initial;">*Nom</ion-label>
               <ion-input
                 type="text"
                
@@ -24,8 +35,8 @@
         <ion-col>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Prénom</ion-label
+              <ion-label position="floating" clear-on-edit="true"
+                >*Prénom</ion-label
               >
               <ion-input
                 type="text"
@@ -40,7 +51,7 @@
         <ion-col>
           <div>
             <ion-item>
-              <ion-label position="stacked">Télephone</ion-label>
+              <ion-label position="floating">*Télephone</ion-label>
               <ion-input
                 type="tel"
               ></ion-input>
@@ -50,8 +61,8 @@
         <ion-col>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Mot de passe</ion-label
+              <ion-label position="floating" clear-on-edit="true"
+                >*Mot de passe</ion-label
               >
               <ion-input
                 [type]="passwordType"
@@ -71,7 +82,7 @@
         <ion-col size="12">
           <div>
             <ion-item>
-              <ion-label position="stacked">E-mail</ion-label>
+              <ion-label position="floating">*E-mail</ion-label>
               <ion-input
                 type="email"
                
@@ -82,8 +93,8 @@
         <ion-col>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Adresse</ion-label
+              <ion-label position="floating" clear-on-edit="true"
+                >*Adresse</ion-label
               >
               <ion-input
                 type="text"
@@ -94,8 +105,8 @@
           </div>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Ville</ion-label
+              <ion-label position="floating" clear-on-edit="true"
+                >*Ville</ion-label
               >
               <ion-input
                 type="text"
@@ -106,11 +117,11 @@
           </div>
           <div>
             <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Code Postal</ion-label
+              <ion-label position="floating" clear-on-edit="true"
+                >*Code Postal</ion-label
               >
               <ion-input
-                type="text"
+                type="tel"
               >
               </ion-input>
             </ion-item>
@@ -119,14 +130,21 @@
       </ion-row>
     </ion-grid>
 
+
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
     <ion-button
       expand="block"
       class="button"
       shape="round"
+      href="/login"
     >
-    S'inscrire
-      <ion-icon name="save-outline" slot="end"></ion-icon>
+    Isncription
     </ion-button>
+  </ion-toolbar>
+</ion-footer>
 
 
-</ion-content>

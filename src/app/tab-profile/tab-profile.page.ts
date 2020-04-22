@@ -4,6 +4,7 @@ import {
   PopoverController,
   ActionSheetController,
   ToastController,
+  NavController,
 } from "@ionic/angular";
 import { ProfileImageModalPage } from "../profile-image-modal/profile-image-modal.page";
 import { PopoverComponentPage } from "../popover-component/popover-component.page";
@@ -52,6 +53,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
   };
 
   constructor(
+    private navCtrl: NavController,
     private modalController: ModalController,
     private popoverController: PopoverController,
     private clientsService: ClientsService,
@@ -211,6 +213,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
           } else if (test == 2) {
             this.presentActionSheet();
           } else {
+            this.navCtrl.navigateForward('inscription');
             console.log("déconnexion");
           }
           popover.dismiss();
