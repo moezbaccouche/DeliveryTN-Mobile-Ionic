@@ -7,7 +7,7 @@ import { resolve } from "url";
   providedIn: "root",
 })
 export class DeliveryMenService {
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  baseUrl = "http://192.168.1.3:51044/delivery-app/";
 
   constructor() {}
 

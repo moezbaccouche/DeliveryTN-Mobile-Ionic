@@ -1,0 +1,115 @@
+<!-- <ion-header> </ion-header> -->
+
+<ion-content>
+  <div class="overviewDiv">
+    <ion-button fill="clear" class="btReturn">
+      <ion-icon
+        style="margin-right: 10px;"
+        name="arrow-back-outline"
+      ></ion-icon>
+      Suivi commande
+    </ion-button>
+    <ion-grid class="overviewGrid">
+      <ion-row style="text-align: center; font-size: small; color: #ededed;">
+        <ion-col>
+          <span>Heure estimée</span>
+        </ion-col>
+        <ion-col>
+          <span>Distance</span>
+        </ion-col>
+      </ion-row>
+      <ion-row style="text-align: center; font-size: 25px;">
+        <ion-col>
+          <span>18:00</span>
+        </ion-col>
+        <ion-col>
+          <span>3.0</span>
+          <span style="font-size: 12px !important;"> Km</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="timeline">
+    <div class="container right">
+      <div class="content">
+        <div
+          style="
+            text-align: end;
+            font-style: italic;
+            color: grey;
+            font-size: 14px;
+          "
+        >
+          <span>08:00</span><br />
+        </div>
+        <span>Commande passée</span>
+      </div>
+    </div>
+    <div class="container right">
+      <div class="content">
+        <div
+          style="
+            text-align: end;
+            font-style: italic;
+            color: grey;
+            font-size: 14px;
+          "
+        >
+          <span>08:25</span><br />
+        </div>
+
+        <span>Commande acceptée</span>
+        <div class="deliveryManDiv">
+          <ion-grid class="noPadding">
+            <ion-row>
+              <ion-col size="4" class="noPadding" style="text-align: center;">
+                <img class="circleImg" src="../../../assets/Moez.jpg" alt="" />
+              </ion-col>
+              <ion-col size="8" class="ion-align-self-center noPadding">
+                <span style="font-size: 12px; color: grey;"
+                  >Moez a accepté la commande</span
+                >
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button
+                  color="success"
+                  class="btCall"
+                  size="small"
+                  fill="outline"
+                >
+                  <ion-icon name="call" slot="start"></ion-icon>
+                  Contacter
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+
+    <div class="container right">
+      <div class="content">
+        <div
+          style="
+            text-align: end;
+            font-style: italic;
+            color: grey;
+            font-size: 14px;
+          "
+        >
+          <span>09:35</span><br />
+        </div>
+        <span>Commande livrée</span>
+        <br />
+        <div class="divAddress">
+          <span class="textAddress">4, Route de Sfax, Borjine, Sousse</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ion-button color="success" class="btTrackMap" expand="full"
+    >Suivre sur la carte</ion-button
+  >
+</ion-content>
