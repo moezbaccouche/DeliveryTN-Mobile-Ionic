@@ -19,6 +19,8 @@
 
 }
 
+
+
 .logo-img{
     display: block;
     width: 120px;
@@ -42,4 +44,56 @@
     padding-right: 40px;
     font-size: 15px;
 }
+ion-label {
+    color: #000000;
+    opacity: .8;
+    font-size: 13px;
+    display: block;
+}
+ion-content{
+    --background: #fafafa;  
+}
 
+[transparent] {
+    --background: transparent;
+}
+ion-input{
+    --color: #000;
+    --padding-bottom:15px;
+    --padding-top:15px;
+    --padding-start:5px;
+    font-size: 15px;
+    text-indent: 1px;
+    padding-left: 10px !important;
+}
+ion-item{
+    --highlight-color-focused:transparent;
+    --highlight-height:0;
+    --highlight-color-invalid:#000;
+    --highlight-color-valid:#ddd;
+    --min-height: 65px;
+    --padding-start: 0;
+}
+
+[linespace]{
+    height: 30px;
+}
+ion-label{
+    color: #000;
+    opacity: .8;
+    font-size: 13px;
+    display: block;
+}
+
+.forget-password{
+    color: #000000;
+    opacity: .8;
+    font-size: 13px;
+    display: block;
+    text-align: right;
+    padding: 10px;
+}
+.center{
+    padding-left: 15px;
+    padding-right: 15px;
+}
