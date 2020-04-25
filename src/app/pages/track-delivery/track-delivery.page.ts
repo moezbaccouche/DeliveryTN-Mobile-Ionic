@@ -39,7 +39,6 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
       (client: any) => {
         this.client = client;
-        console.log(this.client);
       }
     );
     this.clientsService.emitClientSubject();
@@ -60,9 +59,7 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
 
   getClient() {
     this.clientsService.getClient(this.clientId).then(
-      (response) => {
-        console.log(response);
-      },
+      (response) => {},
       (error) => {
         console.log(error);
         this.presentToast("Une erreur est survenue !", "danger");

@@ -28,6 +28,8 @@ export class TrackDeliveryMapPage implements OnInit {
   };
   orderId = 2;
 
+  distance = 0;
+
   private map: mapboxgl.Map;
   style = "mapbox://styles/mapbox/outdoors-v11";
   lat = 37.75;
@@ -54,6 +56,7 @@ export class TrackDeliveryMapPage implements OnInit {
         this.initClientCoordinates();
         setTimeout(() => {
           this.buildMap();
+          this.getMatch();
         }, 0);
       }
     );
@@ -75,7 +78,6 @@ export class TrackDeliveryMapPage implements OnInit {
     this.deliveryInfosService.getOrderDeliveryInfos(this.orderId).then(
       (response) => {
         this.deliveryInfos = response;
-        console.log(this.deliveryInfos);
       },
       (error) => {
         console.log(error);
@@ -97,7 +99,6 @@ export class TrackDeliveryMapPage implements OnInit {
       center: [this.lng, this.lat],
       //center : [long, lat]
     };
-    console.log(this.lat + " " + this.lng);
     this.map = new mapboxgl.Map(conf);
     // Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -109,6 +110,56 @@ export class TrackDeliveryMapPage implements OnInit {
 
   onGoBack() {
     this.navController.pop();
+  }
+
+  getMatch() {
+    var coordHome = [10.582612, 35.655248];
+    var coordDeliveryMan = [10.578436, 35.698611];
+
+    var coordinates = [coordHome, coordDeliveryMan];
+
+    var cc = coordinates.join(";");
+
+    this.deliveryInfosService.getRoute(cc, mapToken).then(
+      (response: any) => {
+        this.addRoute(response.routes[0].geometry);
+        this.distance = response.routes[0].distance * 0.001;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  addRoute(coords) {
+    console.log(coords);
+    // check if the route is already loaded
+    if (this.map.getSource("route")) {
+      this.map.removeLayer("route");
+      this.map.removeSource("route");
+    } else {
+      this.map.addLayer({
+        id: "route",
+        type: "line",
+        source: {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            properties: {},
+            geometry: coords,
+          },
+        },
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#1db7dd",
+          "line-width": 8,
+          "line-opacity": 0.8,
+        },
+      });
+    }
   }
 
   async presentToast(msg: string, type: string) {
