@@ -35,10 +35,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-card
-    *ngFor="let product of allProducts"
-    [routerLink]="[ '/product-details', product.id ]"
-  >
+  <ion-card *ngFor="let product of allProducts">
     <ion-grid>
       <ion-row>
         <ion-col size="1">
@@ -50,7 +47,11 @@
             (click)="reactToProduct(product.id)"
           ></ion-icon>
         </ion-col>
-        <ion-col size="6" class="ion-float-left">
+        <ion-col
+          size="6"
+          class="ion-float-left"
+          [routerLink]="[ '/product-details', product.id ]"
+        >
           <div>
             <img
               height="120"
@@ -61,7 +62,7 @@
         </ion-col>
         <ion-col size="5" class="ion-float-right">
           <ion-grid>
-            <ion-row>
+            <ion-row [routerLink]="[ '/product-details', product.id ]">
               <ion-col>
                 <strong>{{ product.name }}</strong>
               </ion-col>

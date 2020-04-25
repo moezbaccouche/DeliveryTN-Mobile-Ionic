@@ -7,33 +7,31 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card
-    *ngFor="let order of treatedOrders"
-    [routerLink]="['/order-details', order.orderId]"
-  >
+  <ion-card *ngFor="let order of treatedOrders">
     <ion-grid>
-      <ion-row>
-        <ion-col size="6">
-          <span
-            ><strong>Date: </strong>{{ order.orderTime | date:"dd/MM/yyyy
-            HH:mm"}}</span
-          >
-        </ion-col>
-        <ion-col size="6" style="text-align: end;">
-          <span><strong>Statut: </strong></span>
-          <span
-            *ngIf="order.orderStatus == 1"
-            style="color: grey; font-style: italic;"
-            >En cours de livraison</span
-          >
-          <span
-            *ngIf="order.orderStatus == 2"
-            style="color: green; font-weight: bold;"
-            >Livrée ({{ order.realDeliveryTime | date:"HH:mm" }})</span
-          >
-        </ion-col>
-      </ion-row>
-
+      <div [routerLink]="['/order-details', order.orderId]">
+        <ion-row>
+          <ion-col size="6">
+            <span
+              ><strong>Date: </strong>{{ order.orderTime | date:"dd/MM/yyyy
+              HH:mm"}}</span
+            >
+          </ion-col>
+          <ion-col size="6" style="text-align: end;">
+            <span><strong>Statut: </strong></span>
+            <span
+              *ngIf="order.orderStatus == 1"
+              style="color: grey; font-style: italic;"
+              >En cours de livraison</span
+            >
+            <span
+              *ngIf="order.orderStatus == 2"
+              style="color: green; font-weight: bold;"
+              >Livrée ({{ order.realDeliveryTime | date:"HH:mm" }})</span
+            >
+          </ion-col>
+        </ion-row>
+      </div>
       <ion-row>
         <ion-col size="12">
           <span><strong>Prix: </strong> {{ order.orderPrice }} DT</span>
