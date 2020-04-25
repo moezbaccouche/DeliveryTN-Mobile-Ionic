@@ -1,8 +1,14 @@
 <!-- <ion-header> </ion-header> -->
 
 <ion-content>
-  <div class="overviewDiv">
-    <ion-button fill="clear" class="btReturn">
+  <ion-spinner
+    style="margin-top: 20px;"
+    color="primary"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+  <div class="overviewDiv" *ngIf="deliveryInfos != null && client != null">
+    <ion-button (click)="onGoBack()" fill="clear" class="btReturn">
       <ion-icon
         style="margin-right: 10px;"
         name="arrow-back-outline"
@@ -20,18 +26,20 @@
       </ion-row>
       <ion-row style="text-align: center; font-size: 25px;">
         <ion-col>
-          <span>18:00</span>
+          <span>{{ deliveryInfos.estimatedDeliveryTime | date:"HH:mm" }}</span>
         </ion-col>
         <ion-col>
-          <span>3.0</span>
+          <span>{{ deliveryInfos.distance }}</span>
           <span style="font-size: 12px !important;"> Km</span>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
-  <div class="timeline">
+  <div class="timeline" *ngIf="deliveryInfos != null && client != null">
     <div class="container right">
       <div class="content">
+        <span>Commande passée</span>
+        <br />
         <div
           style="
             text-align: end;
@@ -40,24 +48,12 @@
             font-size: 14px;
           "
         >
-          <span>08:00</span><br />
+          <span>{{ deliveryInfos.orderTime | date:"HH:mm" }}</span>
         </div>
-        <span>Commande passée</span>
       </div>
     </div>
     <div class="container right">
       <div class="content">
-        <div
-          style="
-            text-align: end;
-            font-style: italic;
-            color: grey;
-            font-size: 14px;
-          "
-        >
-          <span>08:25</span><br />
-        </div>
-
         <span>Commande acceptée</span>
         <div class="deliveryManDiv">
           <ion-grid class="noPadding">
@@ -67,7 +63,8 @@
               </ion-col>
               <ion-col size="8" class="ion-align-self-center noPadding">
                 <span style="font-size: 12px; color: grey;"
-                  >Moez a accepté la commande</span
+                  >{{ deliveryInfos.deliveryMan.firstName }} a accepté la
+                  commande</span
                 >
               </ion-col>
             </ion-row>
@@ -85,12 +82,31 @@
               </ion-col>
             </ion-row>
           </ion-grid>
+          <div
+            style="
+              text-align: end;
+              font-style: italic;
+              color: grey;
+              font-size: 14px;
+            "
+          >
+            <span
+              >{{ deliveryInfos.acceptingDeliveryTime | date:"HH:mm" }}</span
+            >
+          </div>
         </div>
       </div>
     </div>
 
     <div class="container right">
       <div class="content">
+        <span>Commande livrée</span>
+        <br />
+        <div class="divAddress">
+          <span class="textAddress"
+            >{{ client.location.address}}, {{ client.location.city}}</span
+          >
+        </div>
         <div
           style="
             text-align: end;
@@ -99,17 +115,18 @@
             font-size: 14px;
           "
         >
-          <span>09:35</span><br />
-        </div>
-        <span>Commande livrée</span>
-        <br />
-        <div class="divAddress">
-          <span class="textAddress">4, Route de Sfax, Borjine, Sousse</span>
+          <span>{{ deliveryInfos.realDeliveryTime | date:"HH:mm" }}</span>
         </div>
       </div>
     </div>
   </div>
-  <ion-button color="success" class="btTrackMap" expand="full"
-    >Suivre sur la carte</ion-button
+  <ion-button
+    color="success"
+    class="btTrackMap"
+    expand="full"
+    *ngIf="deliveryInfos != null && client != null"
+  >
+    <ion-icon slot="start" name="navigate-outline"></ion-icon>
+    Suivre sur la carte</ion-button
   >
 </ion-content>

@@ -31,37 +31,38 @@
             >
           </ion-col>
         </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <span><strong>Prix: </strong> {{ order.orderPrice }} DT</span>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <span
+              ><strong>Prix de livraison: </strong> {{ order.deliveryPrice }}
+              DT</span
+            >
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-center">
+          <ion-col size="8" style="padding-right: 0px;">
+            <span><strong>Livreur: </strong></span>
+            <span>{{ order.deliveryManName }}</span>
+          </ion-col>
+          <ion-col size="4" class="noPadding" style="text-align: left;">
+            <img
+              class="imgCircle"
+              height="35"
+              width="35"
+              src="../../assets/Moez.jpg"
+              alt="Img livreur"
+            />
+          </ion-col>
+        </ion-row>
       </div>
-      <ion-row>
-        <ion-col size="12">
-          <span><strong>Prix: </strong> {{ order.orderPrice }} DT</span>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="12">
-          <span
-            ><strong>Prix de livraison: </strong> {{ order.deliveryPrice }}
-            DT</span
-          >
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="ion-align-items-center">
-        <ion-col size="8" style="padding-right: 0px;">
-          <span><strong>Livreur: </strong></span>
-          <span>{{ order.deliveryManName }}</span>
-        </ion-col>
-        <ion-col size="4" class="noPadding" style="text-align: left;">
-          <img
-            class="imgCircle"
-            height="35"
-            width="35"
-            src="../../assets/Moez.jpg"
-            alt="Img livreur"
-          />
-        </ion-col>
-      </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-button

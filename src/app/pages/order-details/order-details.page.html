@@ -82,6 +82,17 @@
               <span class="textInfos">{{ order.deliveryPrice }} DT</span>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button
+                class="btTrack"
+                expand="block"
+                [routerLink]="['/track-delivery', order.orderId]"
+              >
+                Suivre
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </div>
     </div>

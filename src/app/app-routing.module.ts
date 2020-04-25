@@ -53,15 +53,19 @@ const routes: Routes = [
       import("./pages/order-details/order-details.module").then(
         (m) => m.OrderDetailsPageModule
       ),
-  },  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'track-delivery',
-    loadChildren: () => import('./pages/track-delivery/track-delivery.module').then( m => m.TrackDeliveryPageModule)
+    path: "login",
+    loadChildren: () =>
+      import("./login/login.module").then((m) => m.LoginPageModule),
   },
-
+  {
+    path: "track-delivery/:orderId",
+    loadChildren: () =>
+      import("./pages/track-delivery/track-delivery.module").then(
+        (m) => m.TrackDeliveryPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

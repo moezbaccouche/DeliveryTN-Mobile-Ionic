@@ -184,3 +184,16 @@ ion-content {
   text-transform: none;
   font-size: large;
 }
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}
