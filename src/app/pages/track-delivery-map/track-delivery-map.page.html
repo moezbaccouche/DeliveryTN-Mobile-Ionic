@@ -1,0 +1,60 @@
+<ion-header> </ion-header>
+
+<ion-content>
+  <ion-spinner
+    style="margin-top: 20px;"
+    color="primary"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+  <div>
+    <div class="map" id="map"></div>
+
+    <ion-grid class="divDeliveryMan noPadding" style="width: 230px !important;">
+      <ion-row>
+        <ion-col style="text-align: center;">
+          <img
+            class="imgCircle"
+            height="45"
+            width="45"
+            src="../../../assets/Moez.jpg"
+            alt=""
+          />
+        </ion-col>
+      </ion-row>
+      <ion-row class="rowTitles">
+        <ion-col style="text-align: center;">
+          <span>Heure estimée</span>
+        </ion-col>
+        <ion-col style="text-align: center;">
+          <span>Distance</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="text-align: center;">
+          <span class="rowInfos"
+            >{{ deliveryInfos.estimatedDeliveryTime | date:"HH:mm" }}</span
+          >
+        </ion-col>
+        <ion-col style="text-align: center;">
+          <span class="rowInfos">{{ deliveryInfos.distance }}</span>
+          <span> Km</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="noPadding" style="text-align: center;">
+          <ion-button expand="full" class="btCall noPadding" color="success">
+            <ion-icon name="call" slot="start"></ion-icon>
+            Contacter
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div style="margin-top: 7% !important;">
+    <ion-button class="btReturn" expand="full" (click)="onGoBack()"
+      >Retour</ion-button
+    >
+  </div>
+</ion-content>

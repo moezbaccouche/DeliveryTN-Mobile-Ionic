@@ -1,0 +1,58 @@
+.map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.btReturn {
+  font-size: 16px;
+  margin: 0px;
+  text-transform: none;
+}
+
+.btCall {
+  text-transform: none;
+  margin: 0px;
+}
+
+.imgCircle {
+  border-radius: 50%;
+}
+
+--ion-grid {
+  width: 100px;
+}
+
+.rowTitles {
+  font-size: 13px;
+}
+
+.rowInfos {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.divDeliveryMan {
+  margin-top: 107%;
+  position: relative;
+  background-color: #f7f7f7;
+}
+
+.noPadding {
+  padding: 0px;
+}
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}

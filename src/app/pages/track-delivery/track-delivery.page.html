@@ -125,6 +125,7 @@
     class="btTrackMap"
     expand="full"
     *ngIf="deliveryInfos != null && client != null"
+    [routerLink]="['/track-delivery-map']"
   >
     <ion-icon slot="start" name="navigate-outline"></ion-icon>
     Suivre sur la carte</ion-button

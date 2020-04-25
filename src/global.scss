@@ -44,4 +44,15 @@ ion-card-title {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+.mapboxgl-ctrl-bottom-left {
+  top: 0 !important;
+  margin-top: 20px;
+}
 
+.mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+
+.mapboxgl-ctrl-top-right {
+  margin-top: 15px;
+}
