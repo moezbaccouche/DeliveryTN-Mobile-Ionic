@@ -40,4 +40,17 @@ export class DeliveryInfosService {
         };
     });
   }
+
+  getDeliveryManCurrentLocation(deliveryManId) {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}deliveryInfos/location/${deliveryManId}`).then(
+        (response) => {
+          resolve(response.json());
+        }
+      ),
+        (error) => {
+          reject(error);
+        };
+    });
+  }
 }

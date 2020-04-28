@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { mapToken } from "../../../assets/maptoken";
 import * as mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -12,7 +12,7 @@ import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
   templateUrl: "./track-delivery-map.page.html",
   styleUrls: ["./track-delivery-map.page.scss"],
 })
-export class TrackDeliveryMapPage implements OnInit {
+export class TrackDeliveryMapPage implements OnInit, OnDestroy {
   clientId = 1;
   client: any = {
     location: {
@@ -22,9 +22,18 @@ export class TrackDeliveryMapPage implements OnInit {
   };
   isLoading = true;
 
+  deliveryInterval = null;
+
   deliveryInfos: any = {
     estimatedDeliveryTime: "2020-04-25T15:00:00",
     distance: 0,
+    deliveryMan: {
+      id: 1,
+      location: {
+        lat: 0,
+        lng: 0,
+      },
+    },
   };
   orderId = 2;
 
@@ -32,8 +41,13 @@ export class TrackDeliveryMapPage implements OnInit {
 
   private map: mapboxgl.Map;
   style = "mapbox://styles/mapbox/outdoors-v11";
-  lat = 37.75;
-  lng = -122.41;
+  clientLat = 0;
+  clientLng = 0;
+
+  deliveryManLat = 0;
+  deliveryManLng = 0;
+
+  marker: any;
 
   clientSubscription: Subscription;
   sub: Subscription;
@@ -50,16 +64,25 @@ export class TrackDeliveryMapPage implements OnInit {
   ngOnInit() {
     this.getClient();
     this.getOrderDeliveryInfos();
+    this.getDeliveryManCurrentLocation();
+
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
       (client: any) => {
         this.client = client;
         this.initClientCoordinates();
         setTimeout(() => {
           this.buildMap();
+          this.addDeliveryManMarker();
           this.getMatch();
         }, 0);
       }
     );
+  }
+
+  ionViewDidEnter() {
+    this.getMatch();
+    this.addDeliveryManMarker();
+    this.getUpdatedDeliveryManLocation();
   }
 
   getClient() {
@@ -76,7 +99,7 @@ export class TrackDeliveryMapPage implements OnInit {
 
   getOrderDeliveryInfos() {
     this.deliveryInfosService.getOrderDeliveryInfos(this.orderId).then(
-      (response) => {
+      (response: any) => {
         this.deliveryInfos = response;
       },
       (error) => {
@@ -87,8 +110,8 @@ export class TrackDeliveryMapPage implements OnInit {
   }
 
   initClientCoordinates() {
-    this.lat = this.client.location.lat;
-    this.lng = this.client.location.long;
+    this.clientLat = this.client.location.lat;
+    this.clientLng = this.client.location.long;
   }
 
   buildMap() {
@@ -96,7 +119,7 @@ export class TrackDeliveryMapPage implements OnInit {
       container: "map",
       style: this.style,
       zoom: 13,
-      center: [this.lng, this.lat],
+      center: [this.clientLng, this.clientLat],
       //center : [long, lat]
     };
     this.map = new mapboxgl.Map(conf);
@@ -104,7 +127,7 @@ export class TrackDeliveryMapPage implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     var marker = new mapboxgl.Marker()
-      .setLngLat([this.lng, this.lat])
+      .setLngLat([this.clientLng, this.clientLat])
       .addTo(this.map);
   }
 
@@ -113,53 +136,106 @@ export class TrackDeliveryMapPage implements OnInit {
   }
 
   getMatch() {
-    var coordHome = [10.582612, 35.655248];
-    var coordDeliveryMan = [10.578436, 35.698611];
+    const coordsClients = [this.clientLng, this.clientLat];
+    const coordsDeliveryMan = [this.deliveryManLng, this.deliveryManLat];
 
-    var coordinates = [coordHome, coordDeliveryMan];
+    const coords = [coordsClients, coordsDeliveryMan];
+    var newCoords = coords.join(";");
 
-    var cc = coordinates.join(";");
-
-    this.deliveryInfosService.getRoute(cc, mapToken).then(
-      (response: any) => {
-        this.addRoute(response.routes[0].geometry);
-        this.distance = response.routes[0].distance * 0.001;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (
+      this.clientLng != 0 &&
+      this.clientLat != 0 &&
+      this.deliveryManLat != 0 &&
+      this.deliveryManLng != 0
+    ) {
+      this.deliveryInfosService.getRoute(newCoords, mapToken).then(
+        (response: any) => {
+          this.addRoute(response.routes[0].geometry);
+          this.distance = response.routes[0].distance * 0.001;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   addRoute(coords) {
-    console.log(coords);
     // check if the route is already loaded
     if (this.map.getSource("route")) {
       this.map.removeLayer("route");
       this.map.removeSource("route");
-    } else {
-      this.map.addLayer({
-        id: "route",
-        type: "line",
-        source: {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            properties: {},
-            geometry: coords,
-          },
-        },
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#1db7dd",
-          "line-width": 8,
-          "line-opacity": 0.8,
-        },
-      });
     }
+    this.map.addLayer({
+      id: "route",
+      type: "line",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: coords,
+        },
+      },
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "#1db7dd",
+        "line-width": 8,
+        "line-opacity": 0.8,
+      },
+    });
+  }
+
+  getDeliveryManCurrentLocation() {
+    this.deliveryInfosService
+      .getDeliveryManCurrentLocation(this.deliveryInfos.deliveryMan.id)
+      .then(
+        (response: any) => {
+          this.deliveryManLat = response.lat;
+          this.deliveryManLng = response.long;
+        },
+        (error) => {
+          this.presentToast("Une erreur est survenue !", "danger");
+          console.log(error);
+        }
+      );
+  }
+
+  getUpdatedDeliveryManLocation() {
+    this.deliveryInterval = setInterval(() => {
+      this.deliveryInfosService
+        .getDeliveryManCurrentLocation(this.deliveryInfos.deliveryMan.id)
+        .then(
+          (response: any) => {
+            console.log(response);
+            this.deliveryManLat = response.lat;
+            this.deliveryManLng = response.long;
+            this.getMatch();
+
+            this.marker.remove();
+            this.addDeliveryManMarker();
+          },
+          (error) => {
+            this.presentToast("Une erreur est survenue !", "danger");
+            console.log(error);
+          }
+        );
+    }, 10000);
+  }
+
+  addDeliveryManMarker() {
+    var el = document.createElement("div");
+    el.className = "marker";
+    el.style.backgroundImage = "url(../../../assets/deliveryTruck48.png)";
+    el.style.width = "48px";
+    el.style.height = "48px";
+
+    this.marker = new mapboxgl.Marker(el)
+      .setLngLat([this.deliveryManLng, this.deliveryManLat])
+      .addTo(this.map);
   }
 
   async presentToast(msg: string, type: string) {
@@ -170,5 +246,9 @@ export class TrackDeliveryMapPage implements OnInit {
       color: type,
     });
     toast.present();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.deliveryInterval);
   }
 }
