@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
 import { ClientsService } from "src/app/services/clients.service";
+import { mapToken } from "../../../assets/maptoken";
 
 @Component({
   selector: "app-track-delivery",
@@ -14,6 +15,13 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
   deliveryInfos: any = null;
   clientId = 1;
   client: any = null;
+  clientLat = 0;
+  clientLng = 0;
+
+  deliveryManLat = 0;
+  deliveryManLng = 0;
+
+  distance = 0;
 
   orderId: number;
   isLoading = true;
@@ -30,15 +38,25 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe((params) => {
-      this.orderId = +params["orderId"];
-      this.getDeliveryInfos();
-    });
+    this.sub = this.route.params.subscribe(
+      (params) => {
+        this.orderId = +params["orderId"];
+        this.getDeliveryInfos();
+      },
+      (error) => {
+        this.presentToast("Une erreur est survenue !", "danger");
+        console.log(error);
+      }
+    );
 
     this.getClient();
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
       (client: any) => {
         this.client = client;
+        if (client != undefined) {
+          this.clientLat = client.location.lat;
+          this.clientLng = client.location.long;
+        }
       }
     );
     this.clientsService.emitClientSubject();
@@ -49,6 +67,7 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
       (response) => {
         this.isLoading = false;
         this.deliveryInfos = response;
+        this.getDeliveryManCurrentLocation();
       },
       (error) => {
         console.log(error);
@@ -69,6 +88,48 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
 
   onGoBack() {
     this.navController.pop();
+  }
+
+  getDeliveryManCurrentLocation() {
+    this.deliveryInfosService
+      .getDeliveryManCurrentLocation(this.deliveryInfos.deliveryMan.id)
+      .then(
+        (response: any) => {
+          console.log(response);
+          this.deliveryManLat = response.lat;
+          this.deliveryManLng = response.long;
+          this.getMatch();
+        },
+        (error) => {
+          this.presentToast("Une erreur est survenue !", "danger");
+          console.log(error);
+        }
+      );
+  }
+
+  getMatch() {
+    const coordsClients = [this.clientLng, this.clientLat];
+    const coordsDeliveryMan = [this.deliveryManLng, this.deliveryManLat];
+
+    const coords = [coordsDeliveryMan, coordsClients];
+    var newCoords = coords.join(";");
+
+    if (
+      this.clientLng != 0 &&
+      this.clientLat != 0 &&
+      this.deliveryManLat != 0 &&
+      this.deliveryManLng != 0
+    ) {
+      this.deliveryInfosService.getRoute(newCoords, mapToken).then(
+        (response: any) => {
+          this.distance = response.routes[0].distance * 0.001;
+          console.log(this.distance);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   async presentToast(msg: string, type: string) {

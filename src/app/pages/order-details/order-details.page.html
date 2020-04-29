@@ -15,7 +15,19 @@
   ></ion-spinner>
 
   <div *ngIf="order != null">
+    <ion-row *ngIf="order.orderStatus == 0">
+      <ion-col size="12" style="text-align: center;">
+        <span><strong>Statut: </strong></span>
+        <span style="font-style: italic;">En attente</span>
+      </ion-col>
+    </ion-row>
     <ion-row *ngIf="order.orderStatus == 1">
+      <ion-col size="12" style="text-align: center;">
+        <span><strong>Statut: </strong></span>
+        <span style="font-style: italic;">En cours de traitement</span>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="order.orderStatus == 2">
       <ion-col size="12" style="text-align: center;">
         <span><strong>Statut: </strong></span>
         <span style="font-style: italic;">En cours de livraison</span>
@@ -63,11 +75,18 @@
       </ion-item-divider>
       <div>
         <ion-grid>
-          <ion-row>
-            <ion-col size="5" *ngIf="order.orderStatus == 1">
+          <ion-row *ngIf="order.orderStatus == 1 || order.orderStatus == 2">
+            <ion-col size="5">
               <span class="textInfos"><strong>Heure estimée</strong> </span>
             </ion-col>
-            <ion-col size="5" *ngIf="order.orderStatus == 2">
+            <ion-col size="7" style="text-align: end;">
+              <span>
+                {{ order.estimatedDeliveryTime | date:"dd/MM HH:mm"}}</span
+              >
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="order.orderStatus == 3">
+            <ion-col size="5">
               <span class="textInfos"><strong>Date</strong> </span>
             </ion-col>
             <ion-col size="7" style="text-align: end;">
@@ -85,12 +104,30 @@
           <ion-row>
             <ion-col size="12">
               <ion-button
+                *ngIf="order.orderStatus != 3"
                 class="btTrack"
                 expand="block"
                 [routerLink]="['/track-delivery', order.orderId]"
+                [disabled]="order.orderStatus == 0"
               >
                 Suivre
               </ion-button>
+              <ion-button
+                *ngIf="order.orderStatus == 3"
+                class="btTrack"
+                expand="block"
+                [routerLink]="['/track-delivery', order.orderId]"
+                [disabled]="order.orderStatus == 0"
+              >
+                Chronologie
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="order.orderStatus == 0">
+            <ion-col style="text-align: center;">
+              <span style="color: #d9534f; font-size: 14px; font-style: italic;"
+                >Votre commande n'a pas encore été acceptée.</span
+              >
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -117,7 +154,7 @@
         </ion-grid>
       </div>
     </div>
-    <div style="margin-top: 10px;">
+    <div style="margin-top: 10px;" *ngIf="order.orderStatus != 0">
       <ion-item-divider>
         <ion-label class="dividerLabels">
           <strong><span>Livreur</span></strong>
@@ -136,10 +173,10 @@
                 (click)="presentPopoverDeliveryManProfile(order.deliveryManId)"
               />
             </ion-col>
-            <ion-col size="6">
-              <span style="font-size: 16px;">{{ order.deliveryManName }}</span>
+            <ion-col size="5">
+              <span style="font-size: 14px;">{{ order.deliveryManName }}</span>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="3">
               <ion-button
                 *ngIf="order.deliveryManClientRating == 0"
                 fill="outline"

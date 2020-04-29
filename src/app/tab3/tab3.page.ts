@@ -9,12 +9,12 @@ import { ToastController } from "@ionic/angular";
   styleUrls: ["tab3.page.scss"],
 })
 export class Tab3Page implements OnInit, OnDestroy {
-  treatedOrders: any = [];
+  clientOrders: any = [];
   clientId = 1;
 
   isLoading = true;
 
-  treatedOrdersSubscription: Subscription;
+  clientOrdersSubscription: Subscription;
 
   constructor(
     private ordersService: OrdersService,
@@ -22,17 +22,20 @@ export class Tab3Page implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getTreatedOrders();
-    this.treatedOrdersSubscription = this.ordersService.treatedOrdersSubject.subscribe(
+    this.getClientOrders();
+
+    this.clientOrdersSubscription = this.ordersService.clientOrdersSubject.subscribe(
       (orders: any[]) => {
-        this.treatedOrders = orders;
-        console.log(this.treatedOrders);
+        console.log(orders);
+        this.clientOrders = orders;
+        console.log(this.clientOrders);
       }
     );
+    this.ordersService.emitClientOrdersSubject();
   }
 
-  getTreatedOrders() {
-    this.ordersService.getTreatedOrders(this.clientId).then(
+  getClientOrders() {
+    this.ordersService.getClientOrders(this.clientId).then(
       () => {
         this.isLoading = false;
       },
@@ -53,5 +56,7 @@ export class Tab3Page implements OnInit, OnDestroy {
     toast.present();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.clientOrdersSubscription.unsubscribe();
+  }
 }

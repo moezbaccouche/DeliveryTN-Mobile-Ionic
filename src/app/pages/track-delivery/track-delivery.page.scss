@@ -53,12 +53,20 @@ ion-content {
   height: 10px;
   right: -17px;
   background-color: white;
-  border: 2px solid #ff9f55;
+  border: 3px solid #5cb85c;
   top: 15px;
   border-radius: 50%;
   z-index: 1;
-  margin-left: 10px;
+  margin-left: 9px;
 }
+
+// -------------------- The last container -----------------
+
+.containerAddress::after {
+  border: 3px solid #d9534f;
+}
+
+//-----------------------------------------------------------
 
 /* Place the container to the left */
 .left {
@@ -196,4 +204,11 @@ ion-content {
 ion-spinner {
   display: block;
   margin: auto;
+}
+
+.bottomDiv {
+  position: fixed;
+  left: 0;
+  bottom: 0px;
+  right: 0;
 }

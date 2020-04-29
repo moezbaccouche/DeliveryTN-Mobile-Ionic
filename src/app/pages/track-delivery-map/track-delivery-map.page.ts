@@ -139,7 +139,7 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     const coordsClients = [this.clientLng, this.clientLat];
     const coordsDeliveryMan = [this.deliveryManLng, this.deliveryManLat];
 
-    const coords = [coordsClients, coordsDeliveryMan];
+    const coords = [coordsDeliveryMan, coordsClients];
     var newCoords = coords.join(";");
 
     if (

@@ -35,7 +35,7 @@
 }
 
 .divDeliveryMan {
-  margin-top: 107%;
+  margin-top: 105%;
   position: relative;
   background-color: #f7f7f7;
 }
@@ -55,4 +55,11 @@
 ion-spinner {
   display: block;
   margin: auto;
+}
+
+.bottomDiv {
+  position: fixed;
+  left: 0;
+  bottom: 0px;
+  right: 0;
 }

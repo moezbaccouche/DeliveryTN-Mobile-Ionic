@@ -21,6 +21,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   favoriteProducts: Product[];
   searchTerm: string;
   clientId = 1;
+  private isLoading = true;
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
@@ -46,7 +47,15 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   _loadAllProducts() {
-    this.productsService.getProductsFromApi();
+    this.productsService.getProductsFromApi().then(
+      () => {
+        this.isLoading = false;
+      },
+      (error) => {
+        this.presentToast("Une erreur est survenue !", "danger");
+        console.log(error);
+      }
+    );
   }
 
   _loadProductsByPriceAsc() {

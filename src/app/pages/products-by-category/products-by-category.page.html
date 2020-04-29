@@ -8,7 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let product of categoryProducts">
+  <ion-card
+    *ngFor="let product of categoryProducts"
+    [routerLink]="['/product-details', product.id]"
+  >
     <ion-grid>
       <ion-row>
         <ion-col size="6" class="ion-float-left">

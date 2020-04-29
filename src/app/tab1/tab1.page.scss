@@ -5,3 +5,16 @@ ion-content ion-toolbar {
 .textPriceUnit {
   font-size: 12px;
 }
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}

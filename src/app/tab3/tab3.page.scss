@@ -9,3 +9,16 @@ ion-content ion-toolbar {
 .noPadding {
   padding: 0px;
 }
+
+.loadingSpinner {
+  display: block;
+}
+
+.stopLoading {
+  display: none;
+}
+
+ion-spinner {
+  display: block;
+  margin: auto;
+}

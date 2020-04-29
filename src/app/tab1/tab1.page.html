@@ -16,7 +16,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-row>
+  <ion-spinner
+    color="primary"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+
+  <ion-row *ngIf="allProducts.length != 0">
     <ion-col size="10">
       <ion-searchbar
         [(ngModel)]="searchTerm"
