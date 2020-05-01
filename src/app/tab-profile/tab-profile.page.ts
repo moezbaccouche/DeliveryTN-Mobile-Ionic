@@ -45,7 +45,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
   isLoading = true;
 
-  currentImage = "../../assets/Moez.jpg";
+  currentImage = "../../assets/me.png";
 
   imagePickerOptions = {
     maximumImagesCount: 1,

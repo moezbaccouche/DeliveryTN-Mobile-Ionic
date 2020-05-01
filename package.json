@@ -32,7 +32,7 @@
     "cordova-plugin-file": "6.0.2",
     "core-js": "^2.5.4",
     "ionic-angular": "^3.9.10",
-    "mapbox-gl": "^1.9.1",
+    "mapbox-gl": "^1.10.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

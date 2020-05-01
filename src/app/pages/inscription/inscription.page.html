@@ -6,8 +6,8 @@
         <div class="border-white">
           <div class="img-box">
             <img
-              src="../../../assets/avatar.jpg"
-              
+            [src]="currentImage"
+            tappable
             />
             
           </div>
@@ -18,114 +18,143 @@
     <ion-grid class="input-grid">
       <ion-row>
         <ion-col>
-          <div>
+          <ion-list class="line-input">
             <ion-item>
-              <ion-label position="floating" required="true" style="font-size: initial;">*Nom</ion-label>
-              <ion-input
-                type="text"
-              ></ion-input>
+              <ion-label>Prénom</ion-label>
+              <ion-input class="ion-text-left" type="text"></ion-input>
             </ion-item>
-          </div>
+        </ion-list>
         </ion-col>
       </ion-row>
       
       <ion-row>
         <ion-col>
-          <div>
+          <ion-list class="line-input">
             <ion-item>
-              <ion-label position="floating" clear-on-edit="true"
-                >*Prénom</ion-label
-              >
-              <ion-input
-                type="text"
-               
-              ></ion-input>
+              <ion-label>Nom</ion-label>
+              <ion-input  type="text"></ion-input>
             </ion-item>
-          </div>
+        </ion-list>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list class="line-input">
+            <ion-item>
+              <ion-label>Date de naissance</ion-label>
+              <ion-input  type="date"></ion-input>
+            </ion-item>
+        </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list class="line-input">
+            <ion-item>
+              <ion-label>Email</ion-label>
+              <ion-input  type="email"></ion-input>
+            </ion-item>
+        </ion-list>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <div>
+          <ion-list class="line-input">
             <ion-item>
-              <ion-label position="floating">*Télephone</ion-label>
-              <ion-input
-                type="tel"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <ion-item>
-              <ion-label position="floating" clear-on-edit="true"
-                >*Mot de passe</ion-label
-              >
-              <ion-input
-                [type]="passwordType"
-               
-              ></ion-input>
+              <ion-label>Mot de passe</ion-label>
+              <ion-input  [type]="passwordType"></ion-input> 
               <ion-icon
-                [name]="iconType"
-                slot="end"
-                (click)="HidePassword()"
-              ></ion-icon>
+              [name]="iconType"
+              slot="end"
+              (click)="HidePassword()"
+            ></ion-icon>
             </ion-item>
-          </div>
+        </ion-list>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col size="12">
-          <div>
-            <ion-item>
-              <ion-label position="floating">*E-mail</ion-label>
-              <ion-input
-                type="email"
-               
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
         <ion-col>
-          <div>
+          <ion-list class="line-input">
             <ion-item>
-              <ion-label position="floating" clear-on-edit="true"
-                >*Adresse</ion-label
-              >
-              <ion-input
-                type="text"
-              >
-              </ion-input>
+              <ion-label>Téléphone</ion-label>
+              <ion-input  type="tel"></ion-input>
             </ion-item>
-          </div>
-          <div>
-            <ion-item>
-              <ion-label position="floating" clear-on-edit="true"
-                >*Ville</ion-label
-              >
-              <ion-input
-                type="text"
-              
-              >
-              </ion-input>
-            </ion-item>
-          </div>
-          <div>
-            <ion-item>
-              <ion-label position="floating" clear-on-edit="true"
-                >*Code Postal</ion-label
-              >
-              <ion-input
-                type="tel"
-              >
-              </ion-input>
-            </ion-item>
-          </div>
+        </ion-list>
         </ion-col>
       </ion-row>
+
+      <ion-row >
+        <ion-col>
+        <ion-list class='line-input'>
+          <ion-item>
+            <ion-label>Gouvernorat</ion-label>
+            <ion-select cancelText="Annuler">
+              <ion-select-option >Ariana</ion-select-option>
+              <ion-select-option >Béja</ion-select-option>
+              <ion-select-option >Ben arous</ion-select-option>
+              <ion-select-option >Bizerte</ion-select-option>
+              <ion-select-option >Gabés</ion-select-option>
+              <ion-select-option >Gafsa</ion-select-option>
+              <ion-select-option >Jendouba</ion-select-option>
+              <ion-select-option >Kaiouan</ion-select-option>
+              <ion-select-option >Kasserine	</ion-select-option>
+              <ion-select-option >Kébili</ion-select-option>
+              <ion-select-option >Kef</ion-select-option>
+              <ion-select-option >Manouba</ion-select-option>
+              <ion-select-option >Mahdia</ion-select-option>
+              <ion-select-option >Médenine</ion-select-option>
+              <ion-select-option >Monastir</ion-select-option>
+              <ion-select-option >Nabeul</ion-select-option>
+              <ion-select-option >Sfax</ion-select-option>
+              <ion-select-option >Sidi Bouzid</ion-select-option>
+              <ion-select-option >Siliana</ion-select-option>
+              <ion-select-option >Sousse</ion-select-option>
+              <ion-select-option >Tataouine</ion-select-option>
+              <ion-select-option >Tozeur</ion-select-option>
+              <ion-select-option >Tunis</ion-select-option>
+              <ion-select-option >Zaghouan</ion-select-option>
+            </ion-select>
+          </ion-item>  
+        </ion-list>
+      </ion-col>
+      </ion-row >
+      
+      <ion-row>
+        <ion-col >
+          <ion-list class="line-input">
+            <ion-item>
+              <ion-label>Adresse</ion-label>
+              <ion-input  type="text"></ion-input>
+            </ion-item>
+        </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col >
+          <ion-list class="line-input">
+            <ion-item>
+              <ion-label>Code Postal</ion-label>
+              <ion-input  type="number"></ion-input>
+            </ion-item>
+        </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col style="text-align: center;">
+          <ion-button fill="clear" style="text-transform: none;" (click)="presentActionSheet()">Choisir Photo
+          <ion-icon name="camera-outline" slot="end"></ion-icon>        
+        </ion-button> 
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
+
+ 
 
 
 
@@ -135,7 +164,7 @@
   <ion-toolbar>
     <ion-button
       expand="block"
-      class="button"
+      class="inscri"
       shape="round"
       routerLink="/login"
     >
