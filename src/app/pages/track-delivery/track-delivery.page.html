@@ -20,7 +20,7 @@
         <ion-col>
           <span>Heure estimée</span>
         </ion-col>
-        <ion-col>
+        <ion-col *ngIf="deliveryInfos.orderStatus != 1">
           <span>Distance</span>
         </ion-col>
       </ion-row>
@@ -28,8 +28,8 @@
         <ion-col>
           <span>{{ deliveryInfos.estimatedDeliveryTime | date:"HH:mm" }}</span>
         </ion-col>
-        <ion-col>
-          <span>{{ deliveryInfos.distance }}</span>
+        <ion-col *ngIf="deliveryInfos.orderStatus != 1">
+          <span>{{ distance | number:"1.2-2" }}</span>
           <span style="font-size: 12px !important;"> Km</span>
         </ion-col>
       </ion-row>
@@ -38,7 +38,7 @@
   <div class="timeline" *ngIf="deliveryInfos != null && client != null">
     <div class="container right">
       <div class="content">
-        <span>Commande passée</span>
+        <span style="font-weight: bold;">Commande passée</span>
         <br />
         <div
           style="
@@ -54,7 +54,7 @@
     </div>
     <div class="container right">
       <div class="content">
-        <span>Commande acceptée</span>
+        <span style="font-weight: bold;">Commande acceptée</span>
         <div class="deliveryManDiv">
           <ion-grid class="noPadding">
             <ion-row>
@@ -68,7 +68,7 @@
                 >
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="deliveryInfos.orderStatus != 3">
               <ion-col>
                 <ion-button
                   color="success"
@@ -98,9 +98,29 @@
       </div>
     </div>
 
-    <div class="container right">
+    <!-- If the order is still processing or being delivered, then display the address container
+       as if it is disabled -->
+    <!-- With a red cercle in the timeline -->
+    <div
+      class="container containerAddress right"
+      *ngIf="deliveryInfos.orderStatus != 3"
+    >
       <div class="content">
-        <span>Commande livrée</span>
+        <span style="font-weight: bold; color: #bababa;">Commande livrée</span>
+        <br />
+        <div class="divAddress">
+          <span class="textAddress" style="color: #bababa;"
+            >{{ client.location.address}}, {{ client.location.city}}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- If the order is delivered then display the address container normally -->
+    <!-- With a green cercle in the timeline -->
+    <div class="container right" *ngIf="deliveryInfos.orderStatus == 3">
+      <div class="content">
+        <span style="font-weight: bold;">Commande livrée</span>
         <br />
         <div class="divAddress">
           <span class="textAddress"
@@ -120,14 +140,17 @@
       </div>
     </div>
   </div>
-  <ion-button
-    color="success"
-    class="btTrackMap"
-    expand="full"
-    *ngIf="deliveryInfos != null && client != null"
-    [routerLink]="['/track-delivery-map']"
-  >
-    <ion-icon slot="start" name="navigate-outline"></ion-icon>
-    Suivre sur la carte</ion-button
-  >
+  <div class="bottomDiv">
+    <ion-button
+      color="success"
+      class="btTrackMap"
+      expand="full"
+      *ngIf="deliveryInfos != null && client != null && deliveryInfos.orderStatus != 1 && deliveryInfos.orderStatus != 3"
+      [routerLink]="['/track-delivery-map']"
+      [disabled]="deliveryInfos.orderStatus == 1"
+    >
+      <ion-icon slot="start" name="navigate-outline"></ion-icon>
+      Suivre sur la carte</ion-button
+    >
+  </div>
 </ion-content>

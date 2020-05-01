@@ -7,7 +7,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let order of treatedOrders">
+  <ion-spinner
+    color="primary"
+    [class.loadingSpinner]="isLoading"
+    [class.stopLoading]="!isLoading"
+  ></ion-spinner>
+
+  <ion-card *ngFor="let order of clientOrders">
     <ion-grid>
       <div [routerLink]="['/order-details', order.orderId]">
         <ion-row>
@@ -20,12 +26,22 @@
           <ion-col size="6" style="text-align: end;">
             <span><strong>Statut: </strong></span>
             <span
+              *ngIf="order.orderStatus == 0"
+              style="color: grey; font-style: italic;"
+              >En attente</span
+            >
+            <span
               *ngIf="order.orderStatus == 1"
+              style="color: grey; font-style: italic;"
+              >En cours de traitement</span
+            >
+            <span
+              *ngIf="order.orderStatus == 2"
               style="color: grey; font-style: italic;"
               >En cours de livraison</span
             >
             <span
-              *ngIf="order.orderStatus == 2"
+              *ngIf="order.orderStatus == 3"
               style="color: green; font-weight: bold;"
               >Livrée ({{ order.realDeliveryTime | date:"HH:mm" }})</span
             >
@@ -47,7 +63,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="ion-align-items-center">
+        <ion-row class="ion-align-items-center" *ngIf="order.orderStatus != 0">
           <ion-col size="8" style="padding-right: 0px;">
             <span><strong>Livreur: </strong></span>
             <span>{{ order.deliveryManName }}</span>

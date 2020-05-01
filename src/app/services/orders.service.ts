@@ -18,6 +18,9 @@ export class OrdersService {
   private treatedOrders: any[] = [];
   treatedOrdersSubject = new Subject<any[]>();
 
+  private clientOrders: any[] = [];
+  clientOrdersSubject = new Subject<any[]>();
+
   emitTreatedOrdersSubject() {
     this.treatedOrdersSubject.next(this.treatedOrders.slice());
   }
@@ -36,6 +39,10 @@ export class OrdersService {
 
   emitNotDeliveredOrderSubject() {
     this.notDeliveredOrderSubject.next(this.notDeliveredOrder);
+  }
+
+  emitClientOrdersSubject() {
+    this.clientOrdersSubject.next(this.clientOrders.slice());
   }
 
   makeNewOrder(cliId, requestBill) {
@@ -77,6 +84,23 @@ export class OrdersService {
         .then((data) => {
           this.treatedOrders = data;
           this.emitTreatedOrdersSubject();
+          resolve("Commandes récupérés avec succès !");
+        }),
+        (error) => {
+          reject(error);
+        };
+    });
+  }
+
+  getClientOrders(clientId) {
+    return new Promise((resolve, reject) => {
+      fetch(`${this.baseUrl}orders/all/clients/${clientId}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.clientOrders = data;
+          this.emitClientOrdersSubject();
           resolve("Commandes récupérés avec succès !");
         }),
         (error) => {
