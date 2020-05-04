@@ -1,15 +1,10 @@
-<ion-content >
-  
-
+<ion-content>
+  <form [formGroup]="formModel" autocomplete="off">
     <div class="flex">
       <div class="border-blue">
         <div class="border-white">
           <div class="img-box">
-            <img
-            [src]="currentImage"
-            tappable
-            />
-            
+            <img [src]="currentImage" tappable />
           </div>
         </div>
       </div>
@@ -17,35 +12,67 @@
 
     <ion-grid class="input-grid">
       <ion-row>
+        <ion-col style="text-align: center;">
+          <ion-button
+            fill="clear"
+            style="text-transform: none;"
+            (click)="presentActionSheet()"
+            >Choisir Photo
+            <ion-icon name="camera-outline" slot="end"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
         <ion-col>
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Prénom</ion-label>
-              <ion-input class="ion-text-left" type="text"></ion-input>
+              <ion-input
+                formControlName="firstName"
+                class="ion-text-left"
+                type="text"
+              ></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('firstName').touched && formModel.get('firstName').errors?.required"
+              >Ce champs est requis !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
-      
+
       <ion-row>
         <ion-col>
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Nom</ion-label>
-              <ion-input  type="text"></ion-input>
+              <ion-input formControlName="lastName" type="text"></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('lastName').touched && formModel.get('lastName').errors?.required"
+              >Ce champs est requis !</span
+            >
+          </ion-list>
         </ion-col>
-
       </ion-row>
       <ion-row>
         <ion-col>
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Date de naissance</ion-label>
-              <ion-input  type="date"></ion-input>
+              <ion-datetime
+                formControlName="dateOfBirth"
+                displayFormat="DD/MM/YYYY"
+              ></ion-datetime>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('dateOfBirth').touched && formModel.get('dateOfBirth').errors?.required"
+              >Ce champs est requis !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -53,9 +80,19 @@
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Email</ion-label>
-              <ion-input  type="email"></ion-input>
+              <ion-input formControlName="email" type="email"></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('email').touched && formModel.get('email').errors?.required"
+              >Ce champs est requis !</span
+            >
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('email').touched && formModel.get('email').errors?.email"
+              >Adresse E-Mail invalide !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
 
@@ -64,14 +101,27 @@
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Mot de passe</ion-label>
-              <ion-input  [type]="passwordType"></ion-input> 
+              <ion-input
+                formControlName="password"
+                [type]="passwordType"
+              ></ion-input>
               <ion-icon
-              [name]="iconType"
-              slot="end"
-              (click)="HidePassword()"
-            ></ion-icon>
+                [name]="iconType"
+                slot="end"
+                (click)="HidePassword()"
+              ></ion-icon>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('password').touched && formModel.get('password').errors?.required"
+              >Ce champs est requis !</span
+            >
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('password').touched && formModel.get('password').errors?.minlength"
+              >Doit contenir au moins 4 caractères !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
 
@@ -80,97 +130,140 @@
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Téléphone</ion-label>
-              <ion-input  type="tel"></ion-input>
+              <ion-input formControlName="phone" type="tel"></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('phone').touched && formModel.get('phone').errors?.required"
+              >Ce champs est requis !</span
+            >
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('phone').touched && formModel.get('phone').errors?.minlength"
+              >Doit contenir au moins 8 caractères !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
 
-      <ion-row >
-        <ion-col>
-        <ion-list class='line-input'>
-          <ion-item>
-            <ion-label>Gouvernorat</ion-label>
-            <ion-select cancelText="Annuler">
-              <ion-select-option >Ariana</ion-select-option>
-              <ion-select-option >Béja</ion-select-option>
-              <ion-select-option >Ben arous</ion-select-option>
-              <ion-select-option >Bizerte</ion-select-option>
-              <ion-select-option >Gabés</ion-select-option>
-              <ion-select-option >Gafsa</ion-select-option>
-              <ion-select-option >Jendouba</ion-select-option>
-              <ion-select-option >Kaiouan</ion-select-option>
-              <ion-select-option >Kasserine	</ion-select-option>
-              <ion-select-option >Kébili</ion-select-option>
-              <ion-select-option >Kef</ion-select-option>
-              <ion-select-option >Manouba</ion-select-option>
-              <ion-select-option >Mahdia</ion-select-option>
-              <ion-select-option >Médenine</ion-select-option>
-              <ion-select-option >Monastir</ion-select-option>
-              <ion-select-option >Nabeul</ion-select-option>
-              <ion-select-option >Sfax</ion-select-option>
-              <ion-select-option >Sidi Bouzid</ion-select-option>
-              <ion-select-option >Siliana</ion-select-option>
-              <ion-select-option >Sousse</ion-select-option>
-              <ion-select-option >Tataouine</ion-select-option>
-              <ion-select-option >Tozeur</ion-select-option>
-              <ion-select-option >Tunis</ion-select-option>
-              <ion-select-option >Zaghouan</ion-select-option>
-            </ion-select>
-          </ion-item>  
-        </ion-list>
-      </ion-col>
-      </ion-row >
-      
       <ion-row>
-        <ion-col >
+        <ion-col>
+          <ion-list class="line-input">
+            <ion-item>
+              <ion-label>Gouvernorat</ion-label>
+              <ion-select cancelText="Annuler" formControlName="city">
+                <ion-select-option>Ariana</ion-select-option>
+                <ion-select-option>Béja</ion-select-option>
+                <ion-select-option>Ben arous</ion-select-option>
+                <ion-select-option>Bizerte</ion-select-option>
+                <ion-select-option>Gabés</ion-select-option>
+                <ion-select-option>Gafsa</ion-select-option>
+                <ion-select-option>Jendouba</ion-select-option>
+                <ion-select-option>Kaiouan</ion-select-option>
+                <ion-select-option>Kasserine </ion-select-option>
+                <ion-select-option>Kébili</ion-select-option>
+                <ion-select-option>Kef</ion-select-option>
+                <ion-select-option>Manouba</ion-select-option>
+                <ion-select-option>Mahdia</ion-select-option>
+                <ion-select-option>Médenine</ion-select-option>
+                <ion-select-option>Monastir</ion-select-option>
+                <ion-select-option>Nabeul</ion-select-option>
+                <ion-select-option>Sfax</ion-select-option>
+                <ion-select-option>Sidi Bouzid</ion-select-option>
+                <ion-select-option>Siliana</ion-select-option>
+                <ion-select-option>Sousse</ion-select-option>
+                <ion-select-option>Tataouine</ion-select-option>
+                <ion-select-option>Tozeur</ion-select-option>
+                <ion-select-option>Tunis</ion-select-option>
+                <ion-select-option>Zaghouan</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Adresse</ion-label>
-              <ion-input  type="text"></ion-input>
+              <ion-input formControlName="address" type="text"></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('address').touched && formModel.get('address').errors?.required"
+              >Ce champs est requis !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col >
+        <ion-col>
           <ion-list class="line-input">
             <ion-item>
               <ion-label>Code Postal</ion-label>
-              <ion-input  type="number"></ion-input>
+              <ion-input formControlName="zipCode" type="number"></ion-input>
             </ion-item>
-        </ion-list>
+            <span
+              class="text-danger"
+              *ngIf="formModel.get('zipCode').touched && formModel.get('zipCode').errors?.required"
+              >Ce champs est requis !</span
+            >
+          </ion-list>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col style="text-align: center;">
-          <ion-button fill="clear" style="text-transform: none;" (click)="presentActionSheet()">Choisir Photo
-          <ion-icon name="camera-outline" slot="end"></ion-icon>        
-        </ion-button> 
+          <ion-button (click)="locateClient()" class="btLocate" color="success">
+            <ion-icon name="locate" slot="icon-only"></ion-icon>
+            Localiser
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="text-align: center;">
+          <span class="text-danger" *ngIf="lat == null || long == null"
+            >Localisez votre position !</span
+          >
         </ion-col>
       </ion-row>
 
+      <ion-row *ngIf="long != null && lat != null">
+        <ion-col size="12" style="text-align: center;">
+          <ion-row>
+            <ion-col>
+              <span>Longitude </span>
+              <span><strong>{{ long.toFixed(2) }}</strong></span>
+            </ion-col>
+            <ion-col>
+              <span>Latitude </span>
+              <span><strong>{{ lat.toFixed(2) }}</strong></span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="emailExists">
+        <ion-col style="text-align: center;">
+          <span class="text-danger">L'Email saisi est déjà utilisé !</span>
+        </ion-col>
+      </ion-row>
     </ion-grid>
-
- 
-
-
-
+  </form>
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar>
     <ion-button
+      [disabled]="!formModel.valid || long == null || lat == null"
       expand="block"
       class="inscri"
       shape="round"
-      routerLink="/login"
+      (click)="onSubmit()"
     >
-    Isncription
+      Inscription
     </ion-button>
   </ion-toolbar>
 </ion-footer>
-
-

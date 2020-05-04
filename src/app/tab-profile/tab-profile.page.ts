@@ -33,7 +33,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
   clientSubscription: Subscription;
   client: Client;
-  clientId = 1;
+  clientId = 7;
 
   nbFavoriteProducts = 0;
   favoriteProducts: any;
@@ -213,7 +213,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
           } else if (test == 2) {
             this.presentActionSheet();
           } else {
-            this.navCtrl.navigateForward('inscription');
+            this.navCtrl.navigateForward("inscription");
             console.log("déconnexion");
           }
           popover.dismiss();

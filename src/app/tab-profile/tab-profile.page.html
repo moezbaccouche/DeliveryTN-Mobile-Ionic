@@ -42,7 +42,7 @@
         <div class="border-white">
           <div class="img-box">
             <img
-              [src]="currentImage"
+              [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
               tappable
               (click)="openPreview(currentImage)"
             />

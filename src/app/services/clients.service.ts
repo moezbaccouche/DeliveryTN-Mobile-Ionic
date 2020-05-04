@@ -16,6 +16,8 @@ export class ClientsService {
 
   clientSubject = new Subject<Client>();
 
+  constructor(private http: HttpClient) {}
+
   emitClientSubject() {
     this.clientSubject.next(this.client);
   }
@@ -43,5 +45,9 @@ export class ClientsService {
           reject(error);
         };
     });
+  }
+
+  register(newClient) {
+    return this.http.post(`${this.baseUrl}clients/register`, newClient);
   }
 }
