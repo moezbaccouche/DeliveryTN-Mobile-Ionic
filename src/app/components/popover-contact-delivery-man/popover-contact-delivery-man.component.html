@@ -1,0 +1,70 @@
+<ion-grid>
+  <ion-row>
+    <ion-col style="text-align: center;">
+      <span class="title">Contacter via </span>
+      <br />
+    </ion-col>
+  </ion-row>
+  <br />
+  <ion-row>
+    <ion-col size="4" style="text-align: center;">
+      <img
+        height="32"
+        width="32"
+        src="../../../assets/contact-icons/phone.png"
+        alt=""
+        (click)="onCall()"
+      />
+      <br />
+      <span class="appName">Appeler</span>
+    </ion-col>
+
+    <ion-col size="4" style="text-align: center;">
+      <a
+        [href]="
+          domSanitizer.bypassSecurityTrustUrl('sms://' + deliveryManPhoneNumber)
+        "
+        ><img
+          height="32"
+          width="32"
+          src="../../../assets/contact-icons/messages.png"
+          alt=""
+      /></a>
+      <br />
+      <span class="appName">
+        SMS
+      </span>
+    </ion-col>
+    <ion-col size="4" style="text-align: center;">
+      <a
+        [href]="
+          domSanitizer.bypassSecurityTrustUrl(
+            'mailto:' + deliveryManEmailAddress
+          )
+        "
+      >
+        <img
+          height="32"
+          width="32"
+          src="../../../assets/contact-icons/email.png"
+          alt=""
+        />
+      </a>
+      <br />
+      <span class="appName">
+        Email
+      </span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col style="text-align: center;">
+      <ion-button
+        (click)="onCancel()"
+        class="btContact"
+        fill="clear"
+        color="primary"
+        >Annuler</ion-button
+      >
+    </ion-col>
+  </ion-row>
+</ion-grid>

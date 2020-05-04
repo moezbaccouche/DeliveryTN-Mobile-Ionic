@@ -43,7 +43,12 @@
       </ion-row>
       <ion-row>
         <ion-col class="noPadding" style="text-align: center;">
-          <ion-button expand="full" class="btCall noPadding" color="success">
+          <ion-button
+            expand="full"
+            class="btCall noPadding"
+            color="success"
+            (click)="presentPopoverContactDeliveryMan($event)"
+          >
             <ion-icon name="call" slot="start"></ion-icon>
             Contacter
           </ion-button>

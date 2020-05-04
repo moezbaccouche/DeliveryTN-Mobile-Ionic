@@ -4,8 +4,13 @@ import * as mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Subscription } from "rxjs";
 import { ClientsService } from "src/app/services/clients.service";
-import { ToastController, NavController } from "@ionic/angular";
+import {
+  ToastController,
+  NavController,
+  PopoverController,
+} from "@ionic/angular";
 import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
+import { PopoverContactDeliveryManComponent } from "src/app/components/popover-contact-delivery-man/popover-contact-delivery-man.component";
 
 @Component({
   selector: "app-track-delivery-map",
@@ -56,7 +61,8 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     private clientsService: ClientsService,
     private toastController: ToastController,
     private navController: NavController,
-    private deliveryInfosService: DeliveryInfosService
+    private deliveryInfosService: DeliveryInfosService,
+    private popoverController: PopoverController
   ) {
     mapboxgl.accessToken = mapToken;
   }
@@ -246,6 +252,23 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
       color: type,
     });
     toast.present();
+  }
+
+  async presentPopoverContactDeliveryMan(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverContactDeliveryManComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        deliveryManPhoneNumber: this.deliveryInfos.deliveryMan.phone,
+        deliveryManEmailAddress: this.deliveryInfos.deliveryMan.email,
+        onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
   }
 
   ngOnDestroy(): void {

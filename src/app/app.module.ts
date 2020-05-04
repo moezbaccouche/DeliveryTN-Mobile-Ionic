@@ -27,6 +27,9 @@ import { PopoverRatingComponent } from "./components/popover-rating/popover-rati
 import { PopoverDeliverymanProfileComponent } from "./components/popover-deliveryman-profile/popover-deliveryman-profile.component";
 import { DeliveryMenService } from "./services/deliveryMen.service";
 import { PopoverRequestBillComponent } from "./components/popover-request-bill/popover-request-bill.component";
+import { PopoverContactDeliveryManComponent } from "./components/popover-contact-delivery-man/popover-contact-delivery-man.component";
+import { CallNumber } from "@ionic-native/call-number/ngx";
+import { SMS } from "@ionic-native/sms/ngx";
 
 @NgModule({
   declarations: [
@@ -40,6 +43,7 @@ import { PopoverRequestBillComponent } from "./components/popover-request-bill/p
     PopoverRatingComponent,
     PopoverDeliverymanProfileComponent,
     PopoverRequestBillComponent,
+    PopoverContactDeliveryManComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -51,6 +55,7 @@ import { PopoverRequestBillComponent } from "./components/popover-request-bill/p
     PopoverRatingComponent,
     PopoverDeliverymanProfileComponent,
     PopoverRequestBillComponent,
+    PopoverContactDeliveryManComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,8 @@ import { PopoverRequestBillComponent } from "./components/popover-request-bill/p
     DeliveryMenService,
     Camera,
     File,
+    CallNumber,
+    SMS,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],
