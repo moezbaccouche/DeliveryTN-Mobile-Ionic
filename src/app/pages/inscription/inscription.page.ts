@@ -9,6 +9,7 @@ import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { ClientsService } from "src/app/services/clients.service";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { defaultAvatarBase64 } from "../../../assets/defaultAvatarBase64";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-inscription",
@@ -19,7 +20,7 @@ export class InscriptionPage implements OnInit {
   passwordType: string = "password";
   iconType: string = "eye-off-outline";
   passwordShown: boolean = false;
-  currentImage = "../../assets/defaultAvatar.png";
+  currentImage = "../../assets/defaultAvatar.jpg";
 
   formModel: FormGroup;
   lat = null;
@@ -34,7 +35,8 @@ export class InscriptionPage implements OnInit {
     private clientsService: ClientsService,
     private geolocation: Geolocation,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -140,7 +142,7 @@ export class InscriptionPage implements OnInit {
   onSubmit() {
     console.log(this.currentImage);
     var clientImage = defaultAvatarBase64;
-    if (this.currentImage != "../../assets/defaultAvatar.png") {
+    if (this.currentImage != "../../assets/defaultAvatar.jpg") {
       console.log("here");
       clientImage = this.currentImage;
     }
@@ -166,7 +168,11 @@ export class InscriptionPage implements OnInit {
       (response: any) => {
         console.log(response);
         if (response.succeeded) {
-          this.presentToast("Inscription réussie !", "success");
+          this.presentToast(
+            "Inscription réussie ! Un Email de confirmation vous a été envoyé.",
+            "success"
+          );
+          this.router.navigate(["/login"]);
         } else {
           response.errors.forEach((err) => {
             switch (err.code) {
@@ -191,7 +197,7 @@ export class InscriptionPage implements OnInit {
   async presentToast(msg: string, type: string) {
     const toast = await this.toastController.create({
       message: msg,
-      duration: 2000,
+      duration: 3000,
       cssClass: "toastCart",
       color: type,
     });

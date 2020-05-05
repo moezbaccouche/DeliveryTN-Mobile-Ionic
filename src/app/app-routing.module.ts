@@ -65,11 +65,14 @@ const routes: Routes = [
       import("./pages/track-delivery/track-delivery.module").then(
         (m) => m.TrackDeliveryPageModule
       ),
-  },  {
-    path: 'track-delivery-map',
-    loadChildren: () => import('./pages/track-delivery-map/track-delivery-map.module').then( m => m.TrackDeliveryMapPageModule)
   },
-
+  {
+    path: "track-delivery-map",
+    loadChildren: () =>
+      import("./pages/track-delivery-map/track-delivery-map.module").then(
+        (m) => m.TrackDeliveryMapPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [
