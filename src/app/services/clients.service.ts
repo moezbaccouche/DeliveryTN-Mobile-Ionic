@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { from } from "rxjs";
@@ -49,5 +49,12 @@ export class ClientsService {
 
   register(newClient) {
     return this.http.post(`${this.baseUrl}clients/register`, newClient);
+  }
+
+  login(clientCredentials) {
+    return this.http.post(
+      `${this.baseUrl}clients/loginClient`,
+      clientCredentials
+    );
   }
 }

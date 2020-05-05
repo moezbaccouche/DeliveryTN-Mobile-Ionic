@@ -16,6 +16,7 @@ import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { ProductsService } from "../services/products.service";
 import { OrdersService } from "../services/orders.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-tab-profile",
@@ -63,7 +64,8 @@ export class TabProfilePage implements OnInit, OnDestroy {
     private camera: Camera,
     private file: File,
     private productsService: ProductsService,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private router: Router
   ) {
     this.ButtonDisabled = true;
     this.readOnly = true;
@@ -212,8 +214,10 @@ export class TabProfilePage implements OnInit, OnDestroy {
             this.ButtonDisabled = false;
           } else if (test == 2) {
             this.presentActionSheet();
-          } else {
-            this.navCtrl.navigateForward("inscription");
+          } else if (test == 3) {
+            //Logout
+            localStorage.removeItem("token");
+            this.router.navigate(["/login"]);
             console.log("déconnexion");
           }
           popover.dismiss();

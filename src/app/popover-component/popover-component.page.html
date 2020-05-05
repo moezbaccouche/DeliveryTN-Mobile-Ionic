@@ -2,23 +2,50 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-      <ion-item>
-      <ion-button fill="clear" (click)="EditProfile()">Modifier Profil <ion-icon name="create-outline" slot="end" ></ion-icon>   </ion-button> 
-      </ion-item>
-    </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
         <ion-item>
-          <ion-button fill="clear" (click)="EditPic()">Modifier Photo <ion-icon name="camera-outline" slot="end" ></ion-icon>   </ion-button> 
-          </ion-item>
+          <ion-button fill="clear" (click)="EditProfile()"
+            >Modifier Profil
+            <ion-icon name="create-outline" slot="end"></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-button fill="clear" color="danger" (click)="LogOut()">Déconnexion <ion-icon name="log-out-outline" slot="end" color="danger" ></ion-icon>   </ion-button> 
-          </ion-item>
+          <ion-button fill="clear" (click)="EditPic()"
+            >Modifier Photo
+            <ion-icon name="camera-outline" slot="end"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-button fill="clear" color="danger" [routerLink]="['login']"
+            >Login
+            <ion-icon
+              name="log-out-outline"
+              slot="end"
+              color="danger"
+            ></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-button (click)="LogOut()" fill="clear" color="danger"
+            >Déconnexion
+            <ion-icon
+              name="log-out-outline"
+              slot="end"
+              color="danger"
+            ></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

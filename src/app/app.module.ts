@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { PopoverOrderbyComponent } from "./menus/popover-orderby/popover-orderby.component";
@@ -31,6 +31,7 @@ import { PopoverContactDeliveryManComponent } from "./components/popover-contact
 import { CallNumber } from "@ionic-native/call-number/ngx";
 import { SMS } from "@ionic-native/sms/ngx";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
+import { AuthInterceptor } from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -83,7 +84,9 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
     CallNumber,
     SMS,
     Geolocation,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    //The following line makes a token check for all the services requests
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    // { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],
 })

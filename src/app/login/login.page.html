@@ -1,41 +1,64 @@
 <ion-header no-border>
   <div class="login-header ion-padding">
-    <img class="logo-img" src="../../assets/header_icon.png" >
+    <img class="logo-img" src="../../assets/header_icon.png" />
   </div>
 </ion-header>
 
 <ion-content>
-
-
   <div class="center">
+    <form [formGroup]="formLogin" autocomplete="off">
+      <div heading-column-lr>
+        <h1 big-heading>Connexion</h1>
+      </div>
+      <ion-label
+        >Commencez à faire vos courses dès maintenant avec DeliveryTN !
+      </ion-label>
 
-    <div heading-column-lr>
-      <h1 big-heading>Login</h1>
-      <h2 small-heading>SIGN UP</h2>
-    </div>
-    <ion-label>Lorem ipsum dolor sit amet consectetur 
-      adipisicing elit.
-     </ion-label>
-
-     <ion-item transparent>
-      <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <ion-input type="email" placeholder="E-Mail"></ion-input>  
+      <ion-item transparent>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          type="email"
+          placeholder="E-Mail"
+          name="email"
+          formControlName="email"
+          required
+        ></ion-input>
       </ion-item>
       <ion-item transparent>
         <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        <ion-input type="password" placeholder="Mot de passe"></ion-input>  
-        </ion-item>
-      <ion-label class="forget-password"><strong>Mot de passe oublié ?</strong></ion-label>
+        <ion-input
+          type="password"
+          placeholder="Mot de passe"
+          name="password"
+          formControlName="password"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-label class="forget-password"
+        ><strong>Mot de passe oublié ?</strong></ion-label
+      >
 
-      <div linespace></div>
-      <ion-button style="text-transform: none;" color="warning" class="ion-button-class"  
-      shape="round" fill="solid" size="large" expand="block"  >
+      <div style="text-align: center;" *ngIf="authenticationFailed != '' ">
+        <span style="color: #d9534f;">{{ authenticationFailed }}</span>
+      </div>
+      <ion-button
+        style="text-transform: none;"
+        color="warning"
+        class="ion-button-class"
+        shape="round"
+        fill="solid"
+        size="large"
+        expand="block"
+        (click)="onSubmit()"
+        [disabled]="!formLogin.valid"
+      >
         Connexion
       </ion-button>
-      <ion-label class="ion-text-center">Vous n'êtes pas encore inscrit?
+
+      <ion-label class="ion-text-center"
+        >Vous n'avez pas de compte ?
         <span class="link-button"><strong>Inscrivez-vous</strong></span>
       </ion-label>
-
+    </form>
   </div>
-
 </ion-content>
