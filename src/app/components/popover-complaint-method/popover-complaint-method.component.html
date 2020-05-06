@@ -6,8 +6,8 @@
     </ion-col>
   </ion-row>
   <br />
-  <ion-row>
-    <ion-col size="4" style="text-align: center;">
+  <ion-row style="text-align: center;">
+    <ion-col size="6" style="text-align: center;">
       <img
         height="32"
         width="32"
@@ -18,31 +18,8 @@
       <br />
       <span class="appName">Appel</span>
     </ion-col>
-
-    <ion-col size="4" style="text-align: center;">
-      <a
-        [href]="
-          domSanitizer.bypassSecurityTrustUrl('sms://' + deliveryManPhoneNumber)
-        "
-        ><img
-          height="32"
-          width="32"
-          src="../../../assets/contact-icons/messages.png"
-          alt=""
-      /></a>
-      <br />
-      <span class="appName">
-        SMS
-      </span>
-    </ion-col>
-    <ion-col size="4" style="text-align: center;">
-      <a
-        [href]="
-          domSanitizer.bypassSecurityTrustUrl(
-            'mailto:' + deliveryManEmailAddress
-          )
-        "
-      >
+    <ion-col size="6" style="text-align: center;">
+      <a [href]="'mailto:contact.deliverytn@gmail.com'">
         <img
           height="32"
           width="32"

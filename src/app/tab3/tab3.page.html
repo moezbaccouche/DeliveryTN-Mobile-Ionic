@@ -85,9 +85,23 @@
             style="text-transform: none;"
             color="warning"
             fill="outline"
+            (click)="presentPopoverComplaintMethod($event)"
           >
             <ion-icon slot="end" name="alert-circle"></ion-icon>
             Réclamation
+          </ion-button>
+        </ion-col>
+        <ion-col
+          size="6"
+          style="text-align: end;"
+          *ngIf="order.orderStatus == 1 || order.orderStatus == 2"
+        >
+          <ion-button
+            [routerLink]="['/track-delivery', order.orderId]"
+            class="btTrack"
+            style="text-transform: none;"
+          >
+            <ion-icon name="navigate-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>

@@ -37,64 +37,148 @@
       </div>
     </div>
 
-    <div class="flex">
-      <div class="border-blue">
-        <div class="border-white">
-          <div class="img-box">
-            <img
-              [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
-              tappable
-              (click)="openPreview(currentImage)"
-            />
+    <div *ngIf="!showForm">
+      <div class="flex">
+        <div class="border-blue">
+          <div class="border-white">
+            <div class="img-box">
+              <img
+                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
+                tappable
+                (click)="openPreview('data:image/jpg;base64,' +client.imageBase64)"
+              />
+            </div>
           </div>
         </div>
       </div>
+
+      <ion-grid>
+        <ion-row style="padding: 0px;">
+          <ion-col style="text-align: center; padding: 0px;">
+            <h6>Email: <strong>{{ client.email}}</strong></h6>
+          </ion-col>
+        </ion-row>
+        <ion-row style="padding: 0px; padding: 0px;">
+          <ion-col style="text-align: center; padding: 0px;">
+            <h6>
+              Adresse:
+              <strong
+                >{{ client.location.address }}, {{ client.location.city
+                }}</strong
+              >
+            </h6>
+          </ion-col>
+        </ion-row>
+        <ion-row style="padding: 0px; padding: 0px;">
+          <ion-col style="text-align: center; padding: 0px;">
+            <h6>Téléphone: <strong>{{ client.phone }}</strong></h6>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
 
-    <ion-grid class="input-grid">
-      <ion-row>
-        <ion-col>
-          <div>
-            <ion-item>
-              <ion-label position="stacked" clear-on-edit="true">Nom</ion-label>
-              <ion-input
-                type="text"
-                value="{{client.lastName}}"
-                [readonly]="readOnly"
-              ></ion-input>
-            </ion-item>
+    <form [formGroup]="formProfile" *ngIf="showForm">
+      <div class="flex">
+        <div class="border-blue">
+          <div class="border-white">
+            <div class="img-box">
+              <img
+                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
+                tappable
+                (click)="presentActionSheet()"
+              />
+            </div>
           </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Prénom</ion-label
-              >
-              <ion-input
-                type="text"
-                value="{{ client.firstName }}"
-                [readonly]="readOnly"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
+        </div>
+      </div>
 
-      <ion-row>
-        <ion-col>
-          <div>
-            <ion-item>
-              <ion-label position="stacked">Télephone</ion-label>
-              <ion-input
-                type="tel"
-                value="{{client.phone}}"
-                [readonly]="readOnly"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-        <ion-col>
+      <ion-grid class="input-grid">
+        <ion-row>
+          <ion-col>
+            <div>
+              <ion-item>
+                <ion-label position="stacked" clear-on-edit="true"
+                  >Nom</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="lastName"
+                  [readonly]="readOnly"
+                ></ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('lastName').touched && formProfile.get('lastName').errors?.required"
+                >Ce champs est requis !</span
+              >
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-item>
+                <ion-label position="stacked" clear-on-edit="true"
+                  >Prénom</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="firstName"
+                  [readonly]="readOnly"
+                ></ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('firstName').touched && formProfile.get('firstName').errors?.required"
+                >Ce champs est requis !</span
+              >
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <div>
+              <ion-item>
+                <ion-label position="stacked">Date de naissance</ion-label>
+                <ion-datetime
+                  formControlName="dateOfBirth"
+                  displayFormat="DD/MM/YYYY"
+                ></ion-datetime>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('dateOfBirth').touched && formProfile.get('dateOfBirth').errors?.required"
+                >Ce champs est requis !</span
+              >
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-item>
+                <ion-label position="stacked">Télephone</ion-label>
+                <ion-input
+                  type="tel"
+                  formControlName="phone"
+                  [readonly]="readOnly"
+                ></ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('phone').touched && formProfile.get('phone').errors?.required"
+                >Ce champs est requis !</span
+              >
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('phone').touched && formProfile.get('phone').errors?.maxlength"
+                >Doit contenir 8 chiffres !</span
+              >
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('phone').touched && formProfile.get('phone').errors?.minlength"
+                >Doit contenir 8 chiffres !</span
+              >
+            </div>
+          </ion-col>
+          <!-- <ion-col>
           <div>
             <ion-item>
               <ion-label position="stacked" clear-on-edit="true"
@@ -112,76 +196,107 @@
               ></ion-icon>
             </ion-item>
           </div>
-        </ion-col>
-      </ion-row>
+        </ion-col> -->
+        </ion-row>
 
-      <ion-row>
-        <ion-col size="12">
-          <div>
-            <ion-item>
-              <ion-label position="stacked">E-mail</ion-label>
-              <ion-input
-                type="email"
-                value="{{ client.email }}"
-                [readonly]="readOnly"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Adresse</ion-label
+        <ion-row>
+          <ion-col size="12">
+            <div>
+              <ion-item>
+                <ion-label position="stacked">E-mail</ion-label>
+                <ion-input
+                  type="email"
+                  formControlName="email"
+                  [readonly]="readOnly"
+                ></ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('email').touched && formProfile.get('email').errors?.required"
+                >Ce champs est requis !</span
               >
-              <ion-input
-                type="text"
-                value="{{ client.location.address }}"
-                [readonly]="readOnly"
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('email').touched && formProfile.get('email').errors?.email"
+                >Ce champs est requis !</span
               >
-              </ion-input>
-              <ion-icon name="navigate-outline" slot="end"></ion-icon>
-            </ion-item>
-          </div>
-          <div>
-            <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Ville</ion-label
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              <ion-item>
+                <ion-label position="stacked" clear-on-edit="true"
+                  >Adresse</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="address"
+                  [readonly]="readOnly"
+                >
+                </ion-input>
+                <ion-icon
+                  button
+                  (click)="onLocateClient()"
+                  name="navigate-outline"
+                  slot="end"
+                ></ion-icon>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('address').touched && formProfile.get('address').errors?.required"
+                >Ce champs est requis !</span
               >
-              <ion-input
-                type="text"
-                value="{{ client.location.city }}"
-                [readonly]="readOnly"
+            </div>
+            <div>
+              <ion-item>
+                <ion-label position="stacked" clear-on-edit="true"
+                  >Ville</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="city"
+                  [readonly]="readOnly"
+                >
+                </ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('city').touched && formProfile.get('city').errors?.required"
+                >Ce champs est requis !</span
               >
-              </ion-input>
-            </ion-item>
-          </div>
-          <div>
-            <ion-item>
-              <ion-label position="stacked" clear-on-edit="true"
-                >Code Postal</ion-label
+            </div>
+            <div>
+              <ion-item>
+                <ion-label position="stacked" clear-on-edit="true"
+                  >Code Postal</ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="zipCode"
+                  [readonly]="readOnly"
+                >
+                </ion-input>
+              </ion-item>
+              <span
+                class="text-danger"
+                *ngIf="formProfile.get('zipCode').touched && formProfile.get('zipCode').errors?.required"
+                >Ce champs est requis !</span
               >
-              <ion-input
-                type="text"
-                value="{{ client.location.zipCode }}"
-                [readonly]="readOnly"
-              >
-              </ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-    <ion-button
-      expand="block"
-      class="button"
-      shape="round"
-      [disabled]="ButtonDisabled"
-      [routerLink]="['/inscription']"
-    >
-      Enregistrer
-      <ion-icon name="save-outline" slot="end"></ion-icon>
-    </ion-button>
+      <ion-button
+        expand="block"
+        class="button"
+        shape="round"
+        [disabled]="ButtonDisabled || !formProfile.valid"
+        (click)="onSubmit()"
+      >
+        Modifier
+        <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+    </form>
   </div>
 </ion-content>

@@ -33,6 +33,7 @@ export class ClientsService {
             data.id,
             data.firstName,
             data.lastName,
+            data.dateOfBirth,
             data.phone,
             data.email,
             data.imageBase64,
@@ -45,6 +46,10 @@ export class ClientsService {
           reject(error);
         };
     });
+  }
+
+  updateClient(editedClient) {
+    return this.http.post(`${this.baseUrl}clients/edit`, editedClient);
   }
 
   register(newClient) {

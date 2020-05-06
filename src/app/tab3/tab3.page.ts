@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs";
 import { OrdersService } from "../services/orders.service";
-import { ToastController } from "@ionic/angular";
+import { ToastController, PopoverController } from "@ionic/angular";
+import { PopoverComplaintMethodComponent } from "../components/popover-complaint-method/popover-complaint-method.component";
 
 @Component({
   selector: "app-tab3",
@@ -18,7 +19,8 @@ export class Tab3Page implements OnInit, OnDestroy {
 
   constructor(
     private ordersService: OrdersService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private popoverController: PopoverController
   ) {}
 
   ngOnInit(): void {
@@ -26,9 +28,7 @@ export class Tab3Page implements OnInit, OnDestroy {
 
     this.clientOrdersSubscription = this.ordersService.clientOrdersSubject.subscribe(
       (orders: any[]) => {
-        console.log(orders);
         this.clientOrders = orders;
-        console.log(this.clientOrders);
       }
     );
     this.ordersService.emitClientOrdersSubject();
@@ -54,6 +54,21 @@ export class Tab3Page implements OnInit, OnDestroy {
       color: type,
     });
     toast.present();
+  }
+
+  async presentPopoverComplaintMethod(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComplaintMethodComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
   }
 
   ngOnDestroy(): void {

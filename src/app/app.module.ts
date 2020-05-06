@@ -32,6 +32,8 @@ import { CallNumber } from "@ionic-native/call-number/ngx";
 import { SMS } from "@ionic-native/sms/ngx";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { AuthInterceptor } from "./auth/auth.interceptor";
+import { ConfirmUpdateEmailComponent } from "./components/confirm-update-email/confirm-update-email.component";
+import { PopoverComplaintMethodComponent } from "./components/popover-complaint-method/popover-complaint-method.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
     PopoverDeliverymanProfileComponent,
     PopoverRequestBillComponent,
     PopoverContactDeliveryManComponent,
+    ConfirmUpdateEmailComponent,
+    PopoverComplaintMethodComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -58,6 +62,8 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
     PopoverDeliverymanProfileComponent,
     PopoverRequestBillComponent,
     PopoverContactDeliveryManComponent,
+    ConfirmUpdateEmailComponent,
+    PopoverComplaintMethodComponent,
   ],
   imports: [
     BrowserModule,
