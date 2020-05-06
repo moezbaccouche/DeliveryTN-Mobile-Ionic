@@ -27,6 +27,7 @@ export class InscriptionPage implements OnInit {
   long = null;
   sendingForm = false;
   emailExists = false;
+  imageBase64String: string;
 
   constructor(
     private actionSheetController: ActionSheetController,
@@ -56,6 +57,7 @@ export class InscriptionPage implements OnInit {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
         this.currentImage = "data:image/jpeg;base64," + imageData;
+        this.imageBase64String = imageData;
       },
       (err) => {
         // Handle error
@@ -144,7 +146,7 @@ export class InscriptionPage implements OnInit {
     var clientImage = defaultAvatarBase64;
     if (this.currentImage != "../../assets/defaultAvatar.jpg") {
       console.log("here");
-      clientImage = this.currentImage;
+      clientImage = this.imageBase64String;
     }
 
     var newClient = {

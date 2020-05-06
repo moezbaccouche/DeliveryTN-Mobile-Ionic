@@ -1,6 +1,6 @@
 <ion-header no-border>
   <div class="login-header ion-padding">
-    <img class="logo-img" src="../../assets/header_icon.png" />
+    <img class="logo-img" src="../../assets/logos/logoWhite.png" />
   </div>
 </ion-header>
 
@@ -37,17 +37,16 @@
       <ion-label class="forget-password"
         ><strong>Mot de passe oublié ?</strong></ion-label
       >
-
+      <div linespace></div>
       <div style="text-align: center;" *ngIf="authenticationFailed != '' ">
         <span style="color: #d9534f;">{{ authenticationFailed }}</span>
       </div>
       <ion-button
         style="text-transform: none;"
-        color="warning"
-        class="ion-button-class"
+        class="ion-button-class btLogin"
         shape="round"
         fill="solid"
-        size="large"
+        size="medium"
         expand="block"
         (click)="onSubmit()"
         [disabled]="!formLogin.valid"
