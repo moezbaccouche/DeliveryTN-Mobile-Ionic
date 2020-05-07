@@ -5,7 +5,7 @@ import { AuthGuard } from "./auth/auth.guard";
 const routes: Routes = [
   {
     path: "",
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import("./tabs/tabs.module").then((m) => m.TabsPageModule),
   },
@@ -74,11 +74,14 @@ const routes: Routes = [
       import("./pages/track-delivery-map/track-delivery-map.module").then(
         (m) => m.TrackDeliveryMapPageModule
       ),
-  },  {
-    path: 'forgot-password',
-    loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
-
+  {
+    path: "forgot-password",
+    loadChildren: () =>
+      import("./pages/forgot-password/forgot-password.module").then(
+        (m) => m.ForgotPasswordPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

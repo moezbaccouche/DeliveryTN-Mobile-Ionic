@@ -3,7 +3,8 @@ import { ProductsService } from "../services/products.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { Product } from "../models/product.model";
-import { ToastController } from "@ionic/angular";
+import { ToastController, PopoverController } from "@ionic/angular";
+import { PopoverAmountComponent } from "../menus/popover-amount/popover-amount.component";
 
 @Component({
   selector: "app-tab-favorites",
@@ -14,12 +15,15 @@ export class TabFavoritesPage implements OnInit, OnDestroy {
   favoriteProductsSubscription: Subscription;
   favoriteProducts = [];
   isLoading = true;
-  clientId = 1;
+  clientId = 0;
   constructor(
     private productsService: ProductsService,
     private domSanitizer: DomSanitizer,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private popoverController: PopoverController
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit() {
     this.getFavoriteProducts();
@@ -56,6 +60,32 @@ export class TabFavoritesPage implements OnInit, OnDestroy {
         console.log("Error occured during disliking product" + error);
       }
     );
+  }
+
+  async presentPopoverAmount(id: any) {
+    const popoverAmount = await this.popoverController.create({
+      component: PopoverAmountComponent,
+      translucent: true,
+      componentProps: {
+        onclick: (productAmount) => {
+          //Add the article to the Order table in the DB with its ID, current user ID and the amount
+          //
+          //
+          //
+
+          this.productsService.addToCart(
+            id,
+            this.clientId,
+            productAmount.toString()
+          );
+
+          popoverAmount.dismiss();
+          this.presentToast("Article ajouté au panier !", "success");
+        },
+      },
+    });
+
+    return await popoverAmount.present();
   }
 
   async presentToast(msg: string, type: string) {

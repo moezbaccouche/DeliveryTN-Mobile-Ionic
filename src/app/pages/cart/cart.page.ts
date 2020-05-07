@@ -34,7 +34,7 @@ export class CartPage implements OnInit {
 
   // orderIsPending = false;
 
-  userId = 1;
+  clientId = 0;
   constructor(
     private productsService: ProductsService,
     private domSanitizer: DomSanitizer,
@@ -42,7 +42,9 @@ export class CartPage implements OnInit {
     private toastController: ToastController,
     private ordersService: OrdersService,
     private router: Router
-  ) {}
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit() {
     this.getCartProductsFromApi();
@@ -59,10 +61,8 @@ export class CartPage implements OnInit {
     );
   }
 
-  ionViewDidEnter() {}
-
   getCartProductsFromApi() {
-    this.productsService.getCartProductsFromApi(this.userId).then((data) => {
+    this.productsService.getCartProductsFromApi(this.clientId).then((data) => {
       this.clientInfos = data["client"]["location"];
       this.cartCategories = data["categories"];
 
@@ -83,7 +83,7 @@ export class CartPage implements OnInit {
   }
 
   makeOrder(requestBill) {
-    this.ordersService.makeNewOrder(this.userId, requestBill).then(
+    this.ordersService.makeNewOrder(this.clientId, requestBill).then(
       () => {
         this.presentToast("Commande effectuée !", "success");
         this.getCartProductsFromApi();
@@ -103,7 +103,7 @@ export class CartPage implements OnInit {
       componentProps: {
         onclick: (answer) => {
           if (answer) {
-            this.deleteProduct(product.id, this.userId, product.categoryId);
+            this.deleteProduct(product.id, this.clientId, product.categoryId);
             this.presentToast("Article supprimé du panier !", "success");
           }
           popover.dismiss();
@@ -122,7 +122,7 @@ export class CartPage implements OnInit {
       componentProps: {
         onclick: (answer) => {
           if (answer) {
-            this.productsService.removeAllCartProducts(this.userId).then(
+            this.productsService.removeAllCartProducts(this.clientId).then(
               () => {
                 this.presentToast("Articles supprimés du panier !", "success");
               },

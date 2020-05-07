@@ -20,17 +20,19 @@ export class Tab1Page implements OnInit, OnDestroy {
   allProducts: Product[];
   favoriteProducts: Product[];
   searchTerm: string;
-  clientId = 1;
+  clientId = 0;
   private isLoading = true;
   constructor(
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
     private popoverController: PopoverController,
     private toastController: ToastController
-  ) {}
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit(): void {
-    this._loadAllProducts();
+    this.loadAllProducts();
     this.productsSubscription = this.productsService.productSubject.subscribe(
       (products: Product[]) => {
         this.allProducts = products;
@@ -46,8 +48,8 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.productsService.emitFavoriteProductsSubject();
   }
 
-  _loadAllProducts() {
-    this.productsService.getProductsFromApi().then(
+  loadAllProducts() {
+    this.productsService.getProductsFromApi(this.clientId).then(
       () => {
         this.isLoading = false;
       },
@@ -58,11 +60,11 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
 
-  _loadProductsByPriceAsc() {
+  loadProductsByPriceAsc() {
     this.productsService.getAllProductsByPriceAscFromApi();
   }
 
-  _loadProductsByPriceDesc() {
+  loadProductsByPriceDesc() {
     this.productsService.getAllProductsByPriceDescFromApi();
   }
 
@@ -100,16 +102,16 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
   }
 
-  _loadProductsByCriteria(criteria) {
+  loadProductsByCriteria(criteria) {
     switch (criteria) {
       case "asc":
-        this._loadProductsByPriceAsc();
+        this.loadProductsByPriceAsc();
         break;
       case "desc":
-        this._loadProductsByPriceDesc();
+        this.loadProductsByPriceDesc();
         break;
       case "name":
-        this._loadAllProducts();
+        this.loadAllProducts();
         break;
     }
   }
@@ -121,7 +123,7 @@ export class Tab1Page implements OnInit, OnDestroy {
       translucent: true,
       componentProps: {
         onclick: (criteria) => {
-          this._loadProductsByCriteria(criteria);
+          this.loadProductsByCriteria(criteria);
           popover.dismiss();
         },
       },

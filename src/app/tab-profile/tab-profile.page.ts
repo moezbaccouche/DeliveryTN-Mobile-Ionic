@@ -39,7 +39,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
   clientSubscription: Subscription;
   client: Client;
-  clientId = 7;
+  clientId = 0;
 
   nbFavoriteProducts = 0;
   favoriteProducts: any;
@@ -83,6 +83,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
   ) {
     this.ButtonDisabled = true;
     this.readOnly = true;
+    this.clientId = +localStorage.getItem("id");
   }
 
   ngOnInit() {
@@ -110,7 +111,7 @@ export class TabProfilePage implements OnInit, OnDestroy {
     this.treatedOrdersSubscription = this.ordersService.treatedOrdersSubject.subscribe(
       (treatedOrders: any[]) => {
         this.treatedOrders = treatedOrders;
-        this.nbDeliveredOrders = this.getNbDeliveredOrders(this.treatedOrders);
+        this.nbDeliveredOrders = treatedOrders.length;
       }
     );
     this.ordersService.emitTreatedOrdersSubject();
@@ -201,16 +202,6 @@ export class TabProfilePage implements OnInit, OnDestroy {
         console.log(error);
       }
     );
-  }
-
-  getNbDeliveredOrders(treatedOrders) {
-    let nb = 0;
-    for (let i = 0; i < treatedOrders.length; i++) {
-      if (treatedOrders[i].orderStatus == 2) {
-        nb++;
-      }
-    }
-    return nb;
   }
 
   initForm() {

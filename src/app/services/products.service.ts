@@ -48,9 +48,9 @@ export class ProductsService {
     );
   }
 
-  getProductsFromApi() {
+  getProductsFromApi(clientId) {
     return new Promise((resolve, reject) => {
-      fetch(`${this.baseUrl}products?clientId=1`)
+      fetch(`${this.baseUrl}products?clientId=${clientId}`)
         .then((response) => {
           return response.json();
         })

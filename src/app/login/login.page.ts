@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 export class LoginPage implements OnInit {
   formLogin: FormGroup;
   authenticationFailed: string = "";
+  formSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,11 +41,20 @@ export class LoginPage implements OnInit {
       email: this.formLogin.value.email,
       password: this.formLogin.value.password,
     };
-    console.log(clientCredentials);
+
+    this.formSubmitting = true;
 
     this.clientsService.login(clientCredentials).subscribe(
       (response: any) => {
+        this.formSubmitting = false;
         localStorage.setItem("token", response.token);
+
+        //Bad practise to store ID in local storage
+        //We must find another way
+        localStorage.setItem("id", response.id);
+
+        console.log(response.id);
+
         this.router.navigate([""]);
       },
       (err) => {

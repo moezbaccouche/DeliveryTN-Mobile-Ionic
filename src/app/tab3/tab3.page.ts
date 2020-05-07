@@ -11,7 +11,7 @@ import { PopoverComplaintMethodComponent } from "../components/popover-complaint
 })
 export class Tab3Page implements OnInit, OnDestroy {
   clientOrders: any = [];
-  clientId = 1;
+  clientId = 0;
 
   isLoading = true;
 
@@ -21,7 +21,9 @@ export class Tab3Page implements OnInit, OnDestroy {
     private ordersService: OrdersService,
     private toastController: ToastController,
     private popoverController: PopoverController
-  ) {}
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit(): void {
     this.getClientOrders();

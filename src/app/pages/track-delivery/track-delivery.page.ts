@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { NavController, ToastController } from "@ionic/angular";
+import {
+  NavController,
+  ToastController,
+  PopoverController,
+} from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
 import { ClientsService } from "src/app/services/clients.service";
 import { mapToken } from "../../../assets/maptoken";
+import { PopoverContactDeliveryManComponent } from "src/app/components/popover-contact-delivery-man/popover-contact-delivery-man.component";
 
 @Component({
   selector: "app-track-delivery",
@@ -13,7 +18,7 @@ import { mapToken } from "../../../assets/maptoken";
 })
 export class TrackDeliveryPage implements OnInit, OnDestroy {
   deliveryInfos: any = null;
-  clientId = 1;
+  clientId = 0;
   client: any = null;
   clientLat = 0;
   clientLng = 0;
@@ -34,8 +39,11 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private deliveryInfosService: DeliveryInfosService,
     private clientsService: ClientsService,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private popoverController: PopoverController
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(
@@ -130,6 +138,23 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  async presentPopoverContactDeliveryMan(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverContactDeliveryManComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        deliveryManPhoneNumber: this.deliveryInfos.deliveryMan.phone,
+        deliveryManEmailAddress: this.deliveryInfos.deliveryMan.email,
+        onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
   }
 
   async presentToast(msg: string, type: string) {

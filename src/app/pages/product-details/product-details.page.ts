@@ -21,7 +21,7 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   totalPrice = 3;
   isFavoriteProduct = false;
 
-  clientId = 1;
+  clientId = 0;
 
   favoriteProducts: Product[] = [];
 
@@ -37,7 +37,9 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
     private toastController: ToastController,
     private router: Router,
     private domSanitizer: DomSanitizer
-  ) {}
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {

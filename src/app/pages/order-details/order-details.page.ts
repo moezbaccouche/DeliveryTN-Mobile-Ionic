@@ -18,7 +18,7 @@ export class OrderDetailsPage implements OnInit {
   orderId;
   order: any;
 
-  clientId = 1;
+  clientId = 0;
 
   isLoading = true;
 
@@ -29,7 +29,9 @@ export class OrderDetailsPage implements OnInit {
     private domSanitizer: DomSanitizer,
     private popoverController: PopoverController,
     private deliveryMenService: DeliveryMenService
-  ) {}
+  ) {
+    this.clientId = +localStorage.getItem("id");
+  }
 
   ngOnInit() {
     this.sub = this.activatedRoute.params.subscribe((params) => {

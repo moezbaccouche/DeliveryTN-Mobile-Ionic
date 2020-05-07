@@ -18,7 +18,7 @@ import { PopoverContactDeliveryManComponent } from "src/app/components/popover-c
   styleUrls: ["./track-delivery-map.page.scss"],
 })
 export class TrackDeliveryMapPage implements OnInit, OnDestroy {
-  clientId = 1;
+  clientId = 0;
   client: any = {
     location: {
       lat: 0,
@@ -65,6 +65,7 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     private popoverController: PopoverController
   ) {
     mapboxgl.accessToken = mapToken;
+    this.clientId = +localStorage.getItem("id");
   }
 
   ngOnInit() {

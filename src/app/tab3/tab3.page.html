@@ -3,6 +3,15 @@
     <ion-title>
       Commandes
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        fill="clear"
+        style="--color: rgb(117, 39, 46);"
+        routerLink="/cart"
+      >
+        <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,98 +22,122 @@
     [class.stopLoading]="!isLoading"
   ></ion-spinner>
 
-  <ion-card *ngFor="let order of clientOrders">
-    <ion-grid>
-      <div [routerLink]="['/order-details', order.orderId]">
+  <div *ngIf="clientOrders.length != 0;else emptyOrders">
+    <ion-card *ngFor="let order of clientOrders">
+      <ion-grid>
+        <div [routerLink]="['/order-details', order.orderId]">
+          <ion-row>
+            <ion-col size="6">
+              <span
+                ><strong>Date: </strong>{{ order.orderTime | date:"dd/MM/yyyy
+                HH:mm"}}</span
+              >
+            </ion-col>
+            <ion-col size="6" style="text-align: end;">
+              <span><strong>Statut: </strong></span>
+              <span
+                *ngIf="order.orderStatus == 0"
+                style="color: grey; font-style: italic;"
+                >En attente</span
+              >
+              <span
+                *ngIf="order.orderStatus == 1"
+                style="color: grey; font-style: italic;"
+                >En cours de traitement</span
+              >
+              <span
+                *ngIf="order.orderStatus == 2"
+                style="color: grey; font-style: italic;"
+                >En cours de livraison</span
+              >
+              <span
+                *ngIf="order.orderStatus == 3"
+                style="color: green; font-weight: bold;"
+                >Livrée ({{ order.realDeliveryTime | date:"HH:mm" }})</span
+              >
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <span><strong>Prix: </strong> {{ order.orderPrice }} DT</span>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12">
+              <span
+                ><strong>Prix de livraison: </strong> {{ order.deliveryPrice }}
+                DT</span
+              >
+            </ion-col>
+          </ion-row>
+
+          <ion-row
+            class="ion-align-items-center"
+            *ngIf="order.orderStatus != 0"
+          >
+            <ion-col size="8" style="padding-right: 0px;">
+              <span><strong>Livreur: </strong></span>
+              <span>{{ order.deliveryManName }}</span>
+            </ion-col>
+            <ion-col size="4" class="noPadding" style="text-align: left;">
+              <img
+                class="imgCircle"
+                height="35"
+                width="35"
+                src="../../assets/Moez.jpg"
+                alt="Img livreur"
+              />
+            </ion-col>
+          </ion-row>
+        </div>
         <ion-row>
           <ion-col size="6">
-            <span
-              ><strong>Date: </strong>{{ order.orderTime | date:"dd/MM/yyyy
-              HH:mm"}}</span
+            <ion-button
+              style="text-transform: none;"
+              color="warning"
+              fill="outline"
+              (click)="presentPopoverComplaintMethod($event)"
             >
+              <ion-icon slot="end" name="alert-circle"></ion-icon>
+              Réclamation
+            </ion-button>
           </ion-col>
-          <ion-col size="6" style="text-align: end;">
-            <span><strong>Statut: </strong></span>
-            <span
-              *ngIf="order.orderStatus == 0"
-              style="color: grey; font-style: italic;"
-              >En attente</span
+          <ion-col
+            size="6"
+            style="text-align: end;"
+            *ngIf="order.orderStatus == 1 || order.orderStatus == 2"
+          >
+            <ion-button
+              [routerLink]="['/track-delivery', order.orderId]"
+              class="btTrack"
+              style="text-transform: none;"
             >
-            <span
-              *ngIf="order.orderStatus == 1"
-              style="color: grey; font-style: italic;"
-              >En cours de traitement</span
-            >
-            <span
-              *ngIf="order.orderStatus == 2"
-              style="color: grey; font-style: italic;"
-              >En cours de livraison</span
-            >
-            <span
-              *ngIf="order.orderStatus == 3"
-              style="color: green; font-weight: bold;"
-              >Livrée ({{ order.realDeliveryTime | date:"HH:mm" }})</span
-            >
+              <ion-icon name="navigate-outline"></ion-icon>
+            </ion-button>
           </ion-col>
         </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 
-        <ion-row>
-          <ion-col size="12">
-            <span><strong>Prix: </strong> {{ order.orderPrice }} DT</span>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="12">
-            <span
-              ><strong>Prix de livraison: </strong> {{ order.deliveryPrice }}
-              DT</span
-            >
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-align-items-center" *ngIf="order.orderStatus != 0">
-          <ion-col size="8" style="padding-right: 0px;">
-            <span><strong>Livreur: </strong></span>
-            <span>{{ order.deliveryManName }}</span>
-          </ion-col>
-          <ion-col size="4" class="noPadding" style="text-align: left;">
-            <img
-              class="imgCircle"
-              height="35"
-              width="35"
-              src="../../assets/Moez.jpg"
-              alt="Img livreur"
-            />
-          </ion-col>
-        </ion-row>
-      </div>
+  <ng-template #emptyOrders>
+    <ion-grid>
       <ion-row>
-        <ion-col size="6">
-          <ion-button
-            style="text-transform: none;"
-            color="warning"
-            fill="outline"
-            (click)="presentPopoverComplaintMethod($event)"
+        <ion-col size="12" style="text-align: center; margin-top: 40%;">
+          <img
+            width="100"
+            height="100"
+            src="../../assets/logos/empty-transparent.png"
+            alt="EmptyList"
+          />
+          <br />
+          <span style="color: #b6b6b6; font-style: italic;"
+            >Aucune commande passée !</span
           >
-            <ion-icon slot="end" name="alert-circle"></ion-icon>
-            Réclamation
-          </ion-button>
-        </ion-col>
-        <ion-col
-          size="6"
-          style="text-align: end;"
-          *ngIf="order.orderStatus == 1 || order.orderStatus == 2"
-        >
-          <ion-button
-            [routerLink]="['/track-delivery', order.orderId]"
-            class="btTrack"
-            style="text-transform: none;"
-          >
-            <ion-icon name="navigate-outline"></ion-icon>
-          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-card>
+  </ng-template>
 </ion-content>

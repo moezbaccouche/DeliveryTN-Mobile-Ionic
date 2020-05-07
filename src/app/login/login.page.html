@@ -49,14 +49,16 @@
         size="medium"
         expand="block"
         (click)="onSubmit()"
-        [disabled]="!formLogin.valid"
+        [disabled]="!formLogin.valid || formSubmitting"
       >
         Connexion
       </ion-button>
 
       <ion-label class="ion-text-center"
         >Vous n'avez pas de compte ?
-        <span class="link-button"><strong>Inscrivez-vous</strong></span>
+        <span [routerLink]="['/inscription']" class="link-button"
+          ><strong>Inscrivez-vous</strong></span
+        >
       </ion-label>
     </form>
   </div>
