@@ -62,4 +62,8 @@ export class ClientsService {
       clientCredentials
     );
   }
+
+  resetPassword(email) {
+    return this.http.post(`${this.baseUrl}clients/resetPassword`, email);
+  }
 }

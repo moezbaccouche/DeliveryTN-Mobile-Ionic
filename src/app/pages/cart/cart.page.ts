@@ -9,6 +9,7 @@ import { PopoverConfirmEmptyCartComponent } from "src/app/menus/popover-confirm-
 import { EditDeliveryAddressPopoverComponent } from "src/app/menus/edit-delivery-address-popover/edit-delivery-address-popover.component";
 import { OrdersService } from "../../services/orders.service";
 import { PopoverRequestBillComponent } from "src/app/components/popover-request-bill/popover-request-bill.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-cart",
@@ -31,7 +32,7 @@ export class CartPage implements OnInit {
   deliveryPrice: number = 5;
   totalPrice: number = 0;
 
-  orderIsPending = false;
+  // orderIsPending = false;
 
   userId = 1;
   constructor(
@@ -39,7 +40,8 @@ export class CartPage implements OnInit {
     private domSanitizer: DomSanitizer,
     private popoverController: PopoverController,
     private toastController: ToastController,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -57,22 +59,7 @@ export class CartPage implements OnInit {
     );
   }
 
-  ionViewDidEnter() {
-    this.ordersService.getPendingOrder(this.userId).then(
-      (response) => {
-        console.log(response);
-        if (response["nbOrders"] != 0) {
-          this.orderIsPending = true;
-        } else {
-          this.orderIsPending = false;
-        }
-      },
-      (error) => {
-        this.presentToast("Une erreur s'est produite", "danger");
-        console.log(error);
-      }
-    );
-  }
+  ionViewDidEnter() {}
 
   getCartProductsFromApi() {
     this.productsService.getCartProductsFromApi(this.userId).then((data) => {
@@ -99,7 +86,7 @@ export class CartPage implements OnInit {
     this.ordersService.makeNewOrder(this.userId, requestBill).then(
       () => {
         this.presentToast("Commande effectuée !", "success");
-        this.orderIsPending = true;
+        this.getCartProductsFromApi();
       },
       (error) => {
         this.presentToast("Une erreur s'est produite !", "danger");

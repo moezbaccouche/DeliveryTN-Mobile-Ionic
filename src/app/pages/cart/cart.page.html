@@ -171,16 +171,15 @@
     </div>
   </div>
 
-  <div *ngIf="!orderIsPending;else divPendingOrder">
+  <div>
     <ion-button
-      [class.orderIsPending]="!orderIsPending"
       class="btOrder"
       expand="block"
       (click)="presentPopoverRequestBill()"
       >Commander</ion-button
     >
   </div>
-  <ng-template #divPendingOrder>
+  <!-- <ng-template #divPendingOrder>
     <ion-row>
       <ion-col size="12" style="text-align: center;">
         <span style="font-style: italic;"
@@ -188,7 +187,7 @@
         >
       </ion-col>
     </ion-row>
-  </ng-template>
+  </ng-template> -->
 </ion-content>
 
 <ng-template #emptyCart>

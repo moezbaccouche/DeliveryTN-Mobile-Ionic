@@ -74,7 +74,11 @@ const routes: Routes = [
       import("./pages/track-delivery-map/track-delivery-map.module").then(
         (m) => m.TrackDeliveryMapPageModule
       ),
+  },  {
+    path: 'forgot-password',
+    loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+
 ];
 @NgModule({
   imports: [

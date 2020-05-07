@@ -34,6 +34,10 @@ export class Tab3Page implements OnInit, OnDestroy {
     this.ordersService.emitClientOrdersSubject();
   }
 
+  ionViewWillEnter() {
+    this.getClientOrders();
+  }
+
   getClientOrders() {
     this.ordersService.getClientOrders(this.clientId).then(
       () => {
