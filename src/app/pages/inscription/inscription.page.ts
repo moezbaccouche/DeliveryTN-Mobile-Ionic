@@ -44,19 +44,27 @@ export class InscriptionPage implements OnInit {
     this.initForm();
   }
 
-  pickImage(sourceType) {
+  async pickImage(sourceType) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
     };
+
+    let loader = await this.loadingController.create({
+      message: "Chargement de l'image…",
+    });
+
     this.camera.getPicture(options).then(
       (imageData) => {
+        loader.present();
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
         this.currentImage = "data:image/jpeg;base64," + imageData;
+        loader.dismiss();
         this.imageBase64String = imageData;
       },
       (err) => {
@@ -166,9 +174,10 @@ export class InscriptionPage implements OnInit {
       },
     };
 
+    this.sendingForm = true;
+
     this.clientsService.register(newClient).subscribe(
       (response: any) => {
-        console.log(response);
         if (response.succeeded) {
           this.presentToast(
             "Inscription réussie ! Un Email de confirmation vous a été envoyé.",
@@ -188,9 +197,11 @@ export class InscriptionPage implements OnInit {
             }
           });
         }
+        this.sendingForm = false;
       },
       (error) => {
         this.presentToast("Un problème est survenue !", "danger");
+        this.sendingForm = false;
         console.log(error);
       }
     );

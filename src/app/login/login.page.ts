@@ -22,11 +22,16 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initForm();
     if (localStorage.getItem("token") != null) {
       this.router.navigate([""]);
-    } else {
-      this.initForm();
     }
+  }
+
+  ionViewWillEnter() {
+    this.initForm();
+    this.formSubmitting = false;
+    this.authenticationFailed = "";
   }
 
   initForm() {
@@ -59,6 +64,7 @@ export class LoginPage implements OnInit {
       },
       (err) => {
         console.log(err);
+        this.formSubmitting = false;
         if (err.status == 400) {
           this.authenticationFailed = err.error.message;
         } else {

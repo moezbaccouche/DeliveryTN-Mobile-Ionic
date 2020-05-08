@@ -17,8 +17,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
   product: any = null;
 
   productAmount = 1;
-  productPrice = 3;
-  totalPrice = 3;
+  productPrice = 0;
+  totalPrice = 0;
   isFavoriteProduct = false;
 
   clientId = 0;
@@ -48,6 +48,8 @@ export class ProductDetailsPage implements OnInit, OnDestroy {
         (response) => {
           this.isLoading = false;
           this.product = response;
+          this.productPrice = this.product.price;
+          this.totalPrice = this.productPrice;
         },
         (error) => {
           console.log(error);

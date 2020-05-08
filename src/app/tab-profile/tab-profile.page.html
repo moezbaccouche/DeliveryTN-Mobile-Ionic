@@ -43,9 +43,9 @@
           <div class="border-white">
             <div class="img-box">
               <img
-                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
+                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +currentImage)"
                 tappable
-                (click)="openPreview('data:image/jpg;base64,' +client.imageBase64)"
+                (click)="openPreview('data:image/jpg;base64,' +currentImage)"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@
           <div class="border-white">
             <div class="img-box">
               <img
-                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +client.imageBase64)"
+                [src]="domSanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' +currentImage)"
                 tappable
                 (click)="presentActionSheet()"
               />

@@ -8,13 +8,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-card
-    *ngFor="let product of categoryProducts"
-    [routerLink]="['/product-details', product.id]"
-  >
+  <ion-card *ngFor="let product of categoryProducts">
     <ion-grid>
       <ion-row>
-        <ion-col size="6" class="ion-float-left">
+        <ion-col
+          size="6"
+          class="ion-float-left"
+          [routerLink]="['/product-details', product.id]"
+        >
           <div>
             <img
               height="120"
@@ -26,7 +27,7 @@
         <ion-col size="6" class="ion-float-right">
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col [routerLink]="['/product-details', product.id]">
                 <strong>{{ product.name }}</strong>
               </ion-col>
             </ion-row>
@@ -44,7 +45,11 @@
             </ion-row>
             <ion-row class="ion-justify-content-end">
               <ion-col size="6" style="text-align: end;">
-                <ion-button fill="outline" size="small">
+                <ion-button
+                  (click)="presentPopoverAmount(product.id)"
+                  fill="outline"
+                  size="small"
+                >
                   <ion-icon name="basket-outline" slot="icon-only"></ion-icon>
                 </ion-button>
               </ion-col>

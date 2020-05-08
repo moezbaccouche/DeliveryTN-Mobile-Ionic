@@ -91,8 +91,10 @@ export class TabProfilePage implements OnInit, OnDestroy {
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
       (client: Client) => {
         this.client = client;
-        if (this.client != null)
+        if (this.client != null) {
           this.clientImageBase64 = this.client.imageBase64;
+          this.currentImage = this.client.imageBase64;
+        }
       }
     );
     this.clientsService.emitClientSubject();
@@ -117,20 +119,28 @@ export class TabProfilePage implements OnInit, OnDestroy {
     this.ordersService.emitTreatedOrdersSubject();
   }
 
-  pickImage(sourceType) {
+  async pickImage(sourceType) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
     };
+    let loader = await this.loadingController.create({
+      message: "Chargement de l'image…",
+    });
+
     this.camera.getPicture(options).then(
       (imageData) => {
+        loader.present();
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
-        this.currentImage = "data:image/jpeg;base64," + imageData;
+        this.currentImage = imageData;
+        loader.dismiss();
         this.clientImageBase64 = imageData;
+        console.log(imageData);
       },
       (err) => {
         // Handle error
@@ -229,6 +239,9 @@ export class TabProfilePage implements OnInit, OnDestroy {
     const address = this.formProfile.value.address;
     const city = this.formProfile.value.city;
     const zipCode = this.formProfile.value.zipCode;
+
+    //Get The updated position coordinates
+    await this.onLocateClient();
     const long = this.client.location.lat;
     const lat = this.client.location.long;
 
@@ -258,46 +271,42 @@ export class TabProfilePage implements OnInit, OnDestroy {
     );
 
     this.ButtonDisabled = true;
-    if (this.client.email != email) {
-      //If he answers yes then make the API call, destory the token and redirect him to login page
+    //If he answers yes then make the API call, destory the token and redirect him to login page
 
-      //Get The updated position coordinates
-      this.onLocateClient();
-      this.clientsService.updateClient(editedClient).subscribe(
-        (response: Client) => {
-          this.client = response;
-          this.clientsService.emitClientSubject();
+    const oldEmail = this.client.email;
+
+    this.clientsService.updateClient(editedClient).subscribe(
+      (response: Client) => {
+        console.log(response);
+        this.client = response;
+        //this.clientsService.emitClientSubject();
+
+        if (this.client.email != oldEmail) {
           localStorage.removeItem("token");
+          localStorage.removeItem("id");
           this.presentToast(
             "Votre adresse Email a été modifiée. Veuillez l'activer avant de vous reconnecter !",
             "success"
           );
           this.router.navigate(["/login"]);
-        },
-        (error) => {
-          console.log(error);
-          this.presentToast("Une erreur est survenue !", "danger");
-        }
-      );
-    } else {
-      //Get The updated position coordinates
-      this.onLocateClient();
-      this.clientsService.updateClient(editedClient).subscribe(
-        (response: Client) => {
-          this.client = response;
-          this.clientsService.emitClientSubject();
+        } else {
           this.showForm = false;
           this.presentToast(
             "Votre profil a été modifié avec succès !",
             "success"
           );
-        },
-        (error) => {
-          console.log(error);
+        }
+      },
+      (err) => {
+        console.log(err);
+        if (err.status == 400 && err.error.code == "DuplicatedEmail") {
+          this.presentToast(err.error.message, "danger");
+        } else {
           this.presentToast("Une erreur est survenue !", "danger");
         }
-      );
-    }
+        this.ButtonDisabled = false;
+      }
+    );
   }
 
   async onLocateClient() {
