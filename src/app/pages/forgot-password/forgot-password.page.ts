@@ -43,6 +43,7 @@ export class ForgotPasswordPage implements OnInit {
       (error) => {
         this.presentToast("Une erreur est survenue !", "danger");
         console.log(error);
+        this.submittingForm = false;
       }
     );
   }

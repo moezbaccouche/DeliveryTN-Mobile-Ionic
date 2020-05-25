@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+﻿import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
@@ -10,7 +10,7 @@ import { Client } from "../models/client.model";
   providedIn: "root",
 })
 export class ClientsService {
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  baseUrl = "http://192.168.1.6:51044/delivery-app/";
 
   private client: Client;
 

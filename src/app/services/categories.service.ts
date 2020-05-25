@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+﻿import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
@@ -10,7 +10,7 @@ export class CategoriesService {
   categories: any[] = [];
   categorySubject = new Subject<any[]>();
 
-  baseUrl = "http://192.168.1.4:51044/delivery-app/";
+  baseUrl = "http://192.168.1.6:51044/delivery-app/";
   constructor(private http: HttpClient) {}
 
   emitCategorySubject() {
