@@ -183,14 +183,11 @@ export class InscriptionPage implements OnInit {
             "Inscription réussie ! Un Email de confirmation vous a été envoyé.",
             "success"
           );
+          this.emailExists = false;
           this.router.navigate(["/login"]);
         } else {
           response.errors.forEach((err) => {
             switch (err.code) {
-              case "DuplicateUserName":
-                this.emailExists = true;
-                break;
-
               default:
                 this.presentToast(err.code, "danger");
                 break;
@@ -199,8 +196,13 @@ export class InscriptionPage implements OnInit {
         }
         this.sendingForm = false;
       },
-      (error) => {
-        this.presentToast("Un problème est survenue !", "danger");
+      (err) => {
+        if (err.error.code == "DuplicatedEmail") {
+          this.emailExists = true;
+        } else {
+          this.presentToast("Un problème est survenue !", "danger");
+        }
+
         this.sendingForm = false;
         console.log(error);
       }
