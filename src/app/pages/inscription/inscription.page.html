@@ -260,14 +260,27 @@
           <span class="text-danger">L'Email saisi est déjà utilisé !</span>
         </ion-col>
       </ion-row>
+
+      <ion-row *ngIf="registerDone">
+        <ion-col style="text-align: center;">
+          <p style="color: #5cb85c;">
+            Inscription effectuée ! Un email vous a été envoyé pour activer
+            votre compte.
+          </p>
+          <p>
+            Si Vous n'avez rien reçu,
+            <span (click)="onResendEmail()"><strong>cliquez ici</strong></span>
+          </p></ion-col
+        >
+      </ion-row>
     </ion-grid>
   </form>
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border" *ngIf="!registerDone">
   <ion-toolbar>
     <ion-button
-      [disabled]="!formModel.valid || long == null || lat == null"
+      [disabled]="!formModel.valid || long == null || lat == null || sendingForm"
       expand="block"
       class="inscri"
       shape="round"

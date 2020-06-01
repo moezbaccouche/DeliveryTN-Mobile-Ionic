@@ -17,7 +17,11 @@
             class="imgCircle"
             height="45"
             width="45"
-            src="../../../assets/Moez.jpg"
+            [src]="
+            domSanitizer.bypassSecurityTrustUrl(
+              'data:image/base64;jpg,' + deliveryMan.imageBase64
+            )
+          "
             alt=""
           />
         </ion-col>

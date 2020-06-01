@@ -11,6 +11,7 @@ import {
 } from "@ionic/angular";
 import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
 import { PopoverContactDeliveryManComponent } from "src/app/components/popover-contact-delivery-man/popover-contact-delivery-man.component";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-track-delivery-map",
@@ -62,7 +63,8 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     private toastController: ToastController,
     private navController: NavController,
     private deliveryInfosService: DeliveryInfosService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private domSanitizer: DomSanitizer
   ) {
     mapboxgl.accessToken = mapToken;
     this.clientId = +localStorage.getItem("id");

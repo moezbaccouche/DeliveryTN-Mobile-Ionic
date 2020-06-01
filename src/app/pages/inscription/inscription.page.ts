@@ -29,6 +29,9 @@ export class InscriptionPage implements OnInit {
   emailExists = false;
   imageBase64String: string;
 
+  registerDone = false;
+  clientEmail = "";
+
   constructor(
     private actionSheetController: ActionSheetController,
     private camera: Camera,
@@ -174,6 +177,8 @@ export class InscriptionPage implements OnInit {
       },
     };
 
+    this.clientEmail = this.formModel.value.email;
+
     this.sendingForm = true;
 
     this.clientsService.register(newClient).subscribe(
@@ -184,10 +189,15 @@ export class InscriptionPage implements OnInit {
             "success"
           );
           this.emailExists = false;
-          this.router.navigate(["/login"]);
+          this.registerDone = true;
+          //this.router.navigate(["/login"]);
         } else {
           response.errors.forEach((err) => {
-            switch (err.code) {
+            switch (err.error.code) {
+              case "DuplicatedEmail":
+                this.emailExists = true;
+                break;
+
               default:
                 this.presentToast(err.code, "danger");
                 break;
@@ -204,9 +214,22 @@ export class InscriptionPage implements OnInit {
         }
 
         this.sendingForm = false;
-        console.log(error);
+        console.log(err);
       }
     );
+  }
+
+  onResendEmail() {
+    this.clientsService
+      .resendVerificationEmail({ email: this.clientEmail })
+      .subscribe(
+        () => {
+          this.presentToast("Email de vérification renvoyée !", "success");
+        },
+        (error) => {
+          this.presentToast("Un problème est survenue !", "danger");
+        }
+      );
   }
 
   async presentToast(msg: string, type: string) {

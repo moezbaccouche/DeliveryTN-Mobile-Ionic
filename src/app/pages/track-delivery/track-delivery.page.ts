@@ -10,6 +10,7 @@ import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
 import { ClientsService } from "src/app/services/clients.service";
 import { mapToken } from "../../../assets/maptoken";
 import { PopoverContactDeliveryManComponent } from "src/app/components/popover-contact-delivery-man/popover-contact-delivery-man.component";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-track-delivery",
@@ -40,7 +41,8 @@ export class TrackDeliveryPage implements OnInit, OnDestroy {
     private deliveryInfosService: DeliveryInfosService,
     private clientsService: ClientsService,
     private toastController: ToastController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private domSanitizer: DomSanitizer
   ) {
     this.clientId = +localStorage.getItem("id");
   }

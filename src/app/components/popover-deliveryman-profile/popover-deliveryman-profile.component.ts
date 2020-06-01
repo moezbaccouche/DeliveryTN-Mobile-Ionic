@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { DeliveryMenService } from "src/app/services/deliveryMen.service";
 import { ToastController } from "@ionic/angular";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-popover-deliveryman-profile",
@@ -30,7 +31,8 @@ export class PopoverDeliverymanProfileComponent implements OnInit {
 
   constructor(
     private deliveryMenService: DeliveryMenService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private domSanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {

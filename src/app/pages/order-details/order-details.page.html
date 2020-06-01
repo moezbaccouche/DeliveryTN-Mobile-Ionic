@@ -192,7 +192,11 @@
           <ion-row class="ion-align-items-center">
             <ion-col size="2">
               <img
-                src="../../../assets/Moez.jpg"
+                [src]="
+              domSanitizer.bypassSecurityTrustUrl(
+                'data:image/base64;jpg,' + deliveryMan.imageBase64
+              )
+            "
                 alt="Img Livreur"
                 height="35"
                 width="35"

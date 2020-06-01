@@ -10,6 +10,8 @@ import { EditDeliveryAddressPopoverComponent } from "src/app/menus/edit-delivery
 import { OrdersService } from "../../services/orders.service";
 import { PopoverRequestBillComponent } from "src/app/components/popover-request-bill/popover-request-bill.component";
 import { Router } from "@angular/router";
+import { DeliveryMenService } from "src/app/services/deliveryMen.service";
+import { PushService } from "src/app/services/push.service";
 
 @Component({
   selector: "app-cart",
@@ -41,7 +43,9 @@ export class CartPage implements OnInit {
     private popoverController: PopoverController,
     private toastController: ToastController,
     private ordersService: OrdersService,
-    private router: Router
+    private router: Router,
+    private deliveryMenService: DeliveryMenService,
+    private pushService: PushService
   ) {
     this.clientId = +localStorage.getItem("id");
   }
@@ -87,6 +91,25 @@ export class CartPage implements OnInit {
       () => {
         this.presentToast("Commande effectuée !", "success");
         this.getCartProductsFromApi();
+
+        this.deliveryMenService
+          .getAllDeliveryMenPlayersIds()
+          .subscribe((ids: any) => {
+            console.log(ids);
+            this.pushService
+              .sendNotification(
+                "Nouvelle commande",
+                "Une nouvelle commande a été enregistrée.",
+                ids
+              )
+              .subscribe(
+                () => {},
+                (error) => {
+                  this.presentToast("Une erreur s'est produite !", "danger");
+                  console.log(error);
+                }
+              );
+          });
       },
       (error) => {
         this.presentToast("Une erreur s'est produite !", "danger");

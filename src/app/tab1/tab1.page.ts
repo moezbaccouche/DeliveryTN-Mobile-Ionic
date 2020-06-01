@@ -7,6 +7,9 @@ import { PopoverAmountComponent } from "../menus/popover-amount/popover-amount.c
 import { ToastController } from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { Product } from "../models/product.model";
+import { ClientsService } from "../services/clients.service";
+import { Router } from "@angular/router";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
 
 @Component({
   selector: "app-tab1",
@@ -26,7 +29,10 @@ export class Tab1Page implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private productsService: ProductsService,
     private popoverController: PopoverController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private clientsService: ClientsService,
+    private oneSignal: OneSignal,
+    private router: Router
   ) {
     this.clientId = +localStorage.getItem("id");
   }
@@ -46,6 +52,8 @@ export class Tab1Page implements OnInit, OnDestroy {
       }
     );
     this.productsService.emitFavoriteProductsSubject();
+
+    this.setupPush();
   }
 
   loadAllProducts() {
@@ -166,6 +174,34 @@ export class Tab1Page implements OnInit, OnDestroy {
       color: type,
     });
     toast.present();
+  }
+
+  setupPush() {
+    this.oneSignal.startInit(
+      "4d92a6e0-c0bb-42b6-8bf1-01be7bc90286",
+      "636537591278"
+    );
+
+    this.oneSignal.inFocusDisplaying(
+      this.oneSignal.OSInFocusDisplayOption.None
+    );
+
+    this.oneSignal.handleNotificationReceived().subscribe((data) => {});
+
+    this.oneSignal.handleNotificationOpened().subscribe((data) => {
+      this.router.navigate(["/tabs"]);
+    });
+    this.oneSignal.endInit();
+    this.oneSignal.getIds().then((response) => {
+      //Insert or update the client player ID
+      this.clientsService.setPlayerId(this.clientId, response.userId).subscribe(
+        () => {},
+        (error) => {
+          this.presentToast("Une erreur est survenue !", "danger");
+          console.log(error);
+        }
+      );
+    });
   }
 
   ngOnDestroy() {

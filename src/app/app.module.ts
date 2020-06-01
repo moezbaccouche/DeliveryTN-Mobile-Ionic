@@ -34,6 +34,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { AuthInterceptor } from "./auth/auth.interceptor";
 import { ConfirmUpdateEmailComponent } from "./components/confirm-update-email/confirm-update-email.component";
 import { PopoverComplaintMethodComponent } from "./components/popover-complaint-method/popover-complaint-method.component";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { PopoverComplaintMethodComponent } from "./components/popover-complaint-
     CallNumber,
     SMS,
     Geolocation,
+    OneSignal,
     //The following line makes a token check for all the services requests
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     // { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

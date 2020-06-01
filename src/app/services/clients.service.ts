@@ -10,7 +10,7 @@ import { Client } from "../models/client.model";
   providedIn: "root",
 })
 export class ClientsService {
-  baseUrl = "http://192.168.1.3:51044/delivery-app/";
+  baseUrl = "http://192.168.1.5:51044/delivery-app/";
 
   private client: Client;
 
@@ -65,5 +65,16 @@ export class ClientsService {
 
   resetPassword(email) {
     return this.http.post(`${this.baseUrl}clients/resetPassword`, email);
+  }
+
+  resendVerificationEmail(email) {
+    return this.http.post(`${this.baseUrl}clients/resendEmail`, email);
+  }
+
+  setPlayerId(clientId: number, playerId: string) {
+    return this.http.post(`${this.baseUrl}clients/setPlayerId`, {
+      clientId: clientId,
+      playerId: playerId,
+    });
   }
 }
