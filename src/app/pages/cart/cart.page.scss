@@ -28,3 +28,12 @@
 .dividerLabels {
   color: rgb(117, 39, 46);
 }
+
+.desiredTimeCheckbox {
+  --border-radius: 50%;
+  --background-checked: rgb(117, 39, 46);
+  --checkmark-color: white;
+  --border-color-checked: rgb(117, 39, 46);
+  --background: white;
+  --border-color: rgb(117, 39, 46);
+}

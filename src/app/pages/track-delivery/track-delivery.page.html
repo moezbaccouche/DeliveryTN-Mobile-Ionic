@@ -20,17 +20,23 @@
         <ion-col>
           <span>Heure estimée</span>
         </ion-col>
-        <ion-col *ngIf="deliveryInfos.orderStatus != 1">
+        <ion-col *ngIf="deliveryInfos.orderStatus == 2">
           <span>Distance</span>
+        </ion-col>
+        <ion-col *ngIf="deliveryInfos.orderStatus == 3">
+          <span>Heure livraison</span>
         </ion-col>
       </ion-row>
       <ion-row style="text-align: center; font-size: 25px;">
         <ion-col>
           <span>{{ deliveryInfos.estimatedDeliveryTime | date:"HH:mm" }}</span>
         </ion-col>
-        <ion-col *ngIf="deliveryInfos.orderStatus != 1">
+        <ion-col *ngIf="deliveryInfos.orderStatus == 2">
           <span>{{ distance | number:"1.2-2" }}</span>
           <span style="font-size: 12px !important;"> Km</span>
+        </ion-col>
+        <ion-col *ngIf="deliveryInfos.orderStatus == 3">
+          <span>{{ deliveryInfos.realDeliveryTime | date:"HH:mm" }}</span>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -63,7 +69,7 @@
                   class="circleImg"
                   [src]="
                 domSanitizer.bypassSecurityTrustUrl(
-                  'data:image/base64;jpg,' + deliveryMan.imageBase64
+                  'data:image/base64;jpg,' + deliveryInfos.deliveryMan.imageBase64
                 )
               "
                   alt=""

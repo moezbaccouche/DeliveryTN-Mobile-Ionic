@@ -45,7 +45,7 @@ export class OrdersService {
     this.clientOrdersSubject.next(this.clientOrders.slice());
   }
 
-  makeNewOrder(cliId, requestBill) {
+  makeNewOrder(cliId, requestBill, distance) {
     return fetch(`${this.baseUrl}orders/add`, {
       method: "post",
       headers: {
@@ -55,6 +55,7 @@ export class OrdersService {
       body: JSON.stringify({
         clientId: cliId,
         withBill: requestBill,
+        distance: distance,
       }),
     })
       .then((response) => {

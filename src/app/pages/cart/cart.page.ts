@@ -12,6 +12,8 @@ import { PopoverRequestBillComponent } from "src/app/components/popover-request-
 import { Router } from "@angular/router";
 import { DeliveryMenService } from "src/app/services/deliveryMen.service";
 import { PushService } from "src/app/services/push.service";
+import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
+import { mapToken } from "../../../assets/maptoken";
 
 @Component({
   selector: "app-cart",
@@ -35,6 +37,11 @@ export class CartPage implements OnInit {
   totalPrice: number = 0;
 
   // orderIsPending = false;
+  // showTimeTable = false;
+
+  centerLat = 35.828888;
+  centerLong = 10.640388;
+  distance = 0;
 
   clientId = 0;
   constructor(
@@ -45,7 +52,8 @@ export class CartPage implements OnInit {
     private ordersService: OrdersService,
     private router: Router,
     private deliveryMenService: DeliveryMenService,
-    private pushService: PushService
+    private pushService: PushService,
+    private deliveryInfosService: DeliveryInfosService
   ) {
     this.clientId = +localStorage.getItem("id");
   }
@@ -86,8 +94,8 @@ export class CartPage implements OnInit {
     });
   }
 
-  makeOrder(requestBill) {
-    this.ordersService.makeNewOrder(this.clientId, requestBill).then(
+  makeOrder(requestBill, distance) {
+    this.ordersService.makeNewOrder(this.clientId, requestBill, distance).then(
       () => {
         this.presentToast("Commande effectuée !", "success");
         this.getCartProductsFromApi();
@@ -118,6 +126,15 @@ export class CartPage implements OnInit {
     );
   }
 
+  // editDesiredDeliveryTime(ev, time) {
+  //   console.log(time);
+  // }
+
+  // showTable() {
+  //   if (this.showTimeTable) this.showTimeTable = false;
+  //   else this.showTimeTable = true;
+  // }
+
   async presentPopoverConfirmDelete(product: any) {
     const popover = await this.popoverController.create({
       component: PopoverConfirmDeleteComponent,
@@ -127,7 +144,6 @@ export class CartPage implements OnInit {
         onclick: (answer) => {
           if (answer) {
             this.deleteProduct(product.id, this.clientId, product.categoryId);
-            this.presentToast("Article supprimé du panier !", "success");
           }
           popover.dismiss();
         },
@@ -184,7 +200,7 @@ export class CartPage implements OnInit {
       translucent: true,
       componentProps: {
         onclick: (answer) => {
-          this.makeOrder(answer);
+          this.getMatch(answer);
 
           popover.dismiss();
         },
@@ -197,9 +213,35 @@ export class CartPage implements OnInit {
   deleteProduct(productId, clientId, categoryId) {
     this.productsService
       .deleteProductFromCart(productId, clientId, categoryId)
-      .then(() => {
-        this.getCartProductsPrice();
-      });
+      .then(
+        () => {
+          this.getCartProductsPrice();
+          this.presentToast("Article supprimé du panier !", "success");
+        },
+        (error) => {
+          console.log(error);
+          this.presentToast("Une erreur est survenue !", "danger");
+        }
+      );
+  }
+
+  getMatch(answer) {
+    const coordsClient = [this.clientInfos.long, this.clientInfos.lat];
+    const coordsCenter = [this.centerLong, this.centerLat];
+
+    const coords = [coordsCenter, coordsClient];
+    var newCoords = coords.join(";");
+
+    this.deliveryInfosService.getRoute(newCoords, mapToken).then(
+      (response: any) => {
+        this.distance = response.routes[0].distance * 0.001;
+        console.log(this.distance);
+        this.makeOrder(answer, parseFloat(this.distance.toFixed(2)));
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   async presentToast(msg: string, type: string) {

@@ -151,14 +151,19 @@ export class Tab1Page implements OnInit, OnDestroy {
           //
           //
 
-          this.productsService.addToCart(
-            id,
-            this.clientId,
-            productAmount.toString()
-          );
+          this.productsService
+            .addToCart(id, this.clientId, productAmount.toString())
+            .then(
+              () => {
+                this.presentToast("Article ajouté au panier !", "success");
+              },
+              (error) => {
+                this.presentToast("Une erreur est survenue !", "danger");
+                console.log(error);
+              }
+            );
 
           popoverAmount.dismiss();
-          this.presentToast("Article ajouté au panier !", "success");
         },
       },
     });
