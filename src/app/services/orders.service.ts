@@ -119,4 +119,31 @@ export class OrdersService {
         };
     });
   }
+
+  cancelPendingOrder(orderId) {
+    return fetch(`${this.baseUrl}orders/cancelOrder`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId: orderId,
+      }),
+    })
+      .then((response: any) => {
+        console.log(response);
+        console.log(this.clientOrders);
+        const index = this.clientOrders.findIndex((o) => {
+          return o.orderId === response.orderId;
+        });
+
+        if (index !== -1) {
+          this.clientOrders.splice(index, 1);
+          this.emitClientOrdersSubject();
+          console.log(this.clientOrders);
+        }
+      })
+      .catch((error) => console.error(error));
+  }
 }

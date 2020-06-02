@@ -35,6 +35,7 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
 import { ConfirmUpdateEmailComponent } from "./components/confirm-update-email/confirm-update-email.component";
 import { PopoverComplaintMethodComponent } from "./components/popover-complaint-method/popover-complaint-method.component";
 import { OneSignal } from "@ionic-native/onesignal/ngx";
+import { PopoverCancelOrderComponent } from "./components/popover-cancel-order/popover-cancel-order.component";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { OneSignal } from "@ionic-native/onesignal/ngx";
     PopoverContactDeliveryManComponent,
     ConfirmUpdateEmailComponent,
     PopoverComplaintMethodComponent,
+    PopoverCancelOrderComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -65,6 +67,7 @@ import { OneSignal } from "@ionic-native/onesignal/ngx";
     PopoverContactDeliveryManComponent,
     ConfirmUpdateEmailComponent,
     PopoverComplaintMethodComponent,
+    PopoverCancelOrderComponent,
   ],
   imports: [
     BrowserModule,

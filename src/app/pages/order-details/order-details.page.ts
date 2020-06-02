@@ -1,12 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { OrdersService } from "src/app/services/orders.service";
 import { Subscription } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ToastController, PopoverController } from "@ionic/angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PopoverRatingComponent } from "src/app/components/popover-rating/popover-rating.component";
 import { PopoverDeliverymanProfileComponent } from "src/app/components/popover-deliveryman-profile/popover-deliveryman-profile.component";
 import { DeliveryMenService } from "src/app/services/deliveryMen.service";
+import { PopoverCancelOrderComponent } from "src/app/components/popover-cancel-order/popover-cancel-order.component";
 
 @Component({
   selector: "app-order-details",
@@ -21,6 +22,7 @@ export class OrderDetailsPage implements OnInit {
   clientId = 0;
 
   isLoading = true;
+  disabledButton = false;
 
   constructor(
     private ordersService: OrdersService,
@@ -28,7 +30,8 @@ export class OrderDetailsPage implements OnInit {
     private toastController: ToastController,
     private domSanitizer: DomSanitizer,
     private popoverController: PopoverController,
-    private deliveryMenService: DeliveryMenService
+    private deliveryMenService: DeliveryMenService,
+    private router: Router
   ) {
     this.clientId = +localStorage.getItem("id");
   }
@@ -51,6 +54,21 @@ export class OrderDetailsPage implements OnInit {
       },
       (error) => {
         console.log(error);
+        this.presentToast("Une erreur est survenue !", "danger");
+      }
+    );
+  }
+
+  cancelOrder() {
+    this.disabledButton = true;
+    this.ordersService.cancelPendingOrder(this.orderId).then(
+      () => {
+        this.router.navigate(["/tabs/tab3"]);
+        this.presentToast("Commande annulée !", "success");
+      },
+      (error) => {
+        console.log(error);
+        this.disabledButton = false;
         this.presentToast("Une erreur est survenue !", "danger");
       }
     );
@@ -123,6 +141,24 @@ export class OrderDetailsPage implements OnInit {
       componentProps: {
         id: idDeliv,
         onclick: () => {
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
+  }
+
+  async presentPopoverCancelOrder(ev) {
+    const popover = await this.popoverController.create({
+      component: PopoverCancelOrderComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: (answer) => {
+          if (answer) {
+            this.cancelOrder();
+          }
           popover.dismiss();
         },
       },
