@@ -36,6 +36,8 @@ import { ConfirmUpdateEmailComponent } from "./components/confirm-update-email/c
 import { PopoverComplaintMethodComponent } from "./components/popover-complaint-method/popover-complaint-method.component";
 import { OneSignal } from "@ionic-native/onesignal/ngx";
 import { PopoverCancelOrderComponent } from "./components/popover-cancel-order/popover-cancel-order.component";
+import { PopoverMapLocationComponent } from "./components/popover-map-location/popover-map-location.component";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { PopoverCancelOrderComponent } from "./components/popover-cancel-order/p
     ConfirmUpdateEmailComponent,
     PopoverComplaintMethodComponent,
     PopoverCancelOrderComponent,
+    PopoverMapLocationComponent,
   ],
   entryComponents: [
     PopoverOrderbyComponent,
@@ -68,11 +71,15 @@ import { PopoverCancelOrderComponent } from "./components/popover-cancel-order/p
     ConfirmUpdateEmailComponent,
     PopoverComplaintMethodComponent,
     PopoverCancelOrderComponent,
+    PopoverMapLocationComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyDtomsm7eXWYIgxXUVzzuURGRJYWxwTbb8",
+    }),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,32 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <agm-map
+        [zoom]="10"
+        [latitude]="latitude"
+        [longitude]="longitude"
+        (mapClick)="onMapClicked($event)"
+      >
+        <agm-marker
+          *ngIf="marker"
+          [latitude]="marker.latitude"
+          [longitude]="marker.longitude"
+          [markerDraggable]="!marker.draggable"
+        ></agm-marker>
+      </agm-map>
+      <!-- <div class="map" id="mapContainer" (click)="onMapClick($event)"></div> -->
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" style="text-align: center;">
+      <ion-button
+        style="text-transform: none;"
+        (click)="onConfirm()"
+        [disabled]="!coordsSet"
+      >
+        <ion-icon name="locate-outline" slot="end"></ion-icon>
+        Confirmer
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

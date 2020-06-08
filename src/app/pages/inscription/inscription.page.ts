@@ -3,6 +3,7 @@ import {
   ActionSheetController,
   LoadingController,
   ToastController,
+  PopoverController,
 } from "@ionic/angular";
 import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
@@ -10,6 +11,7 @@ import { ClientsService } from "src/app/services/clients.service";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { defaultAvatarBase64 } from "../../../assets/defaultAvatarBase64";
 import { Router } from "@angular/router";
+import { PopoverMapLocationComponent } from "src/app/components/popover-map-location/popover-map-location.component";
 
 @Component({
   selector: "app-inscription",
@@ -40,7 +42,8 @@ export class InscriptionPage implements OnInit {
     private geolocation: Geolocation,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private popoverController: PopoverController
   ) {}
 
   ngOnInit() {
@@ -121,21 +124,21 @@ export class InscriptionPage implements OnInit {
   }
 
   async locateClient() {
-    let loader = await this.loadingController.create({
-      message: "Recherche de votre position…",
-    });
-    loader.present();
-    this.geolocation.getCurrentPosition().then(
-      (response) => {
-        loader.dismiss();
-        this.lat = response.coords.latitude;
-        this.long = response.coords.longitude;
-      },
-      (error) => {
-        console.log(error);
-        this.presentToast("Impossible de trouver votre position !", "danger");
-      }
-    );
+    // let loader = await this.loadingController.create({
+    //   message: "Recherche de votre position…",
+    // });
+    // loader.present();
+    // this.geolocation.getCurrentPosition().then(
+    //   (response) => {
+    //     loader.dismiss();
+    //     this.lat = response.coords.latitude;
+    //     this.long = response.coords.longitude;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     this.presentToast("Impossible de trouver votre position !", "danger");
+    //   }
+    // );
   }
 
   initForm() {
@@ -240,5 +243,24 @@ export class InscriptionPage implements OnInit {
       color: type,
     });
     toast.present();
+  }
+
+  async presentPopoverMap(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverMapLocationComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        onclick: (lat, long) => {
+          console.log(lat);
+          console.log(long);
+          this.lat = lat;
+          this.long = long;
+          popover.dismiss();
+        },
+      },
+    });
+
+    return await popover.present();
   }
 }

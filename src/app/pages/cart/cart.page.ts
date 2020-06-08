@@ -235,7 +235,6 @@ export class CartPage implements OnInit {
     this.deliveryInfosService.getRoute(newCoords, mapToken).then(
       (response: any) => {
         this.distance = response.routes[0].distance * 0.001;
-        console.log(this.distance);
         this.makeOrder(answer, parseFloat(this.distance.toFixed(2)));
       },
       (error) => {
