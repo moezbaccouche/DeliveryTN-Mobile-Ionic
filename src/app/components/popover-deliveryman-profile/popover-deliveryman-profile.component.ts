@@ -44,6 +44,7 @@ export class PopoverDeliverymanProfileComponent implements OnInit {
     this.deliveryMenService.getDeliveryManById(this.id).then(
       (response) => {
         this.deliveryMan = response;
+        console.log(this.deliveryMan);
         this.initRatingStars();
         this.isLoading = false;
       },

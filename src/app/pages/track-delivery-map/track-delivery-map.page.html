@@ -19,7 +19,7 @@
             width="45"
             [src]="
             domSanitizer.bypassSecurityTrustUrl(
-              'data:image/base64;jpg,' + deliveryInfos.deliveryMan.imageBase64
+              'data:image/jpg;base64,' + deliveryInfos.deliveryMan.imageBase64
             )
           "
             alt=""

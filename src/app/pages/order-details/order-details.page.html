@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title style="font-size: 14px;">Commande 21/04/2020 16:30</ion-title>
+    <ion-title style="font-size: 14px;">Détails commande</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -212,7 +212,7 @@
               <img
                 [src]="
               domSanitizer.bypassSecurityTrustUrl(
-                'data:image/base64;jpg,' + order.deliveryManPicture
+                'data:image/jpg;base64,' + order.deliveryManPicture
               )
             "
                 alt="Img Livreur"

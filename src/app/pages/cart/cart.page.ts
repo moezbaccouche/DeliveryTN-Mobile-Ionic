@@ -82,6 +82,8 @@ export class CartPage implements OnInit {
       this.clientZipCode = this.clientInfos.zipCode;
       this.clientAddress = this.clientInfos.address;
 
+      this.getMatch();
+
       this.getCartProductsPrice();
     });
   }
@@ -90,7 +92,6 @@ export class CartPage implements OnInit {
     this.productsPrice = 0;
     this.cartProducts.forEach((p) => {
       this.productsPrice += p.totalProductPrice;
-      this.totalPrice = this.productsPrice + this.deliveryPrice;
     });
   }
 
@@ -200,8 +201,7 @@ export class CartPage implements OnInit {
       translucent: true,
       componentProps: {
         onclick: (answer) => {
-          this.getMatch(answer);
-
+          this.makeOrder(answer, parseFloat(this.distance.toFixed(2)));
           popover.dismiss();
         },
       },
@@ -216,6 +216,7 @@ export class CartPage implements OnInit {
       .then(
         () => {
           this.getCartProductsPrice();
+          this.totalPrice = this.productsPrice + this.deliveryPrice;
           this.presentToast("Article supprimé du panier !", "success");
         },
         (error) => {
@@ -225,7 +226,7 @@ export class CartPage implements OnInit {
       );
   }
 
-  getMatch(answer) {
+  getMatch() {
     const coordsClient = [this.clientInfos.long, this.clientInfos.lat];
     const coordsCenter = [this.centerLong, this.centerLat];
 
@@ -235,7 +236,16 @@ export class CartPage implements OnInit {
     this.deliveryInfosService.getRoute(newCoords, mapToken).then(
       (response: any) => {
         this.distance = response.routes[0].distance * 0.001;
-        this.makeOrder(answer, parseFloat(this.distance.toFixed(2)));
+        if (this.distance >= 0 && this.distance <= 10) {
+          this.deliveryPrice = 2;
+        } else {
+          if (this.distance > 10 && this.distance <= 25) {
+            this.deliveryPrice = 5;
+          } else {
+            this.deliveryPrice = 10;
+          }
+        }
+        this.totalPrice = this.productsPrice + this.deliveryPrice;
       },
       (error) => {
         console.log(error);

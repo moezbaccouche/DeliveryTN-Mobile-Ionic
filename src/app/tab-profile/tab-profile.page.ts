@@ -242,8 +242,8 @@ export class TabProfilePage implements OnInit, OnDestroy {
 
     //Get The updated position coordinates
     await this.onLocateClient();
-    const long = this.client.location.lat;
-    const lat = this.client.location.long;
+    const long = this.client.location.long;
+    const lat = this.client.location.lat;
 
     const location = new Location(
       this.client.location.id,

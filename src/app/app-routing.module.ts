@@ -69,7 +69,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: "track-delivery-map",
+    path: "track-delivery-map/:orderId",
     loadChildren: () =>
       import("./pages/track-delivery-map/track-delivery-map.module").then(
         (m) => m.TrackDeliveryMapPageModule

@@ -12,6 +12,7 @@ import {
 import { DeliveryInfosService } from "src/app/services/deliveryInfos.service";
 import { PopoverContactDeliveryManComponent } from "src/app/components/popover-contact-delivery-man/popover-contact-delivery-man.component";
 import { DomSanitizer } from "@angular/platform-browser";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-track-delivery-map",
@@ -64,16 +65,26 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     private navController: NavController,
     private deliveryInfosService: DeliveryInfosService,
     private popoverController: PopoverController,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private activatedRoute: ActivatedRoute
   ) {
     mapboxgl.accessToken = mapToken;
     this.clientId = +localStorage.getItem("id");
   }
 
   ngOnInit() {
+    this.sub = this.activatedRoute.params.subscribe(
+      (params) => {
+        this.orderId = +params["orderId"];
+        this.getOrderDeliveryInfos();
+      },
+      (error) => {
+        this.presentToast("Une erreur est survenue !", "danger");
+        console.log(error);
+      }
+    );
+
     this.getClient();
-    this.getOrderDeliveryInfos();
-    this.getDeliveryManCurrentLocation();
 
     this.clientSubscription = this.clientsService.clientSubject.subscribe(
       (client: any) => {
@@ -110,6 +121,8 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
     this.deliveryInfosService.getOrderDeliveryInfos(this.orderId).then(
       (response: any) => {
         this.deliveryInfos = response;
+        console.log(response);
+        this.getDeliveryManCurrentLocation();
       },
       (error) => {
         console.log(error);
@@ -232,7 +245,7 @@ export class TrackDeliveryMapPage implements OnInit, OnDestroy {
             console.log(error);
           }
         );
-    }, 10000);
+    }, 5000);
   }
 
   addDeliveryManMarker() {

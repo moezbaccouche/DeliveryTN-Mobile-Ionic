@@ -9,7 +9,7 @@
         <img
           [src]="
             domSanitizer.bypassSecurityTrustUrl(
-              'data:image/base64;jpg,' + deliveryMan.imageBase64
+              'data:image/jpg;base64,' + deliveryMan.imageBase64
             )
           "
           tappable
@@ -34,10 +34,10 @@
     </ion-col>
   </ion-row>
   <ion-row style="font-size: 14px;">
-    <ion-col>
+    <ion-col size="3">
       <span><strong>E-Mail</strong></span>
     </ion-col>
-    <ion-col style="text-align: end;">
+    <ion-col size="9" style="text-align: end;">
       <span>{{ deliveryMan.email }}</span>
     </ion-col>
   </ion-row>

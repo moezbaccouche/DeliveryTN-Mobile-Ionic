@@ -69,7 +69,7 @@
                   class="circleImg"
                   [src]="
                 domSanitizer.bypassSecurityTrustUrl(
-                  'data:image/base64;jpg,' + deliveryInfos.deliveryMan.imageBase64
+                  'data:image/jpg;base64,' + deliveryInfos.deliveryMan.imageBase64
                 )
               "
                   alt=""
@@ -161,7 +161,7 @@
       class="btTrackMap"
       expand="full"
       *ngIf="deliveryInfos != null && client != null && deliveryInfos.orderStatus != 1 && deliveryInfos.orderStatus != 3"
-      [routerLink]="['/track-delivery-map']"
+      [routerLink]="['/track-delivery-map', orderId]"
       [disabled]="deliveryInfos.orderStatus == 1"
     >
       <ion-icon slot="start" name="navigate-outline"></ion-icon>

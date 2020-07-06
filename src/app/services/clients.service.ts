@@ -10,7 +10,7 @@ import { Client } from "../models/client.model";
   providedIn: "root",
 })
 export class ClientsService {
-  baseUrl = "http://192.168.100.154:51044/delivery-app/";
+  baseUrl = "http://192.168.1.3:51044/delivery-app/";
 
   private client: Client;
 

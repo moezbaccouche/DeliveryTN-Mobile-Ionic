@@ -19,7 +19,7 @@ export class PushService {
     return this.http.post(
       "https://onesignal.com/api/v1/notifications",
       {
-        app_id: "4d92a6e0-c0bb-42b6-8bf1-01be7bc90286",
+        app_id: "1d0cf02e-3eda-4ff5-b9a1-74c3ccf33dfb",
         include_player_ids: playersIds,
         headings: {
           fr: title,

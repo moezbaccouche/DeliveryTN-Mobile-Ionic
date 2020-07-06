@@ -3,6 +3,7 @@ import { Subscription } from "rxjs";
 import { OrdersService } from "../services/orders.service";
 import { ToastController, PopoverController } from "@ionic/angular";
 import { PopoverComplaintMethodComponent } from "../components/popover-complaint-method/popover-complaint-method.component";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-tab3",
@@ -20,7 +21,8 @@ export class Tab3Page implements OnInit, OnDestroy {
   constructor(
     private ordersService: OrdersService,
     private toastController: ToastController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private domSanitizer: DomSanitizer
   ) {
     this.clientId = +localStorage.getItem("id");
   }
